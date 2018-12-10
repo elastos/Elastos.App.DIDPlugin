@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/nav_title"/>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rl_scanView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.qingmei2.library.view.QRCodeScannerView
+                android:id="@+id/scanner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.qingmei2.library.view.QRCoverView
+                android:id="@+id/cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cornerColor="@color/appColor"
+                app:laserColor="@color/appColor"
+                app:laserVisible="true"
+                app:outsideBackgroundColor="#22000000"
+                app:scanRectHeight="300dp"
+                app:scanRectWidth="300dp" />
+
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+</LinearLayout>
