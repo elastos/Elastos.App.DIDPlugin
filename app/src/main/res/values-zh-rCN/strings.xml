@@ -1,0 +1,85 @@
+<resources>
+    <string name="library_name">DID信息</string>
+    <string name="nav_home">首页</string>
+    <string name="nav_charges">收钱</string>
+    <string name="nav_pay">付钱</string>
+    <string name="nav_mine">我</string>
+    <string name="nav_all">全部</string>
+
+    <string name="home_wallet">钱包</string>
+    <string name="home_wallet_name">我的DID账户</string>
+    <string name="home_balance">钱包余额</string>
+    <string name="home_expense">支出</string>
+    <string name="home_income">收入</string>
+    <string name="home_didinfo">DID记录</string>
+
+    <string name="charge_copytips">(点击复制地址)</string>
+    <string name="charge_reset">重置地址</string>
+
+    <string name="send_recipient">收件人</string>
+    <string name="send_enter_address">请输入亦来云地址</string>
+    <string name="send_backup">您的钱包还没有备份</string>
+    <string name="send_tips">为保证您的钱包安全，您需要备份您的钱包信息，之后您可以进行支付交易</string>
+    <string name="send_enter_pwd">输入消费密码</string>
+    <string name="send_sending">正在发送交易，可能会花费一些时间，请耐心等待</string>
+    <string name="send_creating">正在创建交易</string>
+    <string name="send_click">点击发送</string>
+
+    <string name="finance_recharge_addresss">充值来源</string>
+    <string name="finance_recharge_phrase">充值来源账户的助记词（恢复短语）</string>
+    <string name="finance_withdraw_addresss">提现到</string>
+
+    <string name="me_recharge">充值</string>
+    <string name="me_withdraw">提现</string>
+    <string name="me_records">数据记录</string>
+    <string name="me_finance">金融数据</string>
+    <string name="me_history">充值和提现记录</string>
+    <string name="me_preference">偏好设置</string>
+    <string name="me_preference_language">语言</string>
+    <string name="me_preference_language_select_english">ENGLISH</string>
+    <string name="me_preference_language_select_chinese">中文</string>
+    <string name="me_preference_wallet">切换账户</string>
+
+
+    <string name="word_issafe">您的使用环境安全吗</string>
+    <string name="word_besafe">请确保周围环境没有隐形摄像头等不安全因素</string>
+    <string name="word_resume">任何人只有持有您的恢复短语，就可以访问或者花掉您的亦来币</string>
+    <string name="word_remember">请仔细记下这句话</string>
+    <string name="word_confirm">我们会在下一个屏幕上确认</string>
+    <string name="word_written">我已经把它写下来</string>
+    <string name="word_verify">让我们验证您备份的短语</string>
+    <string name="word_click">请按照正确的顺序点击每个单词</string>
+    <string name="word_iscorrect">这是正确的吗</string>
+    <string name="word_sure">确定</string>
+    <string name="word_cleanup">清除</string>
+    <string name="word_wrong">助记词短语不正确，请重试！</string>
+    <string name="word_backdup">您的钱包已经备份了</string>
+    <string name="word_tips">请务必将您的恢复短语存储在一个安全的地方。如果这个程序被删除，恢复您的钱包的时候需要它</string>
+    <string name="word_newpwd">请输入新的支付密码</string>
+    <string name="word_pwdtips">支付密码不能被恢复，请务必记好（密码长度不小于8位）</string>
+
+    <string name="import_wallet">导入钱包</string>
+    <string name="input_phrase">键入恢复短语\n（通常12个字，字符之间需要空格）</string>
+    <string name="set_pwd">设置支付密码(至少8位)</string>
+    <string name="import_pwd">请输入密码</string>
+    <string name="import_pwd_again">请再次输入密码</string>
+    <string name="btn_import">导入</string>
+    <string name="dialog_becareful">提示</string>
+    <string name="dialog_switch_wallet">您正在切换钱包，请确保目前的钱包已经备份过</string>
+    <string name="dialog_unable_import">导入失败</string>
+    <string name="dialog_invalid_phrase">无效的助记词短语</string>
+
+
+    <string name="scan_noresult">未扫描到二维码，请重试</string>
+    <string name="toast_pwd_notcorrect">密码长度不正确，请重试！</string>
+    <string name="toast_pwd_same">两次输入的密码不一致</string>
+    <string name="toast_import_success">钱包切换成功!</string>
+    <string name="btn_last">上一步</string>
+    <string name="btn_next">下一步</string>
+    <string name="btn_cancel">取消</string>
+    <string name="btn_ok">确定</string>
+    <string name="btn_backup">备份</string>
+
+
+
+</resources>

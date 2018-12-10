@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgGray"
+    tools:context="com.ela.wallet.sdk.didlibrary.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"
+            android:layout_marginLeft="15dp"
+            android:gravity="left|center_vertical"
+            android:textSize="16dp"
+            android:textColor="@color/textBlack"
+            android:text="@string/send_recipient"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <EditText
+                android:id="@+id/et_scan_address"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@color/bgGray"
+                android:textSize="14sp"
+                android:textColorHint="@color/hintGray"
+                android:hint="@string/send_enter_address"/>
+            <ImageView
+                android:id="@+id/iv_scan"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/ic_scan"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

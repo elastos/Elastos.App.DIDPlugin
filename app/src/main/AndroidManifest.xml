@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ela.wallet.sdk.didlibrary">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/library_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
+        <activity android:name=".MainActivity">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity
+            android:name=".activity.DidLaunchActivity"
+            android:process=":didservice">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity
+            android:name=".activity.ScanActivity"
+            android:process=":didservice" />
+
+        <service
+            android:name=".service.DidService"
+            android:process=":didservice" />
+
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.4" />
+
+        <activity
+            android:name=".activity.BackupTipsActivity"
+            android:process=":didservice" />
+        <activity android:name=".activity.WordShowActivity"
+            android:process=":didservice" />
+        <activity android:name=".activity.WordInputActivity"
+            android:process=":didservice" />
+        <activity android:name=".activity.ImportWalletActivity"
+            android:process=":didservice" />
+        <activity android:name=".activity.ReChargeActivity"
+            android:process=":didservice" />
+        <activity android:name=".activity.WithDrawActivity"
+            android:process=":didservice" />
+        <activity android:name=".activity.LanguageActivity"
+            android:process=":didservice" />
+        <activity android:name=".activity.PersonalActivity"
+            android:process=":didservice" />
+        <activity android:name=".activity.HomeActivity"
+            android:process=":didservice" />
+        <activity android:name=".activity.ReceiveActivity"
+            android:process=":didservice" />
+        <activity android:name=".activity.SendActivity"
+            android:process=":didservice" />
+        <activity android:name=".activity.RecordsActivity"
+            android:process=":didservice" ></activity>
+    </application>
+
+</manifest>

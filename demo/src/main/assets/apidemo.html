@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<head>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+    <script>
+        function post(url){
+            xhr=new XMLHttpRequest();
+            xhr.open("post",url,true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            var data;
+            var param;
+
+            //api ref: https://walletbrowserandroid.readthedocs.io/en/latest/api_guide.html#set-did-information
+            if (url == 'http://127.0.0.1:34561/api/v1/sendTransfer') {
+                param = {
+                  "amount": 10000,
+                  "toAddress": "EeDUy6TmGSFfVxXVzMpVkxLhqwCqujE1WL",
+                  "memo": "xxx",
+                  "info": "sss"
+                };
+            }else if (url == 'http://127.0.0.1:34561/api/v1/setDidInfo') {
+                param = {
+                  "key1": "value1",
+                  "key2": "value2",
+                  "key3": "value3"
+                };
+            }
+			data=JSON.stringify(param);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if(xhr.getResponseHeader('content-type')==='application/json'){
+                        var result = JSON.parse(xhr.responseText);
+                        //todo:do something
+                    } else{
+                        console.log(xhr.responseText);
+                    }
+                    //for example:
+                    iptBox = document.getElementById('ipt_box')
+                    iptBox.value = xhr.responseText;
+                }
+            }
+            xhr.send(data);
+            //for example: ui tips:
+            iptBox = document.getElementById('ipt_box');
+            iptBox.value = "waiting for result......";
+        }
+
+        function get(url) {
+            xhr=new XMLHttpRequest();
+		    xhr.open("get",url,true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if(xhr.getResponseHeader('content-type')==='application/json'){
+                        var result = JSON.parse(xhr.responseText);
+                        //todo:do something
+                    } else{
+                        console.log(xhr.responseText);
+                    }
+
+                    //for example:
+                    iptBox = document.getElementById('ipt_box')
+                    iptBox.value = xhr.responseText;
+                }
+            }
+            xhr.send(null);
+
+            //for example: ui tips:
+            iptBox = document.getElementById('ipt_box');
+            iptBox.value = "waiting for result......";
+        }
+        </script>
+        <p onclick="get('http://127.0.0.1:34561/api/v1/getDid')"><u>生成DID</u></p>
+        <p onclick="get('http://127.0.0.1:34561/api/v1/getAddress')"><u>获取DID的Candy地址</u></p>
+        <p onclick="get('http://127.0.0.1:34561/api/v1/getBalance')"><u>查询余额</u></p>
+        <p onclick="get('http://127.0.0.1:34561/api/v1/getTxById?txId=cd21b8729ca6173862034fb5515d395c25e5c7779330aa3634d7128435ddd4f4')"><u>查询指定交易记录</u></p>
+        <p onclick="get('http://127.0.0.1:34561/api/v1/getAllTxs?pageNum=1&pageSize=3')"><u>查询交易历史</u></p>
+        <p onclick="get('http://127.0.0.1:34561/api/v1/getDidInfo')"><u>查询DID</u></p>
+        <p onclick="post('http://127.0.0.1:34561/api/v1/sendTransfer')"><u>发送交易[post]</u></p>
+        <p onclick="post('http://127.0.0.1:34561/api/v1/setDidInfo')"><u>设置DID[post]</u></p>
+
+        <textarea id="ipt_box" style="margin-top: 20px; width: 100%; height: 100px;"></textarea>
+    </body>
+</head>
