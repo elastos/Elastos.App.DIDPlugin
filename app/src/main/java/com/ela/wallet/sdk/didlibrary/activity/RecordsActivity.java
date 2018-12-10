@@ -33,14 +33,6 @@ public class RecordsActivity extends BaseActivity {
     private List<RecordsModel> mList3;
     private List<RecordsModel> mList4;
 
-    private String[] tabs = {
-            getString(R.string.nav_all),
-            getString(R.string.nav_charges),
-            getString(R.string.nav_pay),
-            getString(R.string.me_recharge),
-            getString(R.string.me_withdraw)
-    };
-
     @Override
     protected int getRootViewId() {
         return R.layout.activity_records;
@@ -54,6 +46,13 @@ public class RecordsActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        String[] tabs = {
+                getString(R.string.nav_all),
+                getString(R.string.nav_charges),
+                getString(R.string.nav_pay),
+                getString(R.string.me_recharge),
+                getString(R.string.me_withdraw)
+        };
         mList = new ArrayList<>();
         mList1 = new ArrayList<>();
         mList2 = new ArrayList<>();
@@ -144,11 +143,11 @@ public class RecordsActivity extends BaseActivity {
                             mList4.clear();
                             for (AllTxsBean.ResultBean.HistoryBean historyBean : allTxsBean.getResult().getHistory()) {
                                 if ("spend".equals(historyBean.getType())) {
-                                    mList2.add(new RecordsModel(tabs[2], historyBean.getCreateTime(), historyBean.getValue()));
+                                    mList2.add(new RecordsModel(getString(R.string.nav_pay), historyBean.getCreateTime(), historyBean.getValue()));
                                 } else if ("income".equals(historyBean.getType())) {
-                                    mList1.add(new RecordsModel(tabs[1], historyBean.getCreateTime(), historyBean.getValue()));
+                                    mList1.add(new RecordsModel(getString(R.string.nav_charges), historyBean.getCreateTime(), historyBean.getValue()));
                                 }
-                                mList.add(new RecordsModel(tabs[0], historyBean.getCreateTime(), historyBean.getValue()));
+                                mList.add(new RecordsModel(getString(R.string.nav_all), historyBean.getCreateTime(), historyBean.getValue()));
                             }
                             mAdapter.setData(mList);
                         }
