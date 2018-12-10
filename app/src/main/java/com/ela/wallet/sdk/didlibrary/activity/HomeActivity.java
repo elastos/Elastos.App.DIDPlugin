@@ -143,7 +143,7 @@ public class HomeActivity extends BaseActivity {
 //        rv_trans.setAdapter(mAdapter);
 //        mAdapter.setData(mList2);
 
-        tv_balance.setText(Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, ""));
+        tv_balance.setText(Utilty.getPreference(Constants.SP_KEY_DID, ""));
     }
 
     @Override
