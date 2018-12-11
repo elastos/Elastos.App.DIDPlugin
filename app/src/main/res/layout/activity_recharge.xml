@@ -74,16 +74,6 @@
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/et_phrase"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingLeft="15dp"
-        android:background="@color/bgGray"
-        android:textSize="14sp"
-        android:textColorHint="@color/hintGray"
-        android:hint="@string/finance_recharge_phrase"/>
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="53dp"

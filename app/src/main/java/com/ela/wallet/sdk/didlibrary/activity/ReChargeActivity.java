@@ -25,7 +25,6 @@ public class ReChargeActivity extends BaseActivity {
     private ImageView iv_scan;
 
     private EditText et_amount;
-    private EditText et_phrase;
 
     @Override
     protected int getRootViewId() {
@@ -38,7 +37,6 @@ public class ReChargeActivity extends BaseActivity {
         iv_scan = findViewById(R.id.iv_scan);
 
         et_amount = findViewById(R.id.et_amount);
-        et_phrase = findViewById(R.id.et_phrase);
 
         iv_scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,13 +58,12 @@ public class ReChargeActivity extends BaseActivity {
     public void onOKClick(View view) {
         //todo:
         String fromAddress = et_scan_address.getText().toString();
-        String mnemonic = et_phrase.getText().toString();
         String amount = et_amount.getText().toString();
-        if (TextUtils.isEmpty(fromAddress) || TextUtils.isEmpty(mnemonic) || TextUtils.isEmpty(amount)) {
+        if (TextUtils.isEmpty(fromAddress) || TextUtils.isEmpty(amount)) {
             Toast.makeText(ReChargeActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
-        DidLibrary.Chongzhi(fromAddress, Long.parseLong(amount), mnemonic, new TransCallback() {
+        DidLibrary.Chongzhi(fromAddress, Long.parseLong(amount), null, new TransCallback() {
             @Override
             public void onSuccess(final String result) {
                 runOnUiThread(new Runnable() {
