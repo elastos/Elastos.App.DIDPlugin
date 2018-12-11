@@ -30,6 +30,7 @@ public class Urls {
     public static String ELA_TX = "/api/1/tx/";
     public static String ELA_ATX = "/api/1/getAllTxs";
     public static String ELA_SRT = "/api/1/sendRawTx";
+    public static String ELA_HISTORY = "/api/1/history/";//{address};
 
     static {
         if (Constants.isDebug) {
