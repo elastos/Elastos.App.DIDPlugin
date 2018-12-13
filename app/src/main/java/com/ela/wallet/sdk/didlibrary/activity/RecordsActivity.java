@@ -149,7 +149,11 @@ public class RecordsActivity extends BaseActivity {
                             mList4.clear();
                             for (AllTxsBean.ResultBean.HistoryBean historyBean : allTxsBean.getResult().getHistory()) {
                                 if ("spend".equals(historyBean.getType())) {
-                                    mList2.add(new RecordsModel(historyBean.getType(), historyBean.getCreateTime(), historyBean.getValue()));
+                                    if (historyBean.getOutputs().contains("0000000000000000000000000000000000")) {
+                                        mList4.add(new RecordsModel("withdraw", historyBean.getCreateTime(), historyBean.getValue()));
+                                    } else {
+                                        mList2.add(new RecordsModel(historyBean.getType(), historyBean.getCreateTime(), historyBean.getValue()));
+                                    }
                                 } else if ("income".equals(historyBean.getType())) {
                                     mList1.add(new RecordsModel(historyBean.getType(), historyBean.getCreateTime(), historyBean.getValue()));
                                 }

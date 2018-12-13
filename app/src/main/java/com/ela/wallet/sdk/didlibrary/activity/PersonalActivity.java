@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -21,6 +22,7 @@ import com.ela.wallet.sdk.didlibrary.global.Constants;
 import com.ela.wallet.sdk.didlibrary.global.Urls;
 import com.ela.wallet.sdk.didlibrary.http.HttpRequest;
 import com.ela.wallet.sdk.didlibrary.utils.Utilty;
+import com.ela.wallet.sdk.didlibrary.widget.DidAlertDialog;
 import com.ela.wallet.sdk.didlibrary.widget.PersonalRecyclerViewAdapter;
 import com.google.gson.Gson;
 
@@ -91,6 +93,10 @@ public class PersonalActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(new PersonalRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
+                if (!Utilty.isBacked()) {
+                    showBackupDialog();
+                    return;
+                }
                 Intent intent = new Intent();
                 switch (position) {
                     case 0:
@@ -141,7 +147,7 @@ public class PersonalActivity extends BaseActivity {
                     @Override
                     public void run() {
                         BalanceBean bean = new Gson().fromJson(response, BalanceBean.class);
-                        String text = String.format("%s: %s ELA", getString(R.string.home_balance), bean.getResult());
+                        String text = String.format("%s ELA", bean.getResult());
                         tv_balance.setText(text);
                     }
                 });
@@ -152,11 +158,27 @@ public class PersonalActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        String text = String.format("%s: %s ELA", getString(R.string.home_balance), "--");
+                        String text = String.format("%s ELA", "--");
                         tv_balance.setText(text);
                     }
                 });
             }
         });
+    }
+
+    private void showBackupDialog() {
+        new DidAlertDialog(this)
+                .setTitle(getString(R.string.send_backup))
+                .setMessage(getString(R.string.send_tips))
+                .setMessageGravity(Gravity.LEFT)
+                .setRightButton(getString(R.string.btn_backup), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setClass(PersonalActivity.this, BackupTipsActivity.class);
+                        PersonalActivity.this.startActivity(intent);
+                    }
+                })
+                .show();
     }
 }

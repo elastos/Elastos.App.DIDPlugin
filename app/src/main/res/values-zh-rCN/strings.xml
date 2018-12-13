@@ -13,7 +13,7 @@
     <string name="home_income">收入</string>
     <string name="home_didinfo">DID记录</string>
 
-    <string name="charge_copytips">(点击复制地址)</string>
+    <string name="charge_copytips">（点击二维码复制地址）</string>
     <string name="charge_reset">重置地址</string>
 
     <string name="send_recipient">收件人</string>
@@ -26,8 +26,12 @@
     <string name="send_click">点击发送</string>
 
     <string name="finance_recharge_addresss">充值来源</string>
+    <string name="finance_recharge_amount">充值金额(1ELA=100000000SELA)</string>
     <string name="finance_recharge_phrase">充值来源账户的助记词（恢复短语）</string>
     <string name="finance_withdraw_addresss">提现到</string>
+    <string name="finance_withdraw_amount">提现金额(1ELA=100000000SELA)</string>
+    <string name="finance_send_addresss">收款人</string>
+    <string name="finance_send_amount">转账金额(1ELA=100000000SELA)</string>
 
     <string name="me_recharge">充值</string>
     <string name="me_withdraw">提现</string>
@@ -69,11 +73,20 @@
     <string name="dialog_unable_import">导入失败</string>
     <string name="dialog_invalid_phrase">无效的助记词短语</string>
 
+    <string name="dialog_send_success">付款成功</string>
+    <string name="dialog_recharge_success">充值成功</string>
+    <string name="dialog_withdraw_success">提现成功</string>
+    <string name="dialog_finance_failed">操作失败，请核对参数</string>
+
 
     <string name="scan_noresult">未扫描到二维码，请重试</string>
     <string name="toast_pwd_notcorrect">密码长度不正确，请重试！</string>
     <string name="toast_pwd_same">两次输入的密码不一致</string>
+    <string name="toast_pwd_wrong">密码不正确</string>
     <string name="toast_import_success">钱包切换成功!</string>
+    <string name="toast_copy">收款地址复制成功!</string>
+
+
     <string name="btn_last">上一步</string>
     <string name="btn_next">下一步</string>
     <string name="btn_cancel">取消</string>

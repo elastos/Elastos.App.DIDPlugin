@@ -40,6 +40,11 @@ public class PersonalRecyclerViewAdapter extends RecyclerView.Adapter<PersonalRe
     public void onBindViewHolder(final PersonalRecyclerViewAdapter.SettingViewHolder holder, final int position) {
         holder.iv_img.setImageResource(mList.get(position).getImg());
         holder.tv_title.setText(mList.get(position).getTitle());
+        if (position + 1 == getItemCount()) {
+            holder.line.setVisibility(View.GONE);
+        } else {
+            holder.line.setVisibility(View.VISIBLE);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,6 +66,7 @@ public class PersonalRecyclerViewAdapter extends RecyclerView.Adapter<PersonalRe
         private TextView tv_title;
         private TextView tv_subtitle;
         private ImageView iv_next;
+        private View line;
 
         public SettingViewHolder(View itemView) {
             super(itemView);
@@ -68,6 +74,7 @@ public class PersonalRecyclerViewAdapter extends RecyclerView.Adapter<PersonalRe
             tv_title = itemView.findViewById(R.id.tv_personal_title);
             tv_subtitle = itemView.findViewById(R.id.tv_personal_subtitle);
             iv_next = itemView.findViewById(R.id.iv_personal_next);
+            line = itemView.findViewById(R.id.iv_personal_line);
         }
     }
 

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bgGray"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.ela.wallet.sdk.didlibrary.MainActivity">
 
     <include
         layout="@layout/nav_title"/>
@@ -12,67 +13,89 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="136dp"
-        android:background="@android:color/white" >
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/send_panel" >
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="18dp"
-            android:layout_marginLeft="20dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:lines="1"
             android:textColor="@color/textBlack"
             android:textSize="16sp"
-            android:text="@string/nav_pay"/>
+            android:text="@string/finance_send_amount"
+            android:drawableLeft="@drawable/panel_icon_recipient"/>
         <EditText
             android:id="@+id/et_amount"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:padding="15dp"
+            android:gravity="center_vertical"
             android:layout_below="@id/tv_title"
-            android:background="@color/bgGray"
+            android:background="@drawable/send_input"
             android:inputType="number"
-            android:textSize="14sp"
-            android:hint="SELA(1 ELA = 100000000 SELA)"/>
-
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="128dp"
-        android:background="@android:color/white"
-        android:orientation="vertical">
+            android:textSize="14sp"/>
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="52dp"
-            android:layout_marginLeft="15dp"
-            android:gravity="left|center_vertical"
-            android:textSize="16dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:padding="15dp"
+            android:gravity="center_vertical|right"
+            android:layout_below="@id/tv_title"
+            android:layout_alignParentRight="true"
+            android:text="SELA"
             android:textColor="@color/textBlack"
-            android:text="@string/send_recipient"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
-            <EditText
-                android:id="@+id/et_scan_address"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_weight="1"
-                android:background="@color/bgGray"
-                android:textSize="14sp"
-                android:textColorHint="@color/hintGray"
-                android:hint="@string/send_enter_address"/>
-            <ImageView
-                android:id="@+id/iv_scan"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/ic_scan"/>
-        </LinearLayout>
+            android:textSize="14sp"/>
+    </RelativeLayout>
 
-    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="136dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/send_panel" >
+        <TextView
+            android:id="@+id/tv_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:lines="1"
+            android:textColor="@color/textBlack"
+            android:textSize="16sp"
+            android:text="@string/finance_send_addresss"
+            android:drawableLeft="@drawable/panel_icon_recipient"/>
+        <EditText
+            android:id="@+id/et_scan_address"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:padding="15dp"
+            android:gravity="center_vertical"
+            android:layout_below="@id/tv_title2"
+            android:layout_toLeftOf="@id/iv_scan"
+            android:background="@drawable/send_input"
+            android:inputType="text"
+            android:textSize="14sp"
+            android:hint="@string/send_enter_address" />
+        <ImageView
+            android:id="@+id/iv_scan"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@id/et_scan_address"
+            android:layout_alignBottom="@id/et_scan_address"
+            android:layout_marginRight="15dp"
+            android:layout_below="@id/tv_title2"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_scan"/>
+    </RelativeLayout>
 
     <Button
         android:layout_width="match_parent"

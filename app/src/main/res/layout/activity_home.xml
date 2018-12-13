@@ -6,12 +6,6 @@
     android:background="@color/bgGray"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp">
-
-    </FrameLayout>
-
     <include layout="@layout/nav_title"/>
 
     <RelativeLayout

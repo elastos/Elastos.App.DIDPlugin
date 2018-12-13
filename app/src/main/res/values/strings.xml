@@ -26,8 +26,12 @@
     <string name="send_click">Click to send</string>
 
     <string name="finance_recharge_addresss">recharge from</string>
+    <string name="finance_recharge_amount">recharge amount(1ELA=100000000SELA)</string>
     <string name="finance_recharge_phrase">the phrase of recharge account</string>
     <string name="finance_withdraw_addresss">withdraw to</string>
+    <string name="finance_withdraw_amount">withdraw amount(1ELA=100000000SELA)</string>
+    <string name="finance_send_addresss">Recipient</string>
+    <string name="finance_send_amount">Recipient amount(1ELA=100000000SELA)</string>
 
     <string name="me_recharge">Recharge</string>
     <string name="me_withdraw">withdraw</string>
@@ -62,17 +66,26 @@
     <string name="set_pwd">Set payment password(at least 8 bits)</string>
     <string name="import_pwd">password</string>
     <string name="import_pwd_again">again</string>
-    <string name="btn_import">import</string>
+
     <string name="dialog_becareful">Be careful</string>
     <string name="dialog_switch_wallet">You are switching your wallet. Make sure the current wallet is backed up</string>
     <string name="dialog_unable_import">Unable to import</string>
     <string name="dialog_invalid_phrase">Invalid wallet recovery phrase</string>
+    <string name="dialog_send_success">Send Success!</string>
+    <string name="dialog_recharge_success">Recharge Success!</string>
+    <string name="dialog_withdraw_success">Withdraw Success!</string>
+    <string name="dialog_finance_failed">Failed!, Please check your params!</string>
 
 
     <string name="scan_noresult">There\'s no result, Please retry!</string>
     <string name="toast_pwd_notcorrect">The length of password is too short</string>
     <string name="toast_pwd_same">The passwords are inconsistent</string>
-    <string name="toast_import_success">Import Success!</string>
+    <string name="toast_pwd_wrong">The password is wrong</string>
+    <string name="toast_copy">Copy success!</string>
+
+
+
+    <string name="btn_import">import</string>
     <string name="btn_last">LAST</string>
     <string name="btn_next">NEXT</string>
     <string name="btn_cancel">cancel</string>

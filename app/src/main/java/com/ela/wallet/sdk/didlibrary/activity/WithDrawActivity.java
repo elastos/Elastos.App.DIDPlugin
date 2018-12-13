@@ -65,15 +65,54 @@ public class WithDrawActivity extends BaseActivity {
             Toast.makeText(WithDrawActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        final String password = Utilty.getPreference(Constants.SP_KEY_DID_PASSWORD, "");
+        if (!TextUtils.isEmpty(password)) {
+            final DidAlertDialog dialog = new DidAlertDialog(this);
+            dialog.setTitle(getString(R.string.send_enter_pwd))
+                    .setEditText(true)
+                    .setLeftButton(getString(R.string.btn_cancel), null)
+                    .setRightButton(getString(R.string.btn_ok), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String input = dialog.getEditTextView().getText().toString().trim();
+                            if (password.equals(input)) {
+                                doWithDraw();
+                            } else {
+                                Toast.makeText(WithDrawActivity.this, getString(R.string.toast_pwd_wrong), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    })
+                    .show();
+        } else {
+            doWithDraw();
+        }
+
+    }
+
+    private void doWithDraw() {
+        String toAddress = et_scan_address.getText().toString();
+        String amount = et_amount.getText().toString();
+        if (TextUtils.isEmpty(toAddress) || TextUtils.isEmpty(amount)) {
+            Toast.makeText(WithDrawActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
+            return;
+        }
         DidLibrary.Tixian(toAddress, Long.parseLong(amount), new TransCallback() {
             @Override
             public void onSuccess(final String result) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        String msg = "";
+                        if (result.contains("200")) {
+                            msg = getString(R.string.dialog_withdraw_success);
+                        } else {
+                            msg = getString(R.string.dialog_finance_failed);
+                        }
                         Toast.makeText(WithDrawActivity.this, result, Toast.LENGTH_SHORT).show();
                         new DidAlertDialog(WithDrawActivity.this)
-                                .setTitle("操作成功")
+                                .setTitle(msg)
+                                .setMessage(result)
                                 .setRightButton(getString(R.string.btn_ok), null)
                                 .show();
                     }

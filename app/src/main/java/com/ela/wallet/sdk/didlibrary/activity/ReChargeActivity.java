@@ -61,7 +61,38 @@ public class ReChargeActivity extends BaseActivity {
     }
 
     public void onOKClick(View view) {
-        //todo:
+        String fromAddress = et_scan_address.getText().toString();
+        String amount = et_amount.getText().toString();
+        if (TextUtils.isEmpty(fromAddress) || TextUtils.isEmpty(amount)) {
+            Toast.makeText(ReChargeActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        final String password = Utilty.getPreference(Constants.SP_KEY_DID_PASSWORD, "");
+        if (!TextUtils.isEmpty(password)) {
+            final DidAlertDialog dialog = new DidAlertDialog(this);
+            dialog.setTitle(getString(R.string.send_enter_pwd))
+                    .setEditText(true)
+                    .setLeftButton(getString(R.string.btn_cancel), null)
+                    .setRightButton(getString(R.string.btn_ok), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String input = dialog.getEditTextView().getText().toString().trim();
+                            if (password.equals(input)) {
+                                doRecharge();
+                            } else {
+                                Toast.makeText(ReChargeActivity.this, getString(R.string.toast_pwd_wrong), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    })
+                    .show();
+        } else {
+            doRecharge();
+        }
+
+    }
+
+    private void doRecharge() {
         String fromAddress = et_scan_address.getText().toString();
         String amount = et_amount.getText().toString();
         if (TextUtils.isEmpty(fromAddress) || TextUtils.isEmpty(amount)) {
@@ -74,9 +105,16 @@ public class ReChargeActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        String msg = "";
+                        if (result.contains("200")) {
+                            msg = getString(R.string.dialog_recharge_success);
+                        } else {
+                            msg = getString(R.string.dialog_finance_failed);
+                        }
                         Toast.makeText(ReChargeActivity.this, result, Toast.LENGTH_SHORT).show();
                         new DidAlertDialog(ReChargeActivity.this)
-                                .setTitle("充值成功")
+                                .setTitle(msg)
+                                .setMessage(result)
                                 .setRightButton(getString(R.string.btn_ok), null)
                                 .show();
                     }

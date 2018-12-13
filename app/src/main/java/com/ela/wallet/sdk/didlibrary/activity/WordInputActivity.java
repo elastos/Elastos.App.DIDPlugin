@@ -204,7 +204,7 @@ public class WordInputActivity extends BaseActivity {
                         Utilty.setPreference(Constants.SP_KEY_DID_MNEMONIC, "");
                         Toast.makeText(WordInputActivity.this, getString(R.string.word_backdup), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent();
-                        intent.setClass(WordInputActivity.this, DidLaunchActivity.class);
+                        intent.setClass(WordInputActivity.this, PersonalActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         WordInputActivity.this.startActivity(intent);
                     }
