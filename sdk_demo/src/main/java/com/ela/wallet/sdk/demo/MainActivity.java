@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         webView = findViewById(R.id.webview);
         webView.setWebViewClient(mWebviewClient);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("http://www.baidu.com");
+        webView.loadUrl("http://site.baidu.com");
         button = findViewById(R.id.button);
         button.setOnClickListener(this);
         btn_back = findViewById(R.id.btn_back);

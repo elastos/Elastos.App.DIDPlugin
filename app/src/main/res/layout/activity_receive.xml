@@ -52,17 +52,17 @@
         android:gravity="left|center_vertical">
         <ImageView
             android:id="@+id/iv_charge_did_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_marginLeft="20dp"
-            android:src="@drawable/ic_wallet"/>
+            android:src="@drawable/walletbalance_icon_wallet"/>
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@id/iv_charge_did_icon"
-            android:layout_alignTop="@id/iv_charge_did_icon"
             android:gravity="center_vertical">
             <TextView
                 android:layout_width="wrap_content"

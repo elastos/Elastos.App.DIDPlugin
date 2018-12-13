@@ -6,7 +6,7 @@ public class Urls {
     private static String SERVER_DID_RELEASE = "http://hw-did-api.elastos.org:8080";
     private static String SERVER_DID_HISTORY_DEBUG = "http://history-did-api-test-lb-249512150.ap-northeast-1.elb.amazonaws.com";
     private static String SERVER_DID_HISTORY_RELEASE = "";
-    private static String SERVER_WALLET_DEBUG = "http://18.179.207.38:8080";///**"https://hw-ela-api-test.elastos.org";**/http://18.179.207.38:8080";
+    private static String SERVER_WALLET_DEBUG = "https://hw-ela-api-test.elastos.org";///**"https://hw-ela-api-test.elastos.org";**/http://18.179.207.38:8080";
     private static String SERVER_WALLET_RELEASE = "";
     private static String SERVER_WALLET_HISTORY_DEBUG = "http://history-ela-api-test-lb-476898301.ap-northeast-1.elb.amazonaws.com";//"http://54.64.220.165:8080";
     private static String SERVER_WALLET_HISTORY_RELEASE = "";

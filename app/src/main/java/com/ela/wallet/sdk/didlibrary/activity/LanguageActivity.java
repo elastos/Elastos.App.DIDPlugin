@@ -32,6 +32,11 @@ public class LanguageActivity extends BaseActivity {
     }
 
     @Override
+    public String getTitleText() {
+        return getString(R.string.me_preference_language);
+    }
+
+    @Override
     protected void initView() {
         rv_language = findViewById(R.id.rv_language);
     }

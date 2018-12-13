@@ -38,6 +38,7 @@ public class PersonalRecyclerViewAdapter extends RecyclerView.Adapter<PersonalRe
 
     @Override
     public void onBindViewHolder(final PersonalRecyclerViewAdapter.SettingViewHolder holder, final int position) {
+        holder.iv_img.setImageResource(mList.get(position).getImg());
         holder.tv_title.setText(mList.get(position).getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

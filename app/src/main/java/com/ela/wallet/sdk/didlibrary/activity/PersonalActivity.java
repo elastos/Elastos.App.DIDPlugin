@@ -46,6 +46,11 @@ public class PersonalActivity extends BaseActivity {
     }
 
     @Override
+    public String getTitleText() {
+        return getString(R.string.me_finance);
+    }
+
+    @Override
     protected void initView() {
         rv_personal = findViewById(R.id.rv_personal);
         tv_balance = findViewById(R.id.tv_personal_did_balance);
@@ -74,10 +79,10 @@ public class PersonalActivity extends BaseActivity {
     @Override
     protected void initData() {
         mList = new ArrayList<>(8);
-        mList.add(new SettingModel(getString(R.string.nav_charges)));
-        mList.add(new SettingModel(getString(R.string.nav_pay)));
-        mList.add(new SettingModel(getString(R.string.me_recharge)));
-        mList.add(new SettingModel(getString(R.string.me_withdraw)));
+        mList.add(new SettingModel(R.drawable.list_icon_receive, getString(R.string.nav_charges)));
+        mList.add(new SettingModel(R.drawable.list_icon_send, getString(R.string.nav_pay)));
+        mList.add(new SettingModel(R.drawable.list_icon_recharge, getString(R.string.me_recharge)));
+        mList.add(new SettingModel(R.drawable.list_icon_withdraw, getString(R.string.me_withdraw)));
 //        mList.add(new SettingModel(getString(R.string.me_records)));
         mAdapter = new PersonalRecyclerViewAdapter(this, mList);
         LinearLayoutManager llm = new LinearLayoutManager(this);

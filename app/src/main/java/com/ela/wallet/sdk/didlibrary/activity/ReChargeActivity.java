@@ -32,6 +32,11 @@ public class ReChargeActivity extends BaseActivity {
     }
 
     @Override
+    public String getTitleText() {
+        return getString(R.string.me_recharge);
+    }
+
+    @Override
     protected void initView() {
         et_scan_address = findViewById(R.id.et_scan_address);
         iv_scan = findViewById(R.id.iv_scan);

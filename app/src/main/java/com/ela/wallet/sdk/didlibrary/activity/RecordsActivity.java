@@ -39,6 +39,11 @@ public class RecordsActivity extends BaseActivity {
     }
 
     @Override
+    public String getTitleText() {
+        return getString(R.string.me_records);
+    }
+
+    @Override
     protected void initView() {
         mTab = findViewById(R.id.tab_records);
         mRv = findViewById(R.id.rv_records);
@@ -124,6 +129,7 @@ public class RecordsActivity extends BaseActivity {
     }
 
     private void loadTxData() {
+//        String url = String.format("%s%s%s", Urls.SERVER_DID_HISTORY, Urls.DID_HISTORY, "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4");
         String url = String.format("%s%s%s", Urls.SERVER_DID_HISTORY, Urls.DID_HISTORY, Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, ""));
         HttpRequest.sendRequestWithHttpURLConnection(url, new HttpRequest.HttpCallbackListener() {
             @Override
@@ -143,11 +149,11 @@ public class RecordsActivity extends BaseActivity {
                             mList4.clear();
                             for (AllTxsBean.ResultBean.HistoryBean historyBean : allTxsBean.getResult().getHistory()) {
                                 if ("spend".equals(historyBean.getType())) {
-                                    mList2.add(new RecordsModel(getString(R.string.nav_pay), historyBean.getCreateTime(), historyBean.getValue()));
+                                    mList2.add(new RecordsModel(historyBean.getType(), historyBean.getCreateTime(), historyBean.getValue()));
                                 } else if ("income".equals(historyBean.getType())) {
-                                    mList1.add(new RecordsModel(getString(R.string.nav_charges), historyBean.getCreateTime(), historyBean.getValue()));
+                                    mList1.add(new RecordsModel(historyBean.getType(), historyBean.getCreateTime(), historyBean.getValue()));
                                 }
-                                mList.add(new RecordsModel(getString(R.string.nav_all), historyBean.getCreateTime(), historyBean.getValue()));
+                                mList.add(new RecordsModel(historyBean.getType(), historyBean.getCreateTime(), historyBean.getValue()));
                             }
                             mAdapter.setData(mList);
                         }

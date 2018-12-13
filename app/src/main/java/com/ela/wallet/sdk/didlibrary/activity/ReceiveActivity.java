@@ -74,10 +74,15 @@ public class ReceiveActivity extends BaseActivity {
         return R.layout.activity_receive;
     }
 
+    @Override
+    public String getTitleText() {
+        return getString(R.string.nav_charges);
+    }
+
     private void initQrView() {
         String address = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
         if (!TextUtils.isEmpty(address)) {
-            new QRCodeEncoder(ReceiveActivity.this).createQrCode2ImageView(address, iv_qr, R.drawable.icon_launcher);
+            new QRCodeEncoder(ReceiveActivity.this).createQrCode2ImageView(address, iv_qr);
             tv_copy.setText(address);
         }
     }

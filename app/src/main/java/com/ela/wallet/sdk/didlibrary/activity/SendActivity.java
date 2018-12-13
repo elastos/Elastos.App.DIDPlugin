@@ -58,6 +58,11 @@ public class SendActivity extends BaseActivity {
     }
 
     @Override
+    public String getTitleText() {
+        return getString(R.string.nav_pay);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         LogUtil.i("onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
@@ -74,7 +79,7 @@ public class SendActivity extends BaseActivity {
             Toast.makeText(SendActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
-        DidLibrary.Tixian(toAddress, Long.parseLong(amount), new TransCallback() {
+        DidLibrary.Zhuanzhang(toAddress, Long.parseLong(amount), new TransCallback() {
             @Override
             public void onSuccess(final String result) {
                 runOnUiThread(new Runnable() {

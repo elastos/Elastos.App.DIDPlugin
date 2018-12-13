@@ -31,6 +31,7 @@
             android:paddingLeft="15dp"
             android:layout_below="@id/tv_title"
             android:background="@color/bgGray"
+            android:inputType="number"
             android:textSize="14sp"
             android:hint="SELA(1 ELA = 100000000 SELA)"/>
 
