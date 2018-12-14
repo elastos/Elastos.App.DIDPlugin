@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+
+    defaultConfig {
+        applicationId "com.ela.wallet.sdk.demo"
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 100
+        versionName "1.0.0"
+
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.github.qingmei2:QrCodeScannerView-Android:1.1.2'
+    implementation 'com.google.zxing:core:3.3.0'
+    implementation(name: 'Elastos.ORG.Wallet.Lib-v0.1.5', ext: 'aar')
+    implementation(name: 'Elastos.ORG.Did.Lib-v0.1.5', ext: 'aar')
+    implementation(name: 'customdialog', ext: 'aar')
+
+    configurations.all {
+
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion '26.1.0'
+                }
+            }
+        }
+    }
+}

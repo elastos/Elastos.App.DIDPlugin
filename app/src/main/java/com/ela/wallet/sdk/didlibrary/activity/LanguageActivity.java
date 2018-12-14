@@ -1,5 +1,6 @@
 package com.ela.wallet.sdk.didlibrary.activity;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import com.ela.wallet.sdk.didlibrary.base.BaseActivity;
 import com.ela.wallet.sdk.didlibrary.bean.WordModel;
 import com.ela.wallet.sdk.didlibrary.global.Constants;
 import com.ela.wallet.sdk.didlibrary.utils.Utilty;
+import com.ela.wallet.sdk.didlibrary.widget.DidAlertDialog;
 import com.ela.wallet.sdk.didlibrary.widget.LanguageRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -29,6 +31,11 @@ public class LanguageActivity extends BaseActivity {
     @Override
     protected int getRootViewId() {
         return R.layout.activity_language;
+    }
+
+    @Override
+    public String getTitleText() {
+        return getString(R.string.me_preference_language);
     }
 
     @Override
@@ -82,4 +89,15 @@ public class LanguageActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void onLeftNavClick(View view) {
+        setResult(Activity.RESULT_OK);
+        super.onLeftNavClick(view);
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(Activity.RESULT_OK);
+        super.onBackPressed();
+    }
 }

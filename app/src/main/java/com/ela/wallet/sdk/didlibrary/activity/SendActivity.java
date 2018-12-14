@@ -58,6 +58,11 @@ public class SendActivity extends BaseActivity {
     }
 
     @Override
+    public String getTitleText() {
+        return getString(R.string.nav_pay);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         LogUtil.i("onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
@@ -74,15 +79,52 @@ public class SendActivity extends BaseActivity {
             Toast.makeText(SendActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
-        DidLibrary.Tixian(toAddress, Long.parseLong(amount), new TransCallback() {
+        final String password = Utilty.getPreference(Constants.SP_KEY_DID_PASSWORD, "");
+        if (!TextUtils.isEmpty(password)) {
+            final DidAlertDialog dialog = new DidAlertDialog(this);
+                dialog.setTitle(getString(R.string.send_enter_pwd))
+                    .setEditText(true)
+                    .setLeftButton(getString(R.string.btn_cancel), null)
+                    .setRightButton(getString(R.string.btn_ok), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String input = dialog.getEditTextView().getText().toString().trim();
+                            if (password.equals(input)) {
+                                doSend();
+                            } else {
+                                Toast.makeText(SendActivity.this, getString(R.string.toast_pwd_wrong), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    })
+                    .show();
+        } else {
+            doSend();
+        }
+    }
+
+    private void doSend() {
+        String toAddress = et_scan_address.getText().toString();
+        String amount = et_amount.getText().toString();
+        if (TextUtils.isEmpty(toAddress) || TextUtils.isEmpty(amount)) {
+            Toast.makeText(SendActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        DidLibrary.Zhuanzhang(toAddress, Long.parseLong(amount), new TransCallback() {
             @Override
             public void onSuccess(final String result) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        String msg = "";
+                        if (result.contains("200")) {
+                            msg = getString(R.string.dialog_send_success);
+                        } else {
+                            msg = getString(R.string.dialog_finance_failed);
+                        }
                         Toast.makeText(SendActivity.this, result, Toast.LENGTH_SHORT).show();
                         new DidAlertDialog(SendActivity.this)
-                                .setTitle("操作成功")
+                                .setTitle(msg)
+                                .setMessage(result)
                                 .setRightButton(getString(R.string.btn_ok), null)
                                 .show();
                     }

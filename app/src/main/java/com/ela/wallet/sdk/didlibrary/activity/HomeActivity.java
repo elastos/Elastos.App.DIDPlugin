@@ -1,5 +1,6 @@
 package com.ela.wallet.sdk.didlibrary.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -114,7 +115,7 @@ public class HomeActivity extends BaseActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(HomeActivity.this, LanguageActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, Constants.INTENT_REQUEST_CODE_LANGUAGE);
             }
         });
         rl_importwallet.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +144,7 @@ public class HomeActivity extends BaseActivity {
 //        rv_trans.setAdapter(mAdapter);
 //        mAdapter.setData(mList2);
 
-        tv_balance.setText(Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, ""));
+        tv_balance.setText(Utilty.getPreference(Constants.SP_KEY_DID, ""));
     }
 
     @Override
@@ -231,6 +232,16 @@ public class HomeActivity extends BaseActivity {
             }
         } else {
             tv_language_tips.setText(language.equals("english") ? "ENGLISH" : "中文（简体）");
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.INTENT_REQUEST_CODE_LANGUAGE &&
+                resultCode == Activity.RESULT_OK) {
+            finish();
+            startActivity(getIntent());
         }
     }
 }

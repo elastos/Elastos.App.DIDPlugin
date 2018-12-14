@@ -11,9 +11,9 @@
     <RelativeLayout
         android:id="@+id/rl_home_did"
         android:layout_width="match_parent"
-        android:layout_height="133dp"
+        android:layout_height="123dp"
         android:layout_margin="15dp"
-        android:background="@drawable/bg_roundcorner_white">
+        android:background="@drawable/did_panel">
         <TextView
             android:id="@+id/tv_home_did_title"
             android:layout_width="wrap_content"
@@ -27,16 +27,16 @@
             android:text="@string/library_name"/>
         <ImageView
             android:id="@+id/iv_home_did_icon"
-            android:layout_width="70dp"
+            android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="22dp"
             android:layout_marginLeft="20dp"
             android:layout_below="@id/tv_home_did_title"
-            android:src="@drawable/ic_did"/>
+            android:src="@drawable/did_icon"/>
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/iv_home_did_icon"
             android:layout_alignTop="@id/iv_home_did_icon"
@@ -56,8 +56,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textColor="@color/textBlack"
-                android:textSize="14sp"
-                android:lines="2"
+                android:textSize="12sp"
+                android:lines="1"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:text="@string/home_balance"
@@ -118,12 +118,12 @@
         android:background="@android:color/white">
         <ImageView
             android:id="@+id/iv_personal_setting_finance"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="27dp"
-            android:layout_marginLeft="20dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="14dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_wallet_white"/>
+            android:scaleType="fitXY"
+            android:src="@drawable/list_icon_finance"/>
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
@@ -175,12 +175,11 @@
         android:background="@android:color/white">
         <ImageView
             android:id="@+id/iv_personal_setting_record"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="27dp"
-            android:layout_marginLeft="20dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="14dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_wallet_white"/>
+            android:src="@drawable/list_icon_record"/>
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
@@ -223,8 +222,8 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/hintGray"/>
+        android:layout_height="10.5dp"
+        android:background="@color/bgGray"/>
     <RelativeLayout
         android:id="@+id/rl_personal_language"
         android:layout_width="match_parent"
@@ -232,43 +231,48 @@
         android:background="@android:color/white">
         <ImageView
             android:id="@+id/iv_personal_setting_language"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="27dp"
-            android:layout_marginLeft="20dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="14dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_language"/>
+            android:src="@drawable/list_icon_language"/>
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/iv_personal_setting_language"
             android:layout_centerVertical="true">
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="22dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
                 android:textColor="@color/textBlack"
                 android:textSize="16dp"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:text="@string/me_preference_language"/>
-            <TextView
-                android:id="@+id/tv_personal_settings_language_tips"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginTop="7dp"
-                android:gravity="center_vertical"
-                android:textColor="@color/hintGray"
-                android:textSize="14sp"
-                android:singleLine="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:hint="@string/me_preference_language_select_english"
-                tools:text="@string/me_preference_language_select_english"/>
         </LinearLayout>
+        <TextView
+            android:id="@+id/tv_personal_settings_language_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@id/iv_next"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:textColor="@color/hintGray"
+            android:textSize="14sp"
+            android:singleLine="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="@string/me_preference_language_select_english"
+            tools:text="@string/me_preference_language_select_english"/>
         <ImageView
+            android:id="@+id/iv_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
@@ -278,8 +282,8 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/hintGray"/>
+        android:layout_height="10.5dp"
+        android:background="@color/bgGray"/>
     <RelativeLayout
         android:id="@+id/rl_personal_wallet"
         android:layout_width="match_parent"
@@ -287,12 +291,11 @@
         android:background="@android:color/white">
         <ImageView
             android:id="@+id/iv_personal_setting_wallet"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="27dp"
-            android:layout_marginLeft="20dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="14dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_wallet_white"/>
+            android:src="@drawable/list_icon_switchaccount"/>
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"

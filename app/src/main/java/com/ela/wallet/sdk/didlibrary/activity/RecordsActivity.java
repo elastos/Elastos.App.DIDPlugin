@@ -33,17 +33,14 @@ public class RecordsActivity extends BaseActivity {
     private List<RecordsModel> mList3;
     private List<RecordsModel> mList4;
 
-    private String[] tabs = {
-            getString(R.string.nav_all),
-            getString(R.string.nav_charges),
-            getString(R.string.nav_pay),
-            getString(R.string.me_recharge),
-            getString(R.string.me_withdraw)
-    };
-
     @Override
     protected int getRootViewId() {
         return R.layout.activity_records;
+    }
+
+    @Override
+    public String getTitleText() {
+        return getString(R.string.me_records);
     }
 
     @Override
@@ -54,6 +51,13 @@ public class RecordsActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        String[] tabs = {
+                getString(R.string.nav_all),
+                getString(R.string.nav_charges),
+                getString(R.string.nav_pay),
+                getString(R.string.me_recharge),
+                getString(R.string.me_withdraw)
+        };
         mList = new ArrayList<>();
         mList1 = new ArrayList<>();
         mList2 = new ArrayList<>();
@@ -125,6 +129,7 @@ public class RecordsActivity extends BaseActivity {
     }
 
     private void loadTxData() {
+//        String url = String.format("%s%s%s", Urls.SERVER_DID_HISTORY, Urls.DID_HISTORY, "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4");
         String url = String.format("%s%s%s", Urls.SERVER_DID_HISTORY, Urls.DID_HISTORY, Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, ""));
         HttpRequest.sendRequestWithHttpURLConnection(url, new HttpRequest.HttpCallbackListener() {
             @Override
@@ -144,11 +149,15 @@ public class RecordsActivity extends BaseActivity {
                             mList4.clear();
                             for (AllTxsBean.ResultBean.HistoryBean historyBean : allTxsBean.getResult().getHistory()) {
                                 if ("spend".equals(historyBean.getType())) {
-                                    mList2.add(new RecordsModel(tabs[2], historyBean.getCreateTime(), historyBean.getValue()));
+                                    if (historyBean.getOutputs().contains("0000000000000000000000000000000000")) {
+                                        mList4.add(new RecordsModel("withdraw", historyBean.getCreateTime(), historyBean.getValue()));
+                                    } else {
+                                        mList2.add(new RecordsModel(historyBean.getType(), historyBean.getCreateTime(), historyBean.getValue()));
+                                    }
                                 } else if ("income".equals(historyBean.getType())) {
-                                    mList1.add(new RecordsModel(tabs[1], historyBean.getCreateTime(), historyBean.getValue()));
+                                    mList1.add(new RecordsModel(historyBean.getType(), historyBean.getCreateTime(), historyBean.getValue()));
                                 }
-                                mList.add(new RecordsModel(tabs[0], historyBean.getCreateTime(), historyBean.getValue()));
+                                mList.add(new RecordsModel(historyBean.getType(), historyBean.getCreateTime(), historyBean.getValue()));
                             }
                             mAdapter.setData(mList);
                         }

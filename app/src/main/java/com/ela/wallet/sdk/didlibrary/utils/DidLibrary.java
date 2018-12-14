@@ -1,38 +1,23 @@
 package com.ela.wallet.sdk.didlibrary.utils;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.TextureView;
-import android.widget.Toast;
 
-import com.ela.wallet.sdk.didlibrary.activity.DidLaunchActivity;
-import com.ela.wallet.sdk.didlibrary.activity.HomeActivity;
 import com.ela.wallet.sdk.didlibrary.bean.CctBean;
 import com.ela.wallet.sdk.didlibrary.bean.HttpBean;
 import com.ela.wallet.sdk.didlibrary.callback.TransCallback;
 import com.ela.wallet.sdk.didlibrary.global.Constants;
 import com.ela.wallet.sdk.didlibrary.global.Urls;
 import com.ela.wallet.sdk.didlibrary.http.HttpRequest;
-import com.ela.wallet.sdk.didlibrary.service.DidService;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.elastos.wallet.lib.ElastosWallet;
 import org.elastos.wallet.lib.ElastosWalletDID;
 import org.elastos.wallet.lib.ElastosWalletHD;
 import org.elastos.wallet.lib.ElastosWalletSign;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Locale;
-
-import javax.security.auth.callback.Callback;
 
 public class DidLibrary {
 
@@ -246,13 +231,18 @@ public class DidLibrary {
         //充值来源ELA链地址
         String fromAddress = address;
         String toAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
-        String param = String.format("  {\"inputs\":[\"%s\"],\"outputs\":[{\"addr\":\"%s\",\"amt\":%d}]}", fromAddress, toAddress, amount);
+
+        //for test
+//        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
+//        toAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
+//        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";
+        String param = String.format("{\"inputs\":[\"%s\"],\"outputs\":[{\"addr\":\"%s\",\"amt\":%d}]}", fromAddress, toAddress, amount);
         LogUtil.d("chongzhi param=" + param);
         HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_WALLET + Urls.ELA_CCT, param, new HttpRequest.HttpCallbackListener() {
             @Override
             public void onFinish(final String response) {
                 LogUtil.d("chongzhi response=" + response);
-                String signed = parseChongzhiData(response, mnemonic);
+                String signed = parseChongzhiData(response);
                 LogUtil.d("chongzhi signed data=" + signed);
                 if (TextUtils.isEmpty(signed)) {
                     return;
@@ -297,6 +287,12 @@ public class DidLibrary {
      */
     public static void Tixian(String toAddress, long amount, final TransCallback callback) {
         String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
+
+//        //for test
+//        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
+//        toAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
+//        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";
+
         String param = String.format("{\"inputs\":[\"%s\"],\"outputs\":[{\"addr\":\"%s\",\"amt\":%d}]}", fromAddress, toAddress, amount);
 
         HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_DID + Urls.DID_CCT, param, new HttpRequest.HttpCallbackListener() {
@@ -346,6 +342,11 @@ public class DidLibrary {
      */
     public static void Zhuanzhang(String toAddress, long amount, final TransCallback callback) {
         String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
+
+//        //for test
+//        toAddress = fromAddress;
+//        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
+//        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";
 
         String param = String.format("{\"inputs\":[\"%s\"],\"outputs\":[{\"addr\":\"%s\", \"amt\":%d}]}", fromAddress, toAddress, amount);
         HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_DID + Urls.DID_CTX, param, new HttpRequest.HttpCallbackListener() {
@@ -473,13 +474,13 @@ public class DidLibrary {
         return signedData;
     }
 
-    private static String parseChongzhiData(String data, String mnemonic) {
+    private static String parseChongzhiData(String data) {
         String returnData = "";
         CctBean cctBean = new Gson().fromJson(data, CctBean.class);
         if (cctBean.getStatus() != 200) return null;
-        String privateKey = getPrivateKeyFromMnemonic(mnemonic);
-        if (TextUtils.isEmpty(privateKey)) return null;
-        cctBean.getResult().getTransactions().get(0).getUTXOInputs().get(0).setPrivateKey(privateKey);
+//        String privateKey = getPrivateKeyFromMnemonic(mnemonic);
+//        if (TextUtils.isEmpty(privateKey)) return null;
+        cctBean.getResult().getTransactions().get(0).getUTXOInputs().get(0).setPrivateKey(mPrivateKey);
 //        cctBean.getResult().getTransactions().get(0).getUTXOInputs().get(0).setPrivateKey("840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7");
         String trans = new Gson().toJson(cctBean.getResult());
         LogUtil.d("chongzhi:trans data=" + trans);
@@ -504,7 +505,7 @@ public class DidLibrary {
         if (cctBean.getStatus() != 200) return null;
         cctBean.getResult().getTransactions().get(0).getUTXOInputs().get(0).setPrivateKey(mPrivateKey);
         String trans = new Gson().toJson(cctBean.getResult());
-        LogUtil.d("chongzhi:trans data=" + trans);
+        LogUtil.d("zhuanzhang:trans data=" + trans);
         returnData = ElastosWalletSign.generateRawTransaction(trans);
         return returnData;
     }

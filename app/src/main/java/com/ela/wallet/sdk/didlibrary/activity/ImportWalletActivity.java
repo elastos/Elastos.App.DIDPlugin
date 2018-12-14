@@ -27,6 +27,11 @@ public class ImportWalletActivity extends BaseActivity {
     }
 
     @Override
+    public String getTitleText() {
+        return getString(R.string.me_preference_wallet);
+    }
+
+    @Override
     protected void initView() {
         et_import_word = findViewById(R.id.et_import_word);
         et_pwd = findViewById(R.id.et_pwd);
@@ -86,10 +91,10 @@ public class ImportWalletActivity extends BaseActivity {
                 .show();
     }
 
-    @Override
-    public String getTitleText() {
-        return getString(R.string.import_wallet);
-    }
+//    @Override
+//    public String getTitleText() {
+//        return getString(R.string.import_wallet);
+//    }
 
     private void showErrorDialog() {
         if (mErrorDialog == null) {

@@ -40,12 +40,21 @@ public class ReceiveActivity extends BaseActivity {
         tv_reset = findViewById(R.id.tv_charge_reset_address);
         tv_balance = findViewById(R.id.tv_charge_did_balance);
 
+        iv_qr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                cm.setPrimaryClip(ClipData.newPlainText("did", Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "")));
+                Toast.makeText(ReceiveActivity.this, getString(R.string.toast_copy), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         tv_copy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 cm.setPrimaryClip(ClipData.newPlainText("did", Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "")));
-                Toast.makeText(ReceiveActivity.this, "copy success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReceiveActivity.this, getString(R.string.toast_copy), Toast.LENGTH_SHORT).show();
             }
         });
         tv_reset.setOnClickListener(new View.OnClickListener() {
@@ -74,10 +83,15 @@ public class ReceiveActivity extends BaseActivity {
         return R.layout.activity_receive;
     }
 
+    @Override
+    public String getTitleText() {
+        return getString(R.string.nav_charges);
+    }
+
     private void initQrView() {
         String address = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
         if (!TextUtils.isEmpty(address)) {
-            new QRCodeEncoder(ReceiveActivity.this).createQrCode2ImageView(address, iv_qr, R.drawable.icon_launcher);
+            new QRCodeEncoder(ReceiveActivity.this).createQrCode2ImageView(address, iv_qr);
             tv_copy.setText(address);
         }
     }
@@ -91,7 +105,7 @@ public class ReceiveActivity extends BaseActivity {
                     @Override
                     public void run() {
                         BalanceBean bean = new Gson().fromJson(response, BalanceBean.class);
-                        String text = String.format("%s: %s ELA", getString(R.string.home_balance), bean.getResult());
+                        String text = String.format("%s ELA", bean.getResult());
                         tv_balance.setText(text);
                     }
                 });
@@ -102,7 +116,7 @@ public class ReceiveActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        String text = String.format("%s: %s ELA", getString(R.string.home_balance), "--");
+                        String text = String.format("%s ELA", "--");
                         tv_balance.setText(text);
                     }
                 });

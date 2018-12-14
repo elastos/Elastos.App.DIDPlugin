@@ -29,7 +29,6 @@ public class DidEntry {
      */
     public static void init(Context context) {
         LogUtil.i("DidEntry:init");
-        Utilty.setServiceContext(context);
         try {
             Intent intent = new Intent();
             intent.setClass(context, DidService.class);
@@ -45,7 +44,6 @@ public class DidEntry {
      */
     public static void launch(Context context) {
         LogUtil.i("DidEntry:launch");
-        Utilty.setContext(context);
         Intent intent = new Intent();
         if (context instanceof Application) {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

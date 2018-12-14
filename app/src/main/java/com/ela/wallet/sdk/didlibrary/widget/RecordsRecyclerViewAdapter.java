@@ -50,7 +50,7 @@ public class RecordsRecyclerViewAdapter extends RecyclerView.Adapter<RecordsRecy
     public void onBindViewHolder(final RecordsRecyclerViewAdapter.RecordsViewHolder holder, final int position) {
         holder.tv_title.setText(mList.get(position).getType());
         holder.tv_subtitle.setText(stampToDate(mList.get(position).getTime()));
-        holder.tv_next.setText(mList.get(position).getType().equals("income") ? "+ " : "- " +
+        holder.tv_next.setText((mList.get(position).getType().equals("income") ? "+ " : "- ") +
                 Float.parseFloat(mList.get(position).getValue())/100000000.0f + " ELA");
     }
 
@@ -60,7 +60,7 @@ public class RecordsRecyclerViewAdapter extends RecyclerView.Adapter<RecordsRecy
     private String stampToDate(String s){
         String res;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        long lt = new Long(s);
+        long lt = new Long(s)*1000;
         Date date = new Date(lt);
         res = simpleDateFormat.format(date);
         return res;

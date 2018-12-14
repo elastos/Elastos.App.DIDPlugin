@@ -13,6 +13,11 @@ public class SettingModel {
         this.title = title;
     }
 
+    public SettingModel(int img, String title) {
+        this.img = img;
+        this.title = title;
+    }
+
     public SettingModel(int img, String title, String subtitle) {
         this.img = img;
         this.title = title;
