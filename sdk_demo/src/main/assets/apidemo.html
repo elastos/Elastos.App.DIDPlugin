@@ -3,8 +3,8 @@
     <head>
         <meta charset="UTF-8">
     </head>
-    <body>
-    <script>
+<body>
+<script>
         function post(url){
             xhr=new XMLHttpRequest();
             xhr.open("post",url,true);
@@ -47,10 +47,42 @@
             iptBox.value = "waiting for result......";
         }
 
-        function get(url) {
+        function post1(url, type){
             xhr=new XMLHttpRequest();
-		    xhr.open("get",url,true);
+            xhr.open("post",url,true);
             xhr.setRequestHeader("Content-Type", "application/json");
+            var data;
+            var param;
+
+            //api ref: https://walletbrowserandroid.readthedocs.io/en/latest/api_guide.html#set-did-information
+            if (type == 1) {
+                var amount = document.getElementById("send1_amount").value;
+                param = {
+                  "type":type,
+                  "amount": amount,
+                  "memo": "xxx",
+                  "info": "sss"
+                };
+            }else if (type == 2) {
+                var amount = document.getElementById("send2_amount").value;
+                var address = document.getElementById("send2_address").value;
+                param = {
+                  "type":type,
+                  "amount": amount,
+                  "toAddress": "EeDUy6TmGSFfVxXVzMpVkxLhqwCqujE1WL",
+                  "memo": "xxx",
+                  "info": "sss"
+                };
+            }else {
+                var amount = document.getElementById("send3_amount").value;
+                param = {
+                  "type":type,
+                  "amount": amount,
+                  "memo": "xxx",
+                  "info": "sss"
+                };
+            }
+			data=JSON.stringify(param);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4) {
                     if(xhr.getResponseHeader('content-type')==='application/json'){
@@ -59,10 +91,153 @@
                     } else{
                         console.log(xhr.responseText);
                     }
+                    //for example:
+                    iptBox = document.getElementById('ipt_box')
+                    iptBox.value = xhr.responseText;
+                }
+            }
+            xhr.send(data);
+            //for example: ui tips:
+            iptBox = document.getElementById('ipt_box');
+            iptBox.value = "waiting for result......";
+        }
+
+
+        function get(url) {
+            xhr=new XMLHttpRequest();
+		    xhr.open("get",url,true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if(xhr.getResponseHeader('content-type')==='application/json'){
+                        var result = JSON.parse(xhr.responseText);
+                        document.getElementById("id_getDid").innerHTML="获取DID: "+result.result;
+
+                        //todo:do something
+                    } else{
+                        console.log(xhr.responseText);
+                    }
 
                     //for example:
                     iptBox = document.getElementById('ipt_box')
                     iptBox.value = xhr.responseText;
+
+                }
+            }
+            xhr.send(null);
+
+            //for example: ui tips:
+            iptBox = document.getElementById('ipt_box');
+            iptBox.value = "waiting for result......";
+        }
+
+        function get1(url, type) {
+            xhr=new XMLHttpRequest();
+		    xhr.open("get",url,true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if(xhr.getResponseHeader('content-type')==='application/json'){
+                        var result = JSON.parse(xhr.responseText);
+                        if (type == 0) {
+                            document.getElementById("id_getAddress").innerHTML="获取DID的Candy地址: "+result.result;
+                        } else {
+                            document.getElementById("id_getAddress1").innerHTML="获取DID的ELA地址: "+result.result;
+                        }
+
+                        //todo:do something
+                    } else{
+                        console.log(xhr.responseText);
+                    }
+
+                    //for example:
+                    iptBox = document.getElementById('ipt_box')
+                    iptBox.value = xhr.responseText;
+
+                }
+            }
+            xhr.send(null);
+
+            //for example: ui tips:
+            iptBox = document.getElementById('ipt_box');
+            iptBox.value = "waiting for result......";
+        }
+
+        function get2(url) {
+            xhr=new XMLHttpRequest();
+		    xhr.open("get",url,true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if(xhr.getResponseHeader('content-type')==='application/json'){
+                        var result = JSON.parse(xhr.responseText);
+                        document.getElementById("id_getBalance").innerHTML="查询余额: "+result.result;
+
+                        //todo:do something
+                    } else{
+                        console.log(xhr.responseText);
+                    }
+
+                    //for example:
+                    iptBox = document.getElementById('ipt_box')
+                    iptBox.value = xhr.responseText;
+
+                }
+            }
+            xhr.send(null);
+
+            //for example: ui tips:
+            iptBox = document.getElementById('ipt_box');
+            iptBox.value = "waiting for result......";
+        }
+
+
+        function get3(url) {
+            var txId = document.getElementById('id_getTx').value;
+            xhr=new XMLHttpRequest();
+		    xhr.open("get",url + txId,true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if(xhr.getResponseHeader('content-type')==='application/json'){
+                        var result = JSON.parse(xhr.responseText);
+
+                        //todo:do something
+                    } else{
+                        console.log(xhr.responseText);
+                    }
+
+                    //for example:
+                    iptBox = document.getElementById('ipt_box')
+                    iptBox.value = xhr.responseText;
+
+                }
+            }
+            xhr.send(null);
+
+            //for example: ui tips:
+            iptBox = document.getElementById('ipt_box');
+            iptBox.value = "waiting for result......";
+        }
+
+        function get4(url) {
+            xhr=new XMLHttpRequest();
+		    xhr.open("get",url,true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if(xhr.getResponseHeader('content-type')==='application/json'){
+                        var result = JSON.parse(xhr.responseText);
+
+                        //todo:do something
+                    } else{
+                        console.log(xhr.responseText);
+                    }
+
+                    //for example:
+                    iptBox = document.getElementById('ipt_box')
+                    iptBox.value = xhr.responseText;
+
                 }
             }
             xhr.send(null);
@@ -72,15 +247,23 @@
             iptBox.value = "waiting for result......";
         }
         </script>
-        <p onclick="get('http://127.0.0.1:34561/api/v1/getDid')"><u>生成DID</u></p>
-        <p onclick="get('http://127.0.0.1:34561/api/v1/getAddress')"><u>获取DID的Candy地址</u></p>
-        <p onclick="get('http://127.0.0.1:34561/api/v1/getBalance')"><u>查询余额</u></p>
-        <p onclick="get('http://127.0.0.1:34561/api/v1/getTxById?txId=cd21b8729ca6173862034fb5515d395c25e5c7779330aa3634d7128435ddd4f4')"><u>查询指定交易记录</u></p>
-        <p onclick="get('http://127.0.0.1:34561/api/v1/getAllTxs?pageNum=0&pageSize=3')"><u>查询交易历史</u></p>
-        <p onclick="get('http://127.0.0.1:34561/api/v1/getDidInfo')"><u>查询DID</u></p>
-        <p onclick="post('http://127.0.0.1:34561/api/v1/sendTransfer')"><u>发送交易[post]</u></p>
-        <p onclick="post('http://127.0.0.1:34561/api/v1/setDidInfo')"><u>设置DID[post]</u></p>
+        <p id="id_getDid" onclick="get('http://127.0.0.1:34561/api/v1/getDid')"><u>获取DID</u></p>
+        <p id="id_getAddress" onclick="get1('http://127.0.0.1:34561/api/v1/getAddress', 0)"><u>获取DID的Candy地址</u></p>
+        <p id="id_getAddress1" onclick="get1('http://127.0.0.1:34561/api/v1/getAddress', 1)"><u>获取DID的ELA地址</u></p>
+        <p id="id_getBalance" onclick="get2('http://127.0.0.1:34561/api/v1/getBalance')"><u>查询DID积分余额</u></p>
+        <textarea id="send1_amount" style="width: 100%; height: 20px;" placeholder="积分充值数量：充值前请先向DID的ELA地址冲入测试币"></textarea>
+        <p onclick="post1('http://127.0.0.1:34561/api/v1/sendTransfer', 1)"><u>DID积分充值[post]</u></p>
+        <textarea id="send2_address" style="width: 50%; height: 20px;" placeholder="请输入积分转账地址："></textarea>
+        <textarea id="send2_amount" style="width: 40%; height: 20px;" placeholder="请输入积分转账数量："></textarea>
+        <p onclick="post1('http://127.0.0.1:34561/api/v1/sendTransfer', 2)"><u>DID积分转账[post]</u></p>
+        <textarea id="send3_amount" style="width: 100%; height: 20px;" placeholder="请输入积分提现数量："></textarea>
+        <p onclick="post1('http://127.0.0.1:34561/api/v1/sendTransfer', 3)"><u>DID积分提现[post]</u></p>
+        <textarea id="id_getTx" style="width: 100%; height: 20px;" placeholder="请输入交易id(txId:转账充值提现返回的result字段)："></textarea>
+        <p onclick="get3('http://127.0.0.1:34561/api/v1/getTxById?txId=')"><u>查询指定交易记录</u></p>
+        <p onclick="get4('http://127.0.0.1:34561/api/v1/getAllTxs')"><u>查询该DID所有交易历史</u></p>
+        <textarea id="ipt_box" style="margin-top: 20px; width: 100%; height: 80px;" placeholder="http response:"></textarea>
+        <p onclick="get4('http://127.0.0.1:34561/api/v1/getDidInfo')"><u>查询DID属性</u></p>
+        <p onclick="post('http://127.0.0.1:34561/api/v1/setDidInfo')"><u>设置DID属性[post]</u></p>
 
-        <textarea id="ipt_box" style="margin-top: 20px; width: 100%; height: 100px;"></textarea>
     </body>
 </head>

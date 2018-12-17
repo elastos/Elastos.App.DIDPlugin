@@ -242,6 +242,11 @@ public class DidLibrary {
             @Override
             public void onFinish(final String response) {
                 LogUtil.d("chongzhi response=" + response);
+                HttpBean ctxBean = new Gson().fromJson(response, HttpBean.class);
+                if (ctxBean.getStatus() != 200 && callback != null) {
+                    callback.onFailed(response);
+                    return;
+                }
                 String signed = parseChongzhiData(response);
                 LogUtil.d("chongzhi signed data=" + signed);
                 if (TextUtils.isEmpty(signed)) {
@@ -299,6 +304,11 @@ public class DidLibrary {
             @Override
             public void onFinish(final String response) {
                 LogUtil.d("tixian response=" + response);
+                HttpBean ctxBean = new Gson().fromJson(response, HttpBean.class);
+                if (ctxBean.getStatus() != 200 && callback != null) {
+                    callback.onFailed(response);
+                    return;
+                }
                 String signed = parseTixianData(response);
                 if (TextUtils.isEmpty(signed)) {
                     return;

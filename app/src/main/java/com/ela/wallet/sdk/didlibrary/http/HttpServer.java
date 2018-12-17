@@ -74,7 +74,20 @@ public class HttpServer extends NanoHTTPD {
                 String uri = session.getUri();
                 LogUtil.d("uri=" + uri);
                 if (uri.startsWith("/api/v1/sendTransfer")) {
-                    String transferData = dealWithZhuanzhang(param);
+                    String transferData = "";
+                    try {
+                        JSONObject js = new JSONObject(param);
+                        int type = js.optInt("type");
+                        if (type == 1) {
+                            transferData = dealWithChongzhi(param);
+                        } else if (type == 2) {
+                            transferData = dealWithZhuanzhang(param);
+                        } else {
+                            transferData = dealWithTiXian(param);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     return getReturnData(transferData);
                 } else if (uri.startsWith("/api/v1/setDidInfo")) {
                     String didinfo = dealWithSetDid(param);
@@ -233,13 +246,70 @@ public class HttpServer extends NanoHTTPD {
         return allTxs;
     }
 
+    private String chongzhiData = String.format("{\"status\":\"500\",\"result\":\"internal error\"}");
+    private String dealWithChongzhi(String param) {
+        final CountDownLatch countDownLatch = new CountDownLatch(1);
+        try {
+            JSONObject js = new JSONObject(param);
+            long amount = js.optLong("amount");
+            String memo = js.optString("memo");
+            String info = js.optString("info");
+            if (amount >= 0) {
+                String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
+                DidLibrary.Chongzhi(fromAddress, amount, null, new TransCallback() {
+                    @Override
+                    public void onSuccess(String result) {
+                        chongzhiData = result;
+                        countDownLatch.countDown();
+                    }
 
-    private String dealWithChongzhi() {
-        return "";
+                    @Override
+                    public void onFailed(String result) {
+                        chongzhiData = result;
+                        countDownLatch.countDown();
+                    }
+                });
+                countDownLatch.await(30, TimeUnit.SECONDS);
+            } else {
+                chongzhiData = String.format("{\"status\":\"10001\",\"result\":\"param error\"}");
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return chongzhiData;
     }
 
-    private String dealWithTiXian() {
-        return "";
+    private String tixianData = String.format("{\"status\":\"500\",\"result\":\"internal error\"}");
+    private String dealWithTiXian(String param) {
+        final CountDownLatch countDownLatch = new CountDownLatch(1);
+        try {
+            JSONObject js = new JSONObject(param);
+            long amount = js.optLong("amount");
+            String memo = js.optString("memo");
+            String info = js.optString("info");
+            if (amount >= 0) {
+                String toAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
+                DidLibrary.Tixian(toAddress, amount, new TransCallback() {
+                    @Override
+                    public void onSuccess(String result) {
+                        tixianData = result;
+                        countDownLatch.countDown();
+                    }
+
+                    @Override
+                    public void onFailed(String result) {
+                        tixianData = result;
+                        countDownLatch.countDown();
+                    }
+                });
+                countDownLatch.await(30, TimeUnit.SECONDS);
+            } else {
+                tixianData = String.format("{\"status\":\"10001\",\"result\":\"param error\"}");
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tixianData;
     }
 
     private String zhuanzhangData = String.format("{\"status\":\"500\",\"result\":\"internal error\"}");
