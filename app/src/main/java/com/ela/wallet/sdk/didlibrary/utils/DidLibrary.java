@@ -232,7 +232,7 @@ public class DidLibrary {
         String fromAddress = address;
         String toAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
 
-        //for test
+//        //for test
 //        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
 //        toAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
 //        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";

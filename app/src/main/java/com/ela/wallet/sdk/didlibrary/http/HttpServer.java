@@ -128,6 +128,9 @@ public class HttpServer extends NanoHTTPD {
             } else if (uri.contains("/api/v1/getBalance")) {
                 String balance = dealWithBalance();
                 return getReturnData(balance);
+            } else if (uri.contains("/api/v1/getElaBalance")) {
+                String ela = dealWithElaBalance();
+                return getReturnData(ela);
             } else if (uri.startsWith("/api/v1/getTxById")) {
                 String trans = dealWithGetTx(params);
                 return getReturnData(trans);
@@ -178,6 +181,33 @@ public class HttpServer extends NanoHTTPD {
         LogUtil.d("balanceResult=" + balanceResult);
         return balanceResult;
     }
+
+    private String elaBalanceResult;
+    private String dealWithElaBalance() {
+        final CountDownLatch countDownLatch = new CountDownLatch(1);
+        String url = String.format("%s%s%s", Urls.SERVER_WALLET, Urls.ELA_BALANCE, Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, ""));
+        HttpRequest.sendRequestWithHttpURLConnection(url, new HttpRequest.HttpCallbackListener() {
+            @Override
+            public void onFinish(String response) {
+                elaBalanceResult = response;
+                countDownLatch.countDown();
+            }
+
+            @Override
+            public void onError(Exception e) {
+                elaBalanceResult = String.format("{\"status\":\"500\",\"result\":\"internal error\"}");
+                countDownLatch.countDown();
+            }
+        });
+        try {
+            countDownLatch.await(30, TimeUnit.SECONDS);
+        }catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        LogUtil.d("elaBalanceResult=" + elaBalanceResult);
+        return elaBalanceResult;
+    }
+
 
     /**
      * GET http://127.0.0.1:port/api/v1/getTxById?txId=(string:`txid`)
