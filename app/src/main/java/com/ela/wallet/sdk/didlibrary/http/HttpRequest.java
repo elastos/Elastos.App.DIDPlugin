@@ -36,8 +36,8 @@ public class HttpRequest {
 					URL strUrl = new URL(url);
 					connection = (HttpURLConnection) strUrl.openConnection();
 					connection.setRequestMethod("GET");
-					connection.setConnectTimeout(60000);
-					connection.setReadTimeout(60000);
+					connection.setConnectTimeout(15000);
+					connection.setReadTimeout(15000);
 					connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
 					connection.setRequestProperty("accept","application/json");
 
@@ -95,8 +95,8 @@ public class HttpRequest {
 				try {
 					URL strUrl = new URL(url);
 					connection = (HttpURLConnection) strUrl.openConnection();
-					connection.setConnectTimeout(1000);
-					connection.setReadTimeout(1000);
+					connection.setConnectTimeout(15000);
+					connection.setReadTimeout(15000);
 					connection.setRequestMethod("POST");
 					connection.setDoInput(true);
 					connection.setDoOutput(true);
