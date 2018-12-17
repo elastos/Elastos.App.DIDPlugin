@@ -1,6 +1,6 @@
 1、引入aar: 在module的libs目录下加入如下文件
 Elastos.ORG.Did.Lib-vx.x.x.aar
-Elastos.ORG.Wallet.Lib-v0.1.2.aar
+Elastos.ORG.Wallet.Lib-v0.1.5.aar
 customdialog.aar
 
 2、在module的build.gradle文件中添加依赖(其中x.x.x改为实际值)
