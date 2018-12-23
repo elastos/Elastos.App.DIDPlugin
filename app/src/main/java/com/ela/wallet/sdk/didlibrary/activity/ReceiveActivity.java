@@ -31,6 +31,7 @@ public class ReceiveActivity extends BaseActivity {
     private ImageView iv_qr;
     private TextView tv_copy;
     private TextView tv_reset;
+    private TextView tv_title;
     private TextView tv_balance;
 
     @Override
@@ -38,6 +39,7 @@ public class ReceiveActivity extends BaseActivity {
         iv_qr = findViewById(R.id.iv_charge_qr);
         tv_copy = findViewById(R.id.tv_charge_copyaddress);
         tv_reset = findViewById(R.id.tv_charge_reset_address);
+        tv_title = findViewById(R.id.tv_charge_did);
         tv_balance = findViewById(R.id.tv_charge_did_balance);
 
         iv_qr.setOnClickListener(new View.OnClickListener() {
@@ -60,11 +62,11 @@ public class ReceiveActivity extends BaseActivity {
         tv_reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String newAddress = DidLibrary.resetAddress();
-                if (!TextUtils.isEmpty(newAddress)) {
-                    initQrView();
-                    loadBalanceData();
-                }
+//                String newAddress = DidLibrary.resetAddress();
+//                if (!TextUtils.isEmpty(newAddress)) {
+//                    initQrView();
+//                    loadBalanceData();
+//                }
             }
         });
     }
@@ -72,9 +74,19 @@ public class ReceiveActivity extends BaseActivity {
     @Override
     protected void initData() {
         initQrView();
-        loadBalanceData();
         if (!Utilty.isBacked()) {
             showBackupDialog();
+        }
+
+        String from = getIntent().getStringExtra(Constants.INTENT_PARAM_KEY_QRCODE_FROM);
+        if (!TextUtils.isEmpty(from) && from.equals("did")) {
+            setTitleText(getString(R.string.did_qr));
+            loadDidBalanceData();
+        }
+
+        if (!TextUtils.isEmpty(from) && from.equals("ela")) {
+            setTitleText(getString(R.string.ela_qr));
+            loadElaBalanceData();
         }
     }
 
@@ -96,8 +108,38 @@ public class ReceiveActivity extends BaseActivity {
         }
     }
 
-    private void loadBalanceData() {
+    private void loadDidBalanceData() {
+        tv_title.setText(getString(R.string.did_balance));
         String url = String.format("%s%s%s", Urls.SERVER_DID, Urls.DID_BALANCE, Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, ""));
+        HttpRequest.sendRequestWithHttpURLConnection(url, new HttpRequest.HttpCallbackListener() {
+            @Override
+            public void onFinish(final String response) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        BalanceBean bean = new Gson().fromJson(response, BalanceBean.class);
+                        String text = String.format("%s ELA", bean.getResult());
+                        tv_balance.setText(text);
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Exception e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String text = String.format("%s ELA", "--");
+                        tv_balance.setText(text);
+                    }
+                });
+            }
+        });
+    }
+
+    private void loadElaBalanceData() {
+        tv_title.setText(getString(R.string.ela_balance));
+        String url = String.format("%s%s%s", Urls.SERVER_WALLET, Urls.ELA_BALANCE, Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, ""));
         HttpRequest.sendRequestWithHttpURLConnection(url, new HttpRequest.HttpCallbackListener() {
             @Override
             public void onFinish(final String response) {

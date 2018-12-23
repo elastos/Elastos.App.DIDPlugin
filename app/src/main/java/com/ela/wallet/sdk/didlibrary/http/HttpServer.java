@@ -2,18 +2,23 @@ package com.ela.wallet.sdk.didlibrary.http;
 
 import android.text.TextUtils;
 
+import com.ela.wallet.sdk.didlibrary.bean.DidInfoBean;
+import com.ela.wallet.sdk.didlibrary.bean.SetDidBean;
 import com.ela.wallet.sdk.didlibrary.callback.TransCallback;
 import com.ela.wallet.sdk.didlibrary.global.Constants;
 import com.ela.wallet.sdk.didlibrary.global.Urls;
 import com.ela.wallet.sdk.didlibrary.utils.DidLibrary;
 import com.ela.wallet.sdk.didlibrary.utils.LogUtil;
 import com.ela.wallet.sdk.didlibrary.utils.Utilty;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -286,7 +291,7 @@ public class HttpServer extends NanoHTTPD {
             String info = js.optString("info");
             if (amount >= 0) {
                 String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
-                DidLibrary.Chongzhi(fromAddress, amount, null, new TransCallback() {
+                DidLibrary.Ela2Did(fromAddress, amount, new TransCallback() {
                     @Override
                     public void onSuccess(String result) {
                         chongzhiData = result;
@@ -380,7 +385,21 @@ public class HttpServer extends NanoHTTPD {
     }
 
     private String didInfo;
-    private String dealWithSetDid(String memo) {
+    private String dealWithSetDid(String param) {
+        DidInfoBean infoBean = new Gson().fromJson(param, DidInfoBean.class);
+        SetDidBean setDidBean = new SetDidBean();
+        setDidBean.setTag("DID Property");
+        setDidBean.setVer("1.0");
+        setDidBean.setStatus(1);
+        SetDidBean.PropertiesBean propertiesBean = new SetDidBean.PropertiesBean();
+        propertiesBean.setStatus(1);
+        propertiesBean.setKey(infoBean.getKey());
+        propertiesBean.setValue(infoBean.getValue());
+        List<SetDidBean.PropertiesBean> mList = new ArrayList<>();
+        mList.add(propertiesBean);
+        setDidBean.setProperties(mList);
+        String memo = new Gson().toJson(setDidBean);
+        LogUtil.d("memo=" + memo);
         final CountDownLatch countDownLatch = new CountDownLatch(1);
         try {
             if (!TextUtils.isEmpty(memo)) {
@@ -407,8 +426,29 @@ public class HttpServer extends NanoHTTPD {
         return didInfo;
     }
 
+    private String getDidInfo="";
     private String dealWithGetDid() {
-        String didInfo = Utilty.getPreference(Constants.SP_KEY_DID_INFO, "");
-        return String.format("{\"status\":\"200\",\"result\":\"%s\"}", didInfo);
+        final CountDownLatch countDownLatch = new CountDownLatch(1);
+        String url = String.format("%s%s", Urls.DID_GETDID, Utilty.getPreference(Constants.SP_KEY_DID, ""));
+        HttpRequest.sendRequestWithHttpURLConnection(url, new HttpRequest.HttpCallbackListener() {
+            @Override
+            public void onFinish(String response) {
+                getDidInfo = response;
+                countDownLatch.countDown();
+            }
+
+            @Override
+            public void onError(Exception e) {
+                getDidInfo = "{\"status\":\"500\",\"result\":\"internal error\"}";
+                countDownLatch.countDown();
+            }
+        });
+        try {
+            countDownLatch.await(30, TimeUnit.SECONDS);
+        }catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        LogUtil.d("getDidInfo=" + getDidInfo);
+        return getDidInfo;
     }
 }

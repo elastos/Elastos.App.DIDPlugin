@@ -17,7 +17,10 @@ import org.elastos.wallet.lib.ElastosWalletDID;
 import org.elastos.wallet.lib.ElastosWalletHD;
 import org.elastos.wallet.lib.ElastosWalletSign;
 
+import java.security.PublicKey;
 import java.util.Locale;
+
+import javax.security.auth.callback.Callback;
 
 public class DidLibrary {
 
@@ -43,9 +46,6 @@ public class DidLibrary {
         } else {
             loadLibrary();
             mPrivateKey = Utilty.getPreference(Constants.SP_KEY_DID_PRIVATEKEY, "");
-        }
-        if (TextUtils.isEmpty(Utilty.getPreference(Constants.SP_KEY_DID, ""))) {
-            Did();
         }
         return "init success";
     }
@@ -130,6 +130,16 @@ public class DidLibrary {
         message += "address: " + address + "\n";
         Utilty.setPreference(Constants.SP_KEY_DID_ADDRESS, address);
 
+        String did = ElastosWalletDID.getDid(publicKey);
+        if (did == null) {
+            String errmsg = "Failed to get did.\n";
+            LogUtil.e(errmsg);
+            message += errmsg;
+            return message;
+        }
+        message += "did: " + did + "\n";
+        Utilty.setPreference(Constants.SP_KEY_DID, did);
+
         ElastosWallet.Data data = new ElastosWallet.Data();
         data.buf = new byte[]{0, 1, 2, 3, 4, 5};
         ElastosWallet.Data signedData = new ElastosWallet.Data();
@@ -191,6 +201,12 @@ public class DidLibrary {
     }
 
     private static String Did() {
+        String did = ElastosWalletDID.getDid(Utilty.getPreference(Constants.SP_KEY_DID_PUBLICKEY, ""));
+        Utilty.setPreference(Constants.SP_KEY_DID, did);
+        return did;
+    }
+
+    private static String Did2() {
         String message = "";
 
         ElastosWallet.Data idChainMasterPublicKey = ElastosWalletDID.getIdChainMasterPublicKey(mSeed, mSeedLen);
@@ -220,44 +236,112 @@ public class DidLibrary {
         return message;
     }
 
-    public static void Chongzhi(String address, long amount, String mnemonic) {
-        Chongzhi(address, amount, mnemonic,null);
+    /**
+     * ELA->ELA
+     * @param address
+     * @param amount
+     */
+    public static void Ela2Ela(String address, long amount) {
+        Ela2Ela(address, amount, null);
+    }
+    
+    public static void Ela2Ela(String address, long amount, final TransCallback callback) {
+        amount = amount * 100000000;
+        String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
+
+//        //for test
+//        toAddress = fromAddress;
+//        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
+//        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";
+
+        String param = String.format("{\"inputs\":[\"%s\"],\"outputs\":[{\"addr\":\"%s\", \"amt\":%d}]}", fromAddress, address, amount);
+        HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_WALLET + Urls.ELA_CTX, param, new HttpRequest.HttpCallbackListener() {
+            @Override
+            public void onFinish(final String response) {
+                LogUtil.d("Ela2Ela response:" + response);
+                HttpBean ctxBean = new Gson().fromJson(response, HttpBean.class);
+                if (ctxBean.getStatus() != 200 && callback != null) {
+                    callback.onFailed(response);
+                    return;
+                }
+                String signed = parseEla2ElaData(response);
+                if (TextUtils.isEmpty(signed)) {
+                    if (callback != null) {
+                        callback.onFailed(response);
+                    }
+                    return;
+                }
+                LogUtil.d("Ela2Ela signed data=" + signed);
+                String signedparam = String.format("{\"data\":\"%s\"}", signed);
+                LogUtil.d("Ela2Ela signed param data=" + signedparam);
+                HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_WALLET + Urls.ELA_SRT, signedparam, new HttpRequest.HttpCallbackListener() {
+                    @Override
+                    public void onFinish(final String response) {
+                        LogUtil.d("Ela2Ela result:" + response);
+                        if (callback != null) {
+                            callback.onSuccess(response);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        if (callback != null) {
+                            callback.onFailed(e.getMessage());
+                        }
+                    }
+                });
+
+            }
+
+            @Override
+            public void onError(Exception e) {
+                if (callback != null) {
+                    callback.onFailed(e.getMessage());
+                }
+            }
+        });
+
     }
 
     /**
      * 充值 ELA-DID
      */
-    public static void Chongzhi(String address, long amount, final String mnemonic, final TransCallback callback) {
+    public static void Ela2Did(String address, long amount) {
+        Ela2Did(address, amount, null);
+    }
+
+    public static void Ela2Did(String address, long amount, final TransCallback callback) {
+        amount = amount * 100000000;
         //充值来源ELA链地址
         String fromAddress = address;
         String toAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
 
 //        //for test
 //        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
-//        toAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
+////        toAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
 //        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";
         String param = String.format("{\"inputs\":[\"%s\"],\"outputs\":[{\"addr\":\"%s\",\"amt\":%d}]}", fromAddress, toAddress, amount);
-        LogUtil.d("chongzhi param=" + param);
+        LogUtil.d("ela2Did param=" + param);
         HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_WALLET + Urls.ELA_CCT, param, new HttpRequest.HttpCallbackListener() {
             @Override
             public void onFinish(final String response) {
-                LogUtil.d("chongzhi response=" + response);
+                LogUtil.d("ela2Did response=" + response);
                 HttpBean ctxBean = new Gson().fromJson(response, HttpBean.class);
                 if (ctxBean.getStatus() != 200 && callback != null) {
                     callback.onFailed(response);
                     return;
                 }
                 String signed = parseChongzhiData(response);
-                LogUtil.d("chongzhi signed data=" + signed);
+                LogUtil.d("ela2Did signed data=" + signed);
                 if (TextUtils.isEmpty(signed)) {
                     return;
                 }
                 String signdparam = String.format("{\"data\":\"%s\"}", signed);
-                LogUtil.d("chongzhi srt data=" + signdparam);
+                LogUtil.d("ela2Did srt data=" + signdparam);
                 HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_WALLET + Urls.ELA_SRT, signdparam, new HttpRequest.HttpCallbackListener() {
                     @Override
                     public void onFinish(final String response) {
-                        LogUtil.d("chongzhi srt result:" + response);
+                        LogUtil.d("ela2Did srt result:" + response);
                         if (callback != null) {
                             callback.onSuccess(response);
                         }
@@ -291,6 +375,7 @@ public class DidLibrary {
      * 提现 DID-ELA
      */
     public static void Tixian(String toAddress, long amount, final TransCallback callback) {
+        amount = amount * 100000000;
         String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
 
 //        //for test
@@ -351,12 +436,13 @@ public class DidLibrary {
      * 转账 DID-DID
      */
     public static void Zhuanzhang(String toAddress, long amount, final TransCallback callback) {
+        amount = amount * 100000000;
         String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
 
-//        //for test
-//        toAddress = fromAddress;
-//        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
-//        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";
+        //for test
+        toAddress = fromAddress;
+        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
+        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";
 
         String param = String.format("{\"inputs\":[\"%s\"],\"outputs\":[{\"addr\":\"%s\", \"amt\":%d}]}", fromAddress, toAddress, amount);
         HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_DID + Urls.DID_CTX, param, new HttpRequest.HttpCallbackListener() {
@@ -447,7 +533,7 @@ public class DidLibrary {
     }
 
 
-    private static String getSignedData(String origin) {
+    private static String getSignedData(String origin, String pubKey) {
         ElastosWallet.Data data = new ElastosWallet.Data();
         data.buf = origin.getBytes();
         ElastosWallet.Data signedData = new ElastosWallet.Data();
@@ -456,7 +542,11 @@ public class DidLibrary {
             String errmsg = "Failed to sign data.\n";
             LogUtil.e(errmsg);
         }
-        return new String(signedData.buf);
+
+        boolean verified = ElastosWallet.verify(pubKey, data, data.buf.length, signedData, signedLen);
+        LogUtil.i("verified=" + verified);
+
+        return Utilty.bytesToHexString2(signedData.buf);
     }
 
     private static String testSignTxData() {
@@ -484,6 +574,17 @@ public class DidLibrary {
         return signedData;
     }
 
+    private static String parseEla2ElaData(String data) {
+        String returnData = "";
+        CctBean cctBean = new Gson().fromJson(data, CctBean.class);
+        if (cctBean.getStatus() != 200) return null;
+        cctBean.getResult().getTransactions().get(0).getUTXOInputs().get(0).setPrivateKey(mPrivateKey);
+        String trans = new Gson().toJson(cctBean.getResult());
+        LogUtil.d("Ela2Ela:trans data=" + trans);
+        returnData = ElastosWalletSign.generateRawTransaction(trans);
+        return returnData;
+    }
+
     private static String parseChongzhiData(String data) {
         String returnData = "";
         CctBean cctBean = new Gson().fromJson(data, CctBean.class);
@@ -493,7 +594,7 @@ public class DidLibrary {
         cctBean.getResult().getTransactions().get(0).getUTXOInputs().get(0).setPrivateKey(mPrivateKey);
 //        cctBean.getResult().getTransactions().get(0).getUTXOInputs().get(0).setPrivateKey("840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7");
         String trans = new Gson().toJson(cctBean.getResult());
-        LogUtil.d("chongzhi:trans data=" + trans);
+        LogUtil.d("ela2Did:trans data=" + trans);
         returnData = ElastosWalletSign.generateRawTransaction(trans);
         return returnData;
     }
@@ -504,7 +605,7 @@ public class DidLibrary {
         if (cctBean.getStatus() != 200) return null;
         cctBean.getResult().getTransactions().get(0).getUTXOInputs().get(0).setPrivateKey(mPrivateKey);
         String trans = new Gson().toJson(cctBean.getResult());
-        LogUtil.d("chongzhi:trans data=" + trans);
+        LogUtil.d("ela2Did:trans data=" + trans);
         returnData = ElastosWalletSign.generateRawTransaction(trans);
         return returnData;
     }
@@ -526,7 +627,7 @@ public class DidLibrary {
         if (cctBean.getStatus() != 200) return null;
         cctBean.getResult().getTransactions().get(0).getUTXOInputs().get(0).setPrivateKey(mPrivateKey);
         String trans = new Gson().toJson(cctBean.getResult());
-        LogUtil.d("chongzhi:trans data=" + trans);
+        LogUtil.d("ela2Did:trans data=" + trans);
         returnData = ElastosWalletSign.generateRawTransaction(trans);
         return returnData;
     }
@@ -672,6 +773,10 @@ public class DidLibrary {
     public static void setDidInfo(final String memo, final TransCallback callback) {
         String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
 
+////        //        //for test
+//        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
+//        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";
+
         String param = String.format("{\"inputs\":[\"%s\"],\"outputs\":[{\"addr\":\"%s\", \"amt\":%d}]}", fromAddress, fromAddress, 0);
         HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_DID + Urls.DID_CTX, param, new HttpRequest.HttpCallbackListener() {
             @Override
@@ -719,23 +824,34 @@ public class DidLibrary {
             }
         });
 
-
-
     }
 
-    private static String parseDidData(String data, String memo) {
+    private static String parseDidData(String httpData, String memo) {
         String returnData = "";
-        CctBean cctBean = new Gson().fromJson(data, CctBean.class);
+        CctBean cctBean = new Gson().fromJson(httpData, CctBean.class);
         if (cctBean.getStatus() != 200) return null;
         cctBean.getResult().getTransactions().get(0).getUTXOInputs().get(0).setPrivateKey(mPrivateKey);
 
-        String hexMemo = Utilty.str2HexStr(memo);
+        String privateKey = mPrivateKey;
         String publicKey = Utilty.getPreference(Constants.SP_KEY_DID_PUBLICKEY, "");
-        String signedMemo = getSignedData(memo);
+        LogUtil.w("did=" + ElastosWalletDID.getDid(publicKey));
+
+        ElastosWallet.Data data = new ElastosWallet.Data();
+        data.buf = memo.getBytes();
+        ElastosWallet.Data signedData = new ElastosWallet.Data();
+        int signedLen = ElastosWallet.sign(privateKey, data, data.buf.length, signedData);
+        if (signedLen <= 0) {
+            String errmsg = "Failed to sign data.\n";
+            LogUtil.e(errmsg);
+        }
+
+        boolean verified = ElastosWallet.verify(publicKey, data, data.buf.length, signedData, signedLen);
+        LogUtil.i("verified=" + verified);
+
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("msg", hexMemo);
+        jsonObject.addProperty("msg", Utilty.bytesToHexString2(data.buf));
         jsonObject.addProperty("pub", publicKey);
-        jsonObject.addProperty("sig", signedMemo);
+        jsonObject.addProperty("sig", Utilty.bytesToHexString2(signedData.buf));
 
         cctBean.getResult().getTransactions().get(0).setMemo(jsonObject.toString());
 
@@ -743,10 +859,6 @@ public class DidLibrary {
         LogUtil.d("setdid:trans data=" + trans);
         returnData = ElastosWalletSign.generateRawTransaction(trans);
         return returnData;
-    }
-
-    public static void getDidInfo() {
-
     }
 
 }

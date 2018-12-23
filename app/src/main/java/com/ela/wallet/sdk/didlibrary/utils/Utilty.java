@@ -136,6 +136,15 @@ public class Utilty {
     }
 
 
+    public static String bytesToHexString2(byte[] bytes) {
+        StringBuilder buf = new StringBuilder(bytes.length * 2);
+        for(byte b : bytes) {
+            buf.append(String.format("%02x", new Integer(b & 0xFF)));
+        }
+
+        return buf.toString();
+    }
+
     /**
      * 十六进制字符串转换成字符串
      * @param hexStr

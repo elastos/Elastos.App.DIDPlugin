@@ -48,7 +48,7 @@
             android:gravity="center_vertical|right"
             android:layout_below="@id/tv_title"
             android:layout_alignParentRight="true"
-            android:text="SELA"
+            android:text="ELA"
             android:textColor="@color/textBlack"
             android:textSize="14sp"/>
     </RelativeLayout>

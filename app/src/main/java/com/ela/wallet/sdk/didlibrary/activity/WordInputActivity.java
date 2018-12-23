@@ -64,7 +64,9 @@ public class WordInputActivity extends BaseActivity {
                 String s1 = sb.toString();
                 String s2 = mnemonicWord.trim().replaceAll(" ", "");
                 if (s1.equals(s2)) {
-                    showSuccessDialog();
+                    Intent intent = new Intent();
+                    intent.setClass(WordInputActivity.this, PwdInputActivity.class);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(WordInputActivity.this, getString(R.string.word_wrong), Toast.LENGTH_SHORT).show();
                 }
@@ -143,7 +145,9 @@ public class WordInputActivity extends BaseActivity {
         }
         Utilty.getPreference(Constants.SP_KEY_DID_MNEMONIC, "");
         if (sb.toString().equals(mnemonicWord.trim())) {
-            showSuccessDialog();
+            Intent intent = new Intent();
+            intent.setClass(WordInputActivity.this, PwdInputActivity.class);
+            startActivity(intent);
         } else {
             Toast.makeText(this, getString(R.string.word_wrong), Toast.LENGTH_SHORT).show();
         }

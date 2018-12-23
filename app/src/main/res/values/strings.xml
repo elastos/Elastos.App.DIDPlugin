@@ -1,10 +1,14 @@
 <resources>
     <string name="library_name">DidInfo</string>
     <string name="nav_home">home</string>
-    <string name="nav_charges">receive</string>
-    <string name="nav_pay">send</string>
+    <string name="nav_charges">Transfer between Ela</string>
+    <string name="nav_pay">Transfer between Did Integral</string>
     <string name="nav_mine">me</string>
     <string name="nav_all">All</string>
+    <string name="nav_record1">DID->DID</string>
+    <string name="nav_record2">DID->ELA</string>
+    <string name="nav_record3">ELA->ELA</string>
+    <string name="nav_record4">ELA->DID</string>
 
     <string name="home_wallet">wallet</string>
     <string name="home_wallet_name">My DID Address</string>
@@ -12,6 +16,10 @@
     <string name="home_expense">expense</string>
     <string name="home_income">income</string>
     <string name="home_didinfo">did info</string>
+    <string name="did_balance">Did Balance</string>
+    <string name="ela_balance">Ela Balance</string>
+    <string name="did_qr">Did QrCode</string>
+    <string name="ela_qr">Ela QrCode</string>
 
     <string name="charge_copytips">(Click to copy address)</string>
     <string name="charge_reset">Reset address</string>
@@ -26,17 +34,18 @@
     <string name="send_click">Click to send</string>
 
     <string name="finance_recharge_addresss">recharge from</string>
-    <string name="finance_recharge_amount">recharge amount(1ELA=100000000SELA)</string>
+    <string name="finance_recharge_amount">recharge amount</string>
     <string name="finance_recharge_phrase">the phrase of recharge account</string>
     <string name="finance_withdraw_addresss">withdraw to</string>
-    <string name="finance_withdraw_amount">withdraw amount(1ELA=100000000SELA)</string>
+    <string name="finance_withdraw_amount">withdraw amount</string>
     <string name="finance_send_addresss">Recipient</string>
-    <string name="finance_send_amount">Recipient amount(1ELA=100000000SELA)</string>
+    <string name="finance_send_amount">Recipient amount</string>
 
-    <string name="me_recharge">Recharge</string>
-    <string name="me_withdraw">withdraw</string>
+    <string name="me_recharge">Exchange Ela for Integral</string>
+    <string name="me_withdraw">Exchange Integral for Ela</string>
     <string name="me_records">Records</string>
-    <string name="me_finance">Finance</string>
+    <string name="me_finance">Transaction</string>
+    <string name="me_information">Personal Information</string>
     <string name="me_history">Recharge and withdraw record</string>
     <string name="me_preference">preference</string>
     <string name="me_preference_language">Language</string>
@@ -59,6 +68,7 @@
     <string name="word_backdup">Your wallet has been backed up</string>
     <string name="word_tips">Please store your phrases in a safe place. If the program is deleted, no phrase will be able to recover the wallet.</string>
     <string name="word_newpwd">Please enter a new payment password</string>
+    <string name="input_pwd">Input Password</string>
     <string name="word_pwdtips">Payment password can not be resumed. Be sure to remember it well.(at least 8 bits)</string>
 
     <string name="import_wallet">Import the wallet</string>
@@ -82,7 +92,6 @@
     <string name="toast_pwd_same">The passwords are inconsistent</string>
     <string name="toast_pwd_wrong">The password is wrong</string>
     <string name="toast_copy">Copy success!</string>
-
 
 
     <string name="btn_import">import</string>

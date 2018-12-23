@@ -2,6 +2,7 @@ package com.ela.wallet.sdk.didlibrary.widget;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,9 +50,25 @@ public class RecordsRecyclerViewAdapter extends RecyclerView.Adapter<RecordsRecy
     @Override
     public void onBindViewHolder(final RecordsRecyclerViewAdapter.RecordsViewHolder holder, final int position) {
         holder.tv_title.setText(mList.get(position).getType());
-        holder.tv_subtitle.setText(stampToDate(mList.get(position).getTime()));
-        holder.tv_next.setText((mList.get(position).getType().equals("income") ? "+ " : "- ") +
-                Float.parseFloat(mList.get(position).getValue())/100000000.0f + " ELA");
+        if (TextUtils.isEmpty(mList.get(position).getTime())) {
+            holder.tv_subtitle.setVisibility(View.GONE);
+            holder.tv_next.setText(mList.get(position).getValue());
+        } else {
+            holder.tv_subtitle.setVisibility(View.VISIBLE);
+            holder.tv_subtitle.setText(stampToDate(mList.get(position).getTime()));
+
+            String value = mList.get(position).getValue();
+            String preFix = value.substring(0,1);
+            String realValue = value.substring(1);
+
+            String text = String.format("%s%.8f%s", preFix, Long.parseLong(realValue)/100000000.0f , " ELA");
+            holder.tv_next.setText(text);
+        }
+        if (position + 1 == getItemCount()) {
+            holder.line.setVisibility(View.GONE);
+        } else {
+            holder.line.setVisibility(View.VISIBLE);
+        }
     }
 
     /*
@@ -77,6 +94,7 @@ public class RecordsRecyclerViewAdapter extends RecyclerView.Adapter<RecordsRecy
         private TextView tv_title;
         private TextView tv_subtitle;
         private TextView tv_next;
+        private View line;
 
         public RecordsViewHolder(View itemView) {
             super(itemView);
@@ -84,6 +102,7 @@ public class RecordsRecyclerViewAdapter extends RecyclerView.Adapter<RecordsRecy
             tv_title = itemView.findViewById(R.id.tv_records_title);
             tv_subtitle = itemView.findViewById(R.id.tv_records_subtitle);
             tv_next = itemView.findViewById(R.id.tv_records_next);
+            line = itemView.findViewById(R.id.line);
         }
     }
 

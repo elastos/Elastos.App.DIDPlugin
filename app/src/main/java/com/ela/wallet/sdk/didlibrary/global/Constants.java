@@ -19,4 +19,5 @@ public class Constants {
     public static final int INTENT_REQUEST_CODE_LANGUAGE = 1002;
 
     public static final String INTENT_PARAM_KEY_SCANRESUTL = "scan_result";
+    public static final String INTENT_PARAM_KEY_QRCODE_FROM = "qrcode_from";
 }

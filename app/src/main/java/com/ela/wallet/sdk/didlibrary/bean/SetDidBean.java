@@ -1,0 +1,90 @@
+package com.ela.wallet.sdk.didlibrary.bean;
+
+import java.util.List;
+
+/**
+ * Created by Administrator on 2018/12/23.
+ */
+
+public class SetDidBean {
+
+    /**
+     * Tag : DID Property
+     * Ver : 1.0
+     * Status : 1
+     * Properties : [{"Key":"key20181224","Value":"value20181224","Status":1}]
+     */
+
+    private String Tag;
+    private String Ver;
+    private int Status;
+    private List<PropertiesBean> Properties;
+
+    public String getTag() {
+        return Tag;
+    }
+
+    public void setTag(String Tag) {
+        this.Tag = Tag;
+    }
+
+    public String getVer() {
+        return Ver;
+    }
+
+    public void setVer(String Ver) {
+        this.Ver = Ver;
+    }
+
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int Status) {
+        this.Status = Status;
+    }
+
+    public List<PropertiesBean> getProperties() {
+        return Properties;
+    }
+
+    public void setProperties(List<PropertiesBean> Properties) {
+        this.Properties = Properties;
+    }
+
+    public static class PropertiesBean {
+        /**
+         * Key : key20181224
+         * Value : value20181224
+         * Status : 1
+         */
+
+        private String Key;
+        private String Value;
+        private int Status;
+
+        public String getKey() {
+            return Key;
+        }
+
+        public void setKey(String Key) {
+            this.Key = Key;
+        }
+
+        public String getValue() {
+            return Value;
+        }
+
+        public void setValue(String Value) {
+            this.Value = Value;
+        }
+
+        public int getStatus() {
+            return Status;
+        }
+
+        public void setStatus(int Status) {
+            this.Status = Status;
+        }
+    }
+}

@@ -1,10 +1,14 @@
 <resources>
     <string name="library_name">DID信息</string>
     <string name="nav_home">首页</string>
-    <string name="nav_charges">收钱</string>
-    <string name="nav_pay">付钱</string>
+    <string name="nav_charges">ELA间转账</string>
+    <string name="nav_pay">积分间转账</string>
     <string name="nav_mine">我</string>
     <string name="nav_all">全部</string>
+    <string name="nav_record1">DID->DID</string>
+    <string name="nav_record2">DID->ELA</string>
+    <string name="nav_record3">ELA->ELA</string>
+    <string name="nav_record4">ELA->DID</string>
 
     <string name="home_wallet">钱包</string>
     <string name="home_wallet_name">我的DID账户</string>
@@ -12,6 +16,10 @@
     <string name="home_expense">支出</string>
     <string name="home_income">收入</string>
     <string name="home_didinfo">DID记录</string>
+    <string name="did_balance">积分余额</string>
+    <string name="ela_balance">ELA余额</string>
+    <string name="did_qr">积分收款码</string>
+    <string name="ela_qr">ELA收款码</string>
 
     <string name="charge_copytips">（点击二维码复制地址）</string>
     <string name="charge_reset">重置地址</string>
@@ -25,18 +33,19 @@
     <string name="send_creating">正在创建交易</string>
     <string name="send_click">点击发送</string>
 
-    <string name="finance_recharge_addresss">充值来源</string>
-    <string name="finance_recharge_amount">充值金额(1ELA=100000000SELA)</string>
+    <string name="finance_recharge_addresss">兑换来源</string>
+    <string name="finance_recharge_amount">兑换金额</string>
     <string name="finance_recharge_phrase">充值来源账户的助记词（恢复短语）</string>
-    <string name="finance_withdraw_addresss">提现到</string>
-    <string name="finance_withdraw_amount">提现金额(1ELA=100000000SELA)</string>
+    <string name="finance_withdraw_addresss">兑换到</string>
+    <string name="finance_withdraw_amount">兑换金额</string>
     <string name="finance_send_addresss">收款人</string>
-    <string name="finance_send_amount">转账金额(1ELA=100000000SELA)</string>
+    <string name="finance_send_amount">转账金额</string>
 
-    <string name="me_recharge">充值</string>
-    <string name="me_withdraw">提现</string>
-    <string name="me_records">数据记录</string>
-    <string name="me_finance">金融数据</string>
+    <string name="me_recharge">ELA兑换积分</string>
+    <string name="me_withdraw">积分兑换ELA</string>
+    <string name="me_records">交易记录</string>
+    <string name="me_finance">交易</string>
+    <string name="me_information">个人信息</string>
     <string name="me_history">充值和提现记录</string>
     <string name="me_preference">偏好设置</string>
     <string name="me_preference_language">语言</string>
@@ -60,6 +69,7 @@
     <string name="word_backdup">您的钱包已经备份了</string>
     <string name="word_tips">请务必将您的恢复短语存储在一个安全的地方。如果这个程序被删除，恢复您的钱包的时候需要它</string>
     <string name="word_newpwd">请输入新的支付密码</string>
+    <string name="input_pwd">设置密码</string>
     <string name="word_pwdtips">支付密码不能被恢复，请务必记好（密码长度不小于8位）</string>
 
     <string name="import_wallet">导入钱包</string>

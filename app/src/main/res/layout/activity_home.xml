@@ -60,8 +60,7 @@
                 android:lines="1"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:text="@string/home_balance"
-                tools:text="Wallet balance: 0.00 ELA"/>
+                tools:text="ihx1Snz2bb6Tdadflglraglahahhar"/>
         </LinearLayout>
     </RelativeLayout>
 
@@ -196,7 +195,7 @@
                 android:textSize="16dp"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:text="@string/me_records"/>
+                android:text="@string/me_information"/>
             <TextView
                 android:id="@+id/tv_personal_settings_record_tips"
                 android:layout_width="wrap_content"
