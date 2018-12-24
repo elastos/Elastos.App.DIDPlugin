@@ -29,7 +29,7 @@
         </activity>
         <activity
             android:name=".activity.DidLaunchActivity"
-            android:process=":didservice">
+            android:process=":did">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -38,11 +38,11 @@
         </activity>
         <activity
             android:name=".activity.ScanActivity"
-            android:process=":didservice" />
+            android:process=":did" />
 
         <service
             android:name=".service.DidService"
-            android:process=":didservice" />
+            android:process=":did" />
 
         <meta-data
             android:name="android.max_aspect"
@@ -50,29 +50,49 @@
 
         <activity
             android:name=".activity.BackupTipsActivity"
-            android:process=":didservice" />
-        <activity android:name=".activity.WordShowActivity"
-            android:process=":didservice" />
-        <activity android:name=".activity.WordInputActivity"
-            android:process=":didservice" />
-        <activity android:name=".activity.ImportWalletActivity"
-            android:process=":didservice" />
-        <activity android:name=".activity.ReChargeActivity"
-            android:process=":didservice" />
-        <activity android:name=".activity.WithDrawActivity"
-            android:process=":didservice" />
-        <activity android:name=".activity.LanguageActivity"
-            android:process=":didservice" />
-        <activity android:name=".activity.PersonalActivity"
-            android:process=":didservice" />
-        <activity android:name=".activity.HomeActivity"
-            android:process=":didservice" />
-        <activity android:name=".activity.ReceiveActivity"
-            android:process=":didservice" />
-        <activity android:name=".activity.SendActivity"
-            android:process=":didservice" />
-        <activity android:name=".activity.RecordsActivity"
-            android:process=":didservice" ></activity>
+            android:process=":did" />
+        <activity
+            android:name=".activity.WordShowActivity"
+            android:process=":did" />
+        <activity
+            android:name=".activity.WordInputActivity"
+            android:process=":did" />
+        <activity
+            android:name=".activity.ImportWalletActivity"
+            android:process=":did" />
+        <activity
+            android:name=".activity.ReChargeActivity"
+            android:process=":did" />
+        <activity
+            android:name=".activity.WithDrawActivity"
+            android:process=":did" />
+        <activity
+            android:name=".activity.LanguageActivity"
+            android:process=":did" />
+        <activity
+            android:name=".activity.PersonalActivity"
+            android:process=":did" />
+        <activity
+            android:name=".activity.HomeActivity"
+            android:process=":did" />
+        <activity
+            android:name=".activity.ReceiveActivity"
+            android:process=":did" />
+        <activity
+            android:name=".activity.SendActivity"
+            android:process=":did" />
+        <activity
+            android:name=".activity.RecordsActivity"
+            android:process=":did" />
+        <activity
+            android:name=".activity.InformationActivity"
+            android:process=":did" />
+        <activity
+            android:name=".activity.Ela2ElaActivity"
+            android:process=":did" />
+        <activity
+            android:name=".activity.PwdInputActivity"
+            android:process=":did"/>
     </application>
 
 </manifest>

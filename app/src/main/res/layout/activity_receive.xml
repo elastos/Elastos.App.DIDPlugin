@@ -80,6 +80,7 @@
             android:layout_toRightOf="@id/iv_charge_did_icon"
             android:gravity="center_vertical">
             <TextView
+                android:id="@+id/tv_charge_did"
                 android:layout_width="wrap_content"
                 android:layout_height="22dp"
                 android:gravity="center_vertical"
@@ -98,7 +99,6 @@
                 android:singleLine="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:text="@string/home_balance"
                 tools:text="Wallet balance: 0.00 ELA"/>
         </LinearLayout>
     </RelativeLayout>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ela.wallet.sdk.didlibrary.activity.PwdInputActivity">
+
+    <include layout="@layout/nav_title"/>
+
+    <TextView
+        android:id="@+id/tv_import_word"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/textBlack"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="@string/word_newpwd"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/textBlack"
+        android:textSize="14sp"
+        android:text="@string/word_pwdtips"/>
+
+    <EditText
+        android:id="@+id/et_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:paddingLeft="10dp"
+        android:inputType="numberPassword"
+        android:lines="1"
+        android:textSize="14sp"
+        android:textColor="@color/textBlack"
+        android:textCursorDrawable="@drawable/edit_cursor_color"
+        android:background="@drawable/send_input"
+        android:hint="@string/import_pwd"/>
+
+    <EditText
+        android:id="@+id/et_pwd_again"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="10dp"
+        android:inputType="numberPassword"
+        android:lines="1"
+        android:textSize="14sp"
+        android:textColor="@color/textBlack"
+        android:textCursorDrawable="@drawable/edit_cursor_color"
+        android:background="@drawable/send_input"
+        android:hint="@string/import_pwd_again"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="49dp"
+        android:background="@drawable/bg_roundcorner_blue"
+        android:textColor="@android:color/white"
+        android:text="@string/btn_ok"
+        android:onClick="onImportClick"/>
+</LinearLayout>

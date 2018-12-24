@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.ela.wallet.sdk.didlibrary.R;
@@ -53,32 +54,32 @@ public class RecordsActivity extends BaseActivity {
     protected void initData() {
         String[] tabs = {
                 getString(R.string.nav_all),
-                getString(R.string.nav_charges),
-                getString(R.string.nav_pay),
-                getString(R.string.me_recharge),
-                getString(R.string.me_withdraw)
+                getString(R.string.nav_record1),
+                getString(R.string.nav_record2),
+                getString(R.string.nav_record3),
+                getString(R.string.nav_record4)
         };
         mList = new ArrayList<>();
-        mList1 = new ArrayList<>();
-        mList2 = new ArrayList<>();
-        mList3 = new ArrayList<>();
-        mList4 = new ArrayList<>();
+        mList1 = new ArrayList<>();//DID->DID
+        mList2 = new ArrayList<>();//DID->ELA
+        mList3 = new ArrayList<>();//ELA->ELA
+        mList4 = new ArrayList<>();//ELA->DID
 //        //todo:
 //        mList.add(new RecordsModel(tabs[1], "20/11/2018", "+1.5 ELA"));
 //        mList.add(new RecordsModel(tabs[2], "20/11/2018", "-0.5 ELA"));
 //        mList.add(new RecordsModel(tabs[3], "15/11/2018", "+2 ELA"));
 //        mList.add(new RecordsModel(tabs[4], "21/11/2018", "-1 ELA"));
-        for(RecordsModel records : mList) {
-            if (tabs[1].equals(records.getType())) {
-                mList1.add(records);
-            } else if(tabs[2].equals(records.getType())) {
-                mList2.add(records);
-            } else if(tabs[3].equals(records.getType())) {
-                mList3.add(records);
-            } else {
-                mList4.add(records);
-            }
-        }
+//        for(RecordsModel records : mList) {
+//            if (tabs[1].equals(records.getType())) {
+//                mList1.add(records);
+//            } else if(tabs[2].equals(records.getType())) {
+//                mList2.add(records);
+//            } else if(tabs[3].equals(records.getType())) {
+//                mList3.add(records);
+//            } else {
+//                mList4.add(records);
+//            }
+//        }
         mAdapter = new RecordsRecyclerViewAdapter(this, mList);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         mRv.setLayoutManager(llm);
@@ -90,6 +91,7 @@ public class RecordsActivity extends BaseActivity {
             TabLayout.Tab tabItem = mTab.getTabAt(k);
             tabItem.setText(tabs[k]);
         }
+        mTab.setTabMode(TabLayout.MODE_SCROLLABLE);
 
         mTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -125,10 +127,11 @@ public class RecordsActivity extends BaseActivity {
             }
         });
 
-        loadTxData();
+        loadDidTxData();
+        loadElaTxData();
     }
 
-    private void loadTxData() {
+    private void loadDidTxData() {
 //        String url = String.format("%s%s%s", Urls.SERVER_DID_HISTORY, Urls.DID_HISTORY, "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4");
         String url = String.format("%s%s%s", Urls.SERVER_DID_HISTORY, Urls.DID_HISTORY, Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, ""));
         HttpRequest.sendRequestWithHttpURLConnection(url, new HttpRequest.HttpCallbackListener() {
@@ -145,21 +148,58 @@ public class RecordsActivity extends BaseActivity {
                             mList.clear();
                             mList1.clear();
                             mList2.clear();
-                            mList3.clear();
                             mList4.clear();
                             for (AllTxsBean.ResultBean.HistoryBean historyBean : allTxsBean.getResult().getHistory()) {
-                                if ("spend".equals(historyBean.getType())) {
-                                    if (historyBean.getOutputs().contains("0000000000000000000000000000000000")) {
-                                        mList4.add(new RecordsModel("withdraw", historyBean.getCreateTime(), historyBean.getValue()));
+                                if ("spend".equals(historyBean.getType()) && "WithdrawFromSideChain".equals(historyBean.getTxType())) {
+                                    mList2.add(new RecordsModel(getString(R.string.me_withdraw), historyBean.getCreateTime()+"", "-" + historyBean.getValue()));
+                                } else if ("income".equals(historyBean.getType()) && "RechargeToSideChain".equals(historyBean.getTxType())) {
+                                    mList4.add(new RecordsModel(getString(R.string.me_recharge), historyBean.getCreateTime()+"", "+" + historyBean.getValue()));
+                                } else {
+                                    if ("spend".equals(historyBean.getType())) {
+                                        mList1.add(new RecordsModel(getString(R.string.nav_pay), historyBean.getCreateTime()+"", "-" + historyBean.getValue()));
                                     } else {
-                                        mList2.add(new RecordsModel(historyBean.getType(), historyBean.getCreateTime(), historyBean.getValue()));
+                                        mList1.add(new RecordsModel(getString(R.string.nav_pay), historyBean.getCreateTime()+"", "+" + historyBean.getValue()));
                                     }
-                                } else if ("income".equals(historyBean.getType())) {
-                                    mList1.add(new RecordsModel(historyBean.getType(), historyBean.getCreateTime(), historyBean.getValue()));
                                 }
-                                mList.add(new RecordsModel(historyBean.getType(), historyBean.getCreateTime(), historyBean.getValue()));
+                                String prefix = historyBean.getType().equals("income") ? "+" : "-";
+                                mList.add(new RecordsModel(historyBean.getType(), historyBean.getCreateTime()+"", prefix + historyBean.getValue()));
                             }
                             mAdapter.setData(mList);
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Exception e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+            }
+        });
+    }
+
+    private void loadElaTxData() {
+        String url = String.format("%s%s%s", Urls.SERVER_WALLET_HISTORY, Urls.ELA_HISTORY, Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, ""));
+        HttpRequest.sendRequestWithHttpURLConnection(url, new HttpRequest.HttpCallbackListener() {
+            @Override
+            public void onFinish(final String response) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AllTxsBean allTxsBean = new Gson().fromJson(response, AllTxsBean.class);
+                        if (allTxsBean.getStatus() != 200) {
+                            return;
+                        }
+                        if (allTxsBean.getResult().getTotalNum() > 0) {
+                            mList3.clear();
+                            for (AllTxsBean.ResultBean.HistoryBean historyBean : allTxsBean.getResult().getHistory()) {
+                                String prefix = historyBean.getType().equals("income") ? "+" : "-";
+                                mList3.add(new RecordsModel(historyBean.getType(), historyBean.getCreateTime()+"", prefix + historyBean.getValue()));
+                            }
                         }
                     }
                 });

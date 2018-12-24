@@ -8,7 +8,133 @@
 
     <include layout="@layout/nav_title"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+        <RelativeLayout
+            android:id="@+id/rl_did"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/did_panel">
+            <TextView
+                android:id="@+id/did"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/textBlack"
+                android:textSize="16dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@string/did_balance"/>
+            <TextView
+                android:id="@+id/did_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_below="@id/did"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/textBlack"
+                android:textSize="16dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="0 ELA"/>
+            <ImageView
+                android:id="@+id/did_qr"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_below="@id/did_balance"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/walletbalance_icon_code"/>
+            <Button
+                android:id="@+id/btn_did"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignTop="@id/did_qr"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="40dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:clickable="false"
+                android:textColor="@color/appColor"
+                android:text="@string/did_qr"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/ic_next"
+                android:background="@drawable/bg_roundcorner_white"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_ela"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/did_panel">
+            <TextView
+                android:id="@+id/ela"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/textBlack"
+                android:textSize="16dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@string/ela_balance"/>
+            <TextView
+                android:id="@+id/ela_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_below="@id/ela"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/textBlack"
+                android:textSize="16dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="0 ELA"/>
+            <ImageView
+                android:id="@+id/ela_qr"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_below="@id/ela_balance"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/walletbalance_icon_code"/>
+            <Button
+                android:id="@+id/btn_ela"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignTop="@id/ela_qr"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="40dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:clickable="false"
+                android:textColor="@color/appColor"
+                android:text="@string/ela_qr"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/ic_next"
+                android:background="@drawable/bg_roundcorner_white"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="102dp"
         android:layout_margin="15dp"

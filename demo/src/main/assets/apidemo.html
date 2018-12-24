@@ -21,11 +21,24 @@
                   "info": "sss"
                 };
             }else if (url == 'http://127.0.0.1:34561/api/v1/setDidInfo') {
+                var key = document.getElementById("send0_key").value;
+                var value = document.getElementById("send0_value").value;
+
                 param = {
-                  "key1": "value1",
-                  "key2": "value2",
-                  "key3": "value3"
+                        "Key": key,
+                        "Value": value
                 };
+
+                <!--param = {-->
+                    <!--"Tag": "DID Property",-->
+                    <!--"Ver": "1.0",-->
+                    <!--"Status": 1,-->
+                    <!--"Properties": [{-->
+                        <!--"Key": "11111111111",-->
+                        <!--"Value": "22222222222",-->
+                        <!--"Status": 1-->
+                    <!--}]-->
+                <!--};-->
             }
 			data=JSON.stringify(param);
             xhr.onreadystatechange = function() {
@@ -281,8 +294,11 @@
         <p onclick="get3('http://127.0.0.1:34561/api/v1/getTxById?txId=')"><u>查询指定交易记录</u></p>
         <p onclick="get4('http://127.0.0.1:34561/api/v1/getAllTxs')"><u>查询该DID所有交易历史</u></p>
         <textarea id="ipt_box" style="margin-top: 20px; width: 100%; height: 80px;" placeholder="http response:"></textarea>
-        <p onclick="get4('http://127.0.0.1:34561/api/v1/getDidInfo')"><u>查询DID属性</u></p>
+
+        <textarea id="send0_key" style="width: 50%; height: 20px;" placeholder="请输入设置属性key："></textarea>
+        <textarea id="send0_value" style="width: 40%; height: 20px;" placeholder="请输入设置属性value："></textarea>
         <p onclick="post('http://127.0.0.1:34561/api/v1/setDidInfo')"><u>设置DID属性[post]</u></p>
+        <p onclick="get4('http://127.0.0.1:34561/api/v1/getDidInfo')"><u>查询DID属性</u></p>
 
     </body>
 </head>
