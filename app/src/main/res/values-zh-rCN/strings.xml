@@ -44,7 +44,7 @@
     <string name="me_recharge">ELA兑换积分</string>
     <string name="me_withdraw">积分兑换ELA</string>
     <string name="me_records">交易记录</string>
-    <string name="me_finance">交易</string>
+    <string name="me_finance">交易转账</string>
     <string name="me_information">个人信息</string>
     <string name="me_history">充值和提现记录</string>
     <string name="me_preference">偏好设置</string>
@@ -86,7 +86,7 @@
     <string name="dialog_send_success">付款成功</string>
     <string name="dialog_recharge_success">充值成功</string>
     <string name="dialog_withdraw_success">提现成功</string>
-    <string name="dialog_finance_failed">操作失败，请核对参数</string>
+    <string name="dialog_finance_failed">您有未完成的交易，请稍候重试！</string>
 
 
     <string name="scan_noresult">未扫描到二维码，请重试</string>

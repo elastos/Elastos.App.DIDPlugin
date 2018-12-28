@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.ela.wallet.sdk.didlibrary.global.Constants;
+import com.ela.wallet.sdk.didlibrary.service.DidService;
 
 public class Utilty {
 
@@ -25,8 +26,7 @@ public class Utilty {
     }
 
     public static Context getContext() {
-        return sContext == null ? mContext : sContext;
-//        return mContext;
+        return sContext == null ? DidService.mContext : sContext;
     }
 
     public static boolean setPreference(String key, String value) {
@@ -41,7 +41,7 @@ public class Utilty {
 
     @Nullable
     public static String getPreference(String key, String defValue) {
-        if (sp == null) {
+        if (sp == null && getContext() != null) {
             try {
                 LogUtil.w("mContext=" + mContext);
                 LogUtil.w("sContext=" + sContext);
@@ -49,13 +49,25 @@ public class Utilty {
             } catch (Exception e) {
                 LogUtil.e(e.getMessage());
             }
+            return sp.getString(key, defValue);
         }
-
-        return sp.getString(key, defValue);
+        return "";
     }
 
     public static boolean isBacked() {
         return "true".equals(Utilty.getPreference(Constants.SP_KEY_DID_ISBACKUP, "false"));
+    }
+
+    private static long lastClickTime;
+
+    public static boolean isFastDoubleClick() {
+        long time = System.currentTimeMillis();
+        long timeD = time - lastClickTime;
+        if (0 < timeD && timeD < 2000) {
+            return true;
+        }
+        lastClickTime = time;
+        return false;
     }
 
     /**

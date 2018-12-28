@@ -61,9 +61,10 @@ public class ReChargeActivity extends BaseActivity {
     }
 
     public void onOKClick(View view) {
-        String fromAddress = et_scan_address.getText().toString();
+        if (Utilty.isFastDoubleClick()) return;
+//        String fromAddress = et_scan_address.getText().toString();
         String amount = et_amount.getText().toString();
-        if (TextUtils.isEmpty(fromAddress) || TextUtils.isEmpty(amount)) {
+        if (/*TextUtils.isEmpty(fromAddress) || */TextUtils.isEmpty(amount)) {
             Toast.makeText(ReChargeActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -93,7 +94,7 @@ public class ReChargeActivity extends BaseActivity {
     }
 
     private void doRecharge() {
-        String fromAddress = et_scan_address.getText().toString();
+        String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
         String amount = et_amount.getText().toString();
         if (TextUtils.isEmpty(fromAddress) || TextUtils.isEmpty(amount)) {
             Toast.makeText(ReChargeActivity.this, "params invalid", Toast.LENGTH_SHORT).show();

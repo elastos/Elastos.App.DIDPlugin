@@ -33,18 +33,18 @@
     <string name="send_creating">Creating transaction</string>
     <string name="send_click">Click to send</string>
 
-    <string name="finance_recharge_addresss">recharge from</string>
-    <string name="finance_recharge_amount">recharge amount</string>
+    <string name="finance_recharge_addresss">Recharge From</string>
+    <string name="finance_recharge_amount">Recharge Amount</string>
     <string name="finance_recharge_phrase">the phrase of recharge account</string>
-    <string name="finance_withdraw_addresss">withdraw to</string>
-    <string name="finance_withdraw_amount">withdraw amount</string>
+    <string name="finance_withdraw_addresss">Withdraw To</string>
+    <string name="finance_withdraw_amount">Withdraw Amount</string>
     <string name="finance_send_addresss">Recipient</string>
-    <string name="finance_send_amount">Recipient amount</string>
+    <string name="finance_send_amount">Recipient Amount</string>
 
     <string name="me_recharge">Exchange Ela for Integral</string>
     <string name="me_withdraw">Exchange Integral for Ela</string>
     <string name="me_records">Records</string>
-    <string name="me_finance">Transaction</string>
+    <string name="me_finance">Transaction Transfer</string>
     <string name="me_information">Personal Information</string>
     <string name="me_history">Recharge and withdraw record</string>
     <string name="me_preference">preference</string>
@@ -84,7 +84,7 @@
     <string name="dialog_send_success">Send Success!</string>
     <string name="dialog_recharge_success">Recharge Success!</string>
     <string name="dialog_withdraw_success">Withdraw Success!</string>
-    <string name="dialog_finance_failed">Failed!, Please check your params!</string>
+    <string name="dialog_finance_failed">The last transaction is not completed. Please try again later.</string>
 
 
     <string name="scan_noresult">There\'s no result, Please retry!</string>

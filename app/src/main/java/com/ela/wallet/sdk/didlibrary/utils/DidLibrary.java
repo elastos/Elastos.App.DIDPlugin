@@ -318,7 +318,7 @@ public class DidLibrary {
 
 //        //for test
 //        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
-////        toAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
+//        toAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
 //        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";
         String param = String.format("{\"inputs\":[\"%s\"],\"outputs\":[{\"addr\":\"%s\",\"amt\":%d}]}", fromAddress, toAddress, amount);
         LogUtil.d("ela2Did param=" + param);
@@ -728,24 +728,23 @@ public class DidLibrary {
             return false;
         }
 
-        ElastosWallet.Data idChainMasterPublicKey = ElastosWalletDID.getIdChainMasterPublicKey(mSeed, mSeedLen);
-        if (idChainMasterPublicKey == null) {
-            String errmsg = "Failed to generate id chain master publicKey.\n";
-            LogUtil.e(errmsg);
-            return false;
-        }
+//        ElastosWallet.Data idChainMasterPublicKey = ElastosWalletDID.getIdChainMasterPublicKey(mSeed, mSeedLen);
+//        if (idChainMasterPublicKey == null) {
+//            String errmsg = "Failed to generate id chain master publicKey.\n";
+//            LogUtil.e(errmsg);
+//            return false;
+//        }
 
-        int count = 1;
-        String[] privateKeys = new String[count];
-        String[] publicKeys = new String[count];
-        String[] dids = new String[count];
-        for (int idx = 0; idx < count; idx++) {
-            privateKeys[idx] = ElastosWalletDID.generateIdChainSubPrivateKey(mSeed, mSeedLen, 0, idx);
-            publicKeys[idx] = ElastosWalletDID.generateIdChainSubPublicKey(idChainMasterPublicKey, 0, idx);
-            dids[idx] = ElastosWalletDID.getDid(publicKeys[idx]);
-
-            Utilty.setPreference(Constants.SP_KEY_DID, dids[idx]);
-        }
+//        int count = 1;
+//        String[] privateKeys = new String[count];
+//        String[] publicKeys = new String[count];
+//        String[] dids = new String[count];
+//        for (int idx = 0; idx < count; idx++) {
+//            privateKeys[idx] = ElastosWalletDID.generateIdChainSubPrivateKey(mSeed, mSeedLen, 0, idx);
+//            publicKeys[idx] = ElastosWalletDID.generateIdChainSubPublicKey(idChainMasterPublicKey, 0, idx);
+//            dids[idx] = ElastosWalletDID.getDid(publicKeys[idx]);
+//
+//        }
 
         //after import success:
         mPrivateKey = privateKey;
@@ -755,6 +754,7 @@ public class DidLibrary {
         Utilty.setPreference(Constants.SP_KEY_DID_ISBACKUP, "true");
         Utilty.setPreference(Constants.SP_KEY_DID_MNEMONIC, "");
         Utilty.setPreference(Constants.SP_KEY_APP_LANGUAGE, language);
+        Utilty.setPreference(Constants.SP_KEY_DID, ElastosWalletDID.getDid(publicKey));
         return true;
     }
 

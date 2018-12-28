@@ -1,6 +1,7 @@
 package com.ela.wallet.sdk.didlibrary.service;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -14,6 +15,8 @@ import java.io.IOException;
 public class DidService extends Service {
 
     private HttpServer mHttpServer;
+    public static Context mContext;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -25,6 +28,7 @@ public class DidService extends Service {
         super.onCreate();
         Utilty.setServiceContext(this);
         DidLibrary.init(this);
+        mContext = this;
     }
 
     @Override

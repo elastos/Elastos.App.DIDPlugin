@@ -59,9 +59,10 @@ public class WithDrawActivity extends BaseActivity {
     }
 
     public void onOKClick(View view) {
-        String toAddress = et_scan_address.getText().toString();
+        if (Utilty.isFastDoubleClick()) return;
+//        String toAddress = et_scan_address.getText().toString();
         String amount = et_amount.getText().toString();
-        if (TextUtils.isEmpty(toAddress) || TextUtils.isEmpty(amount)) {
+        if (/*TextUtils.isEmpty(toAddress) || */TextUtils.isEmpty(amount)) {
             Toast.makeText(WithDrawActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -91,7 +92,7 @@ public class WithDrawActivity extends BaseActivity {
     }
 
     private void doWithDraw() {
-        String toAddress = et_scan_address.getText().toString();
+        String toAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
         String amount = et_amount.getText().toString();
         if (TextUtils.isEmpty(toAddress) || TextUtils.isEmpty(amount)) {
             Toast.makeText(WithDrawActivity.this, "params invalid", Toast.LENGTH_SHORT).show();

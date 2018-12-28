@@ -73,6 +73,7 @@ public class SendActivity extends BaseActivity {
     }
 
     public void onOKClick(View view) {
+        if (Utilty.isFastDoubleClick()) return;
         String toAddress = et_scan_address.getText().toString();
         String amount = et_amount.getText().toString();
         if (TextUtils.isEmpty(toAddress) || TextUtils.isEmpty(amount)) {
