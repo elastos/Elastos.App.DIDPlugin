@@ -429,7 +429,7 @@ public class HttpServer extends NanoHTTPD {
     private String getDidInfo="";
     private String dealWithGetDid() {
         final CountDownLatch countDownLatch = new CountDownLatch(1);
-        String url = String.format("%s%s", Urls.DID_GETDID, Utilty.getPreference(Constants.SP_KEY_DID, ""));
+        String url = String.format("%s%s%s", Urls.SERVER_DID, Urls.DID_GETDID, Utilty.getPreference(Constants.SP_KEY_DID, ""));
         HttpRequest.sendRequestWithHttpURLConnection(url, new HttpRequest.HttpCallbackListener() {
             @Override
             public void onFinish(String response) {

@@ -1,6 +1,7 @@
 package com.ela.wallet.sdk.didlibrary.utils;
 
 import android.app.Application;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 
@@ -45,9 +46,8 @@ public class DidEntry {
     public static void launch(Context context) {
         LogUtil.i("DidEntry:launch");
         Intent intent = new Intent();
-        if (context instanceof Application) {
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        }
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context = Utilty.getContext() == null ? context : Utilty.getContext();
         intent.setClass(context, HomeActivity.class);
         context.startActivity(intent);
     }

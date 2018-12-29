@@ -66,7 +66,7 @@ public class InformationActivity extends BaseActivity {
 
 
     private void loadInfoData() {
-        String url = String.format("%s%s", Urls.DID_GETDID, Utilty.getPreference(Constants.SP_KEY_DID, ""));
+        String url = String.format("%%s%s", Urls.SERVER_DID, Urls.DID_GETDID, Utilty.getPreference(Constants.SP_KEY_DID, ""));
         HttpRequest.sendRequestWithHttpURLConnection(url, new HttpRequest.HttpCallbackListener() {
             @Override
             public void onFinish(final String response) {
