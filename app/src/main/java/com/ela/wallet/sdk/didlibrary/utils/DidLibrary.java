@@ -241,12 +241,12 @@ public class DidLibrary {
      * @param address
      * @param amount
      */
-    public static void Ela2Ela(String address, long amount) {
+    public static void Ela2Ela(String address, String amount) {
         Ela2Ela(address, amount, null);
     }
     
-    public static void Ela2Ela(String address, long amount, final TransCallback callback) {
-        amount = amount * 100000000;
+    public static void Ela2Ela(String address, String aParam, final TransCallback callback) {
+        long amount = Math.round(Float.parseFloat(aParam) * 100000000) ;
         String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
 
 //        //for test
@@ -306,12 +306,12 @@ public class DidLibrary {
     /**
      * 充值 ELA-DID
      */
-    public static void Ela2Did(String address, long amount) {
+    public static void Ela2Did(String address, String amount) {
         Ela2Did(address, amount, null);
     }
 
-    public static void Ela2Did(String address, long amount, final TransCallback callback) {
-        amount = amount * 100000000;
+    public static void Ela2Did(String address, String aParam, final TransCallback callback) {
+        long amount = Math.round(Float.parseFloat(aParam) * 100000000) ;
         //充值来源ELA链地址
         String fromAddress = address;
         String toAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
@@ -367,15 +367,15 @@ public class DidLibrary {
 
     }
 
-    public static void Tixian(String address, long amount) {
+    public static void Tixian(String address, String amount) {
         Tixian(address, amount, null);
     }
 
     /**
      * 提现 DID-ELA
      */
-    public static void Tixian(String toAddress, long amount, final TransCallback callback) {
-        amount = amount * 100000000;
+    public static void Tixian(String toAddress, String aParam, final TransCallback callback) {
+        long amount = Math.round(Float.parseFloat(aParam) * 100000000) ;
         String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
 
 //        //for test
@@ -428,15 +428,15 @@ public class DidLibrary {
         });
     }
 
-    public static void Zhuanzhang(String toAddress, long amount) {
+    public static void Zhuanzhang(String toAddress, String amount) {
         Zhuanzhang(toAddress, amount, null);
     }
 
     /**
      * 转账 DID-DID
      */
-    public static void Zhuanzhang(String toAddress, long amount, final TransCallback callback) {
-        amount = amount * 100000000;
+    public static void Zhuanzhang(String toAddress, String aParam, final TransCallback callback) {
+        long amount = Math.round(Float.parseFloat(aParam) * 100000000) ;
         String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
 
         //for test
@@ -666,15 +666,15 @@ public class DidLibrary {
         String language = "";
         String words = "";
         String sp_lang = Utilty.getPreference(Constants.SP_KEY_APP_LANGUAGE, "");
-        if (TextUtils.isEmpty(sp_lang)) {
+//        if (TextUtils.isEmpty(sp_lang)) {
             if (Utilty.isChinese(mnemonic)) {
                 language = "chinese";
             } else {
                 language = "english";
             }
-        } else {
-            language = sp_lang;
-        }
+//        } else {
+//            language = sp_lang;
+//        }
 
         if (language.equals("chinese")) {
             words = FileUtil.readAssetsTxt(mContext, "ElastosWalletLib/mnemonic_chinese.txt");

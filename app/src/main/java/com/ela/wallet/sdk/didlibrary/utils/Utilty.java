@@ -7,6 +7,9 @@ import android.support.annotation.Nullable;
 
 import com.ela.wallet.sdk.didlibrary.global.Constants;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Utilty {
 
     private static Context mContext;
@@ -40,6 +43,9 @@ public class Utilty {
 
     @Nullable
     public static String getPreference(String key, String defValue) {
+        if (getContext() == null) {
+            return "";
+        }
         if (sp == null) {
             try {
                 LogUtil.w("mContext=" + mContext);
@@ -212,5 +218,11 @@ public class Utilty {
                 return true;// 有一个中文字符就返回
         }
         return false;
+    }
+
+    public static boolean isOnlyPointNumber(String number) {//保留两位小数正则
+        Pattern pattern = Pattern.compile("^\\d+\\.?\\d{0,8}$");
+        Matcher matcher = pattern.matcher(number);
+        return matcher.matches();
     }
 }

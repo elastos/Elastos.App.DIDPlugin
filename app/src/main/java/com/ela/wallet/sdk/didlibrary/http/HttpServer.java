@@ -286,10 +286,10 @@ public class HttpServer extends NanoHTTPD {
         final CountDownLatch countDownLatch = new CountDownLatch(1);
         try {
             JSONObject js = new JSONObject(param);
-            long amount = js.optLong("amount");
+            String amount = js.optString("amount");
             String memo = js.optString("memo");
             String info = js.optString("info");
-            if (amount >= 0) {
+            if (!TextUtils.isEmpty(amount)) {
                 String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
                 DidLibrary.Ela2Did(fromAddress, amount, new TransCallback() {
                     @Override
@@ -319,10 +319,10 @@ public class HttpServer extends NanoHTTPD {
         final CountDownLatch countDownLatch = new CountDownLatch(1);
         try {
             JSONObject js = new JSONObject(param);
-            long amount = js.optLong("amount");
+            String amount = js.optString("amount");
             String memo = js.optString("memo");
             String info = js.optString("info");
-            if (amount >= 0) {
+            if (!TextUtils.isEmpty(amount)) {
                 String toAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
                 DidLibrary.Tixian(toAddress, amount, new TransCallback() {
                     @Override
@@ -353,10 +353,10 @@ public class HttpServer extends NanoHTTPD {
         try {
             JSONObject js = new JSONObject(param);
             String toAddress = js.optString("toAddress");
-            long amount = js.optLong("amount");
+            String amount = js.optString("amount");
             String memo = js.optString("memo");
             String info = js.optString("info");
-            if (!TextUtils.isEmpty(toAddress) && amount >= 0) {
+            if (!TextUtils.isEmpty(toAddress) && !TextUtils.isEmpty(amount)) {
                 DidLibrary.Zhuanzhang(toAddress, amount, new TransCallback() {
                     @Override
                     public void onSuccess(String result) {

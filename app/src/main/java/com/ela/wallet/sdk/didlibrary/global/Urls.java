@@ -16,7 +16,7 @@ public class Urls {
     public static String SERVER_DID_HISTORY = SERVER_DID_HISTORY_RELEASE;
     public static String SERVER_WALLET_HISTORY = SERVER_WALLET_HISTORY_RELEASE;
 
-    public static String DID_GETDID = "/api/1/did/";
+    public static String DID_GETDID = "/api/1/didexplorer/did/";
     public static String DID_BALANCE = "/api/1/balance/";//{address};
     public static String DID_CTX = "/api/1/createTx";
     public static String DID_CCT = "/api/1/createCrossTx";

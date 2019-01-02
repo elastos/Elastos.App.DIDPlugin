@@ -37,6 +37,7 @@ public class DidService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Utilty.setServiceContext(this);
         mHttpServer = new HttpServer(34561);
         try {
             mHttpServer.start();

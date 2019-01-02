@@ -91,6 +91,7 @@
     <string name="toast_pwd_notcorrect">The length of password is too short</string>
     <string name="toast_pwd_same">The passwords are inconsistent</string>
     <string name="toast_pwd_wrong">The password is wrong</string>
+    <string name="toast_import_success">Import Success!</string>
     <string name="toast_copy">Copy success!</string>
 
 

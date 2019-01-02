@@ -7,7 +7,7 @@ package com.ela.wallet.sdk.didlibrary.bean;
 public class GetDidBean {
 
     /**
-     * result : [{"key":"key20181222","value":"value20181222"},{"key":"key20181224","value":"value20181224"}]
+     * result : [{"key":"","value":""},{"key":"11111111111","value":"22222222222"},{"key":"123","value":"456"},{"key":"我是key","value":"我是value"},{"key":"key20181222","value":"value20181222"},{"key":"key20181224","value":"value20181224"}]
      * status : 200
      */
 
