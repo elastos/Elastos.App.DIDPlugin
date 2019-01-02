@@ -139,7 +139,6 @@ public class WithDrawActivity extends BaseActivity {
 //                        Toast.makeText(WithDrawActivity.this, result, Toast.LENGTH_SHORT).show();
                         new DidAlertDialog(WithDrawActivity.this)
                                 .setTitle(msg)
-                                .setMessage(result)
                                 .setRightButton(getString(R.string.btn_ok), null)
                                 .show();
                     }

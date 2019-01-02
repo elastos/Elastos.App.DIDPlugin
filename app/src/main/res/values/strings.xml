@@ -1,8 +1,8 @@
 <resources>
-    <string name="library_name">DidInfo</string>
+    <string name="library_name">DIDInfo</string>
     <string name="nav_home">home</string>
-    <string name="nav_charges">Transfer between Ela</string>
-    <string name="nav_pay">Transfer between Did Integral</string>
+    <string name="nav_charges">Transfer between ELA</string>
+    <string name="nav_pay">Transfer between DID Integral</string>
     <string name="nav_mine">me</string>
     <string name="nav_all">All</string>
     <string name="nav_record1">DID->DID</string>
@@ -15,11 +15,11 @@
     <string name="home_balance">Walletbalance</string>
     <string name="home_expense">expense</string>
     <string name="home_income">income</string>
-    <string name="home_didinfo">did info</string>
-    <string name="did_balance">Did Balance</string>
-    <string name="ela_balance">Ela Balance</string>
-    <string name="did_qr">Did QrCode</string>
-    <string name="ela_qr">Ela QrCode</string>
+    <string name="home_didinfo">DID info</string>
+    <string name="did_balance">DID Balance</string>
+    <string name="ela_balance">ELA Balance</string>
+    <string name="did_qr">DID QrCode</string>
+    <string name="ela_qr">ELA QrCode</string>
 
     <string name="charge_copytips">(Click to copy address)</string>
     <string name="charge_reset">Reset address</string>
@@ -41,8 +41,8 @@
     <string name="finance_send_addresss">Recipient</string>
     <string name="finance_send_amount">Recipient Amount</string>
 
-    <string name="me_recharge">Exchange Ela for Integral</string>
-    <string name="me_withdraw">Exchange Integral for Ela</string>
+    <string name="me_recharge">Exchange ELA for Integral</string>
+    <string name="me_withdraw">Exchange Integral for ELA</string>
     <string name="me_records">Records</string>
     <string name="me_finance">Transaction Transfer</string>
     <string name="me_information">Personal Information</string>

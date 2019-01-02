@@ -21,6 +21,7 @@ import com.ela.wallet.sdk.didlibrary.widget.RecordsRecyclerViewAdapter;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RecordsActivity extends BaseActivity {
@@ -150,7 +151,7 @@ public class RecordsActivity extends BaseActivity {
                             mList2.clear();
                             mList4.clear();
                             for (AllTxsBean.ResultBean.HistoryBean historyBean : allTxsBean.getResult().getHistory()) {
-                                if ("spend".equals(historyBean.getType()) && "WithdrawFromSideChain".equals(historyBean.getTxType())) {
+                                if ("spend".equals(historyBean.getType()) && "TransferCrossChainAsset".equals(historyBean.getTxType())) {
                                     mList2.add(new RecordsModel(getString(R.string.nav_record2), historyBean.getCreateTime()+"", "-" + historyBean.getValue()));
                                     mList.add(new RecordsModel(getString(R.string.nav_record2), historyBean.getCreateTime()+"", "-" + historyBean.getValue()));
                                 } else if ("income".equals(historyBean.getType()) && "RechargeToSideChain".equals(historyBean.getTxType())) {
@@ -203,8 +204,10 @@ public class RecordsActivity extends BaseActivity {
                             mList3.clear();
                             for (AllTxsBean.ResultBean.HistoryBean historyBean : allTxsBean.getResult().getHistory()) {
                                 String prefix = historyBean.getType().equals("income") ? "+" : "-";
-                                mList3.add(new RecordsModel(getString(R.string.nav_record3), historyBean.getCreateTime()+"", prefix + historyBean.getValue()));
-                                mList.add(new RecordsModel(getString(R.string.nav_record3), historyBean.getCreateTime()+"", prefix + historyBean.getValue()));
+                                if (!historyBean.getTxType().equals("WithdrawFromSideChain") && !historyBean.getTxType().equals("TransferCrossChainAsset")) {
+                                    mList3.add(new RecordsModel(getString(R.string.nav_record3), historyBean.getCreateTime()+"", prefix + historyBean.getValue()));
+                                    mList.add(new RecordsModel(getString(R.string.nav_record3), historyBean.getCreateTime()+"", prefix + historyBean.getValue()));
+                                }
                             }
                         }
                         parseTransData();
@@ -225,6 +228,11 @@ public class RecordsActivity extends BaseActivity {
     }
 
     private void parseTransData() {
+        Collections.reverse(mList);
+        Collections.reverse(mList1);
+        Collections.reverse(mList2);
+        Collections.reverse(mList3);
+        Collections.reverse(mList4);
         mAdapter.setData(mList);
     }
 }

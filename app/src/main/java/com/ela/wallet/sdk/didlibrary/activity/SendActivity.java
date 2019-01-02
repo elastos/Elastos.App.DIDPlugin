@@ -148,10 +148,9 @@ public class SendActivity extends BaseActivity {
                         } else {
                             msg = getString(R.string.dialog_finance_failed);
                         }
-                        Toast.makeText(SendActivity.this, result, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(SendActivity.this, result, Toast.LENGTH_SHORT).show();
                         new DidAlertDialog(SendActivity.this)
                                 .setTitle(msg)
-                                .setMessage(result)
                                 .setRightButton(getString(R.string.btn_ok), null)
                                 .show();
                     }

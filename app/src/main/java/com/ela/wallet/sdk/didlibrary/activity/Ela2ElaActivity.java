@@ -145,10 +145,9 @@ public class Ela2ElaActivity extends BaseActivity {
                         } else {
                             msg = getString(R.string.dialog_finance_failed);
                         }
-                        Toast.makeText(Ela2ElaActivity.this, result, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Ela2ElaActivity.this, result, Toast.LENGTH_SHORT).show();
                         new DidAlertDialog(Ela2ElaActivity.this)
                                 .setTitle(msg)
-                                .setMessage(result)
                                 .setRightButton(getString(R.string.btn_ok), null)
                                 .show();
                     }

@@ -138,10 +138,9 @@ public class ReChargeActivity extends BaseActivity {
                         } else {
                             msg = getString(R.string.dialog_finance_failed);
                         }
-                        Toast.makeText(ReChargeActivity.this, result, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(ReChargeActivity.this, result, Toast.LENGTH_SHORT).show();
                         new DidAlertDialog(ReChargeActivity.this)
                                 .setTitle(msg)
-                                .setMessage(result)
                                 .setRightButton(getString(R.string.btn_ok), null)
                                 .show();
                     }
