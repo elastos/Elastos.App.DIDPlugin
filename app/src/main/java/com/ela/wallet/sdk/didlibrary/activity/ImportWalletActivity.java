@@ -81,7 +81,8 @@ public class ImportWalletActivity extends BaseActivity {
                         boolean b = DidLibrary.importWallet(et_import_word.getText().toString());
                         if (b) {
                             Utilty.setPreference(Constants.SP_KEY_DID_PASSWORD, et_pwd.getText().toString());
-                            Toast.makeText(ImportWalletActivity.this, getString(R.string.toast_import_success), Toast.LENGTH_SHORT).show();
+                            int id = getResources().getIdentifier("toast_import_success", "string", getPackageName());
+                            Toast.makeText(ImportWalletActivity.this, id, Toast.LENGTH_SHORT).show();
                             ImportWalletActivity.this.finish();
                         } else {
                             showErrorDialog();

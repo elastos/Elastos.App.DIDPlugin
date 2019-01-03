@@ -3,6 +3,8 @@ package com.ela.wallet.sdk.didlibrary.http;
 import android.text.TextUtils;
 
 import com.ela.wallet.sdk.didlibrary.bean.DidInfoBean;
+import com.ela.wallet.sdk.didlibrary.bean.GetDidBean;
+import com.ela.wallet.sdk.didlibrary.bean.RecordsModel;
 import com.ela.wallet.sdk.didlibrary.bean.SetDidBean;
 import com.ela.wallet.sdk.didlibrary.callback.TransCallback;
 import com.ela.wallet.sdk.didlibrary.global.Constants;
@@ -13,6 +15,7 @@ import com.ela.wallet.sdk.didlibrary.utils.Utilty;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -286,10 +289,10 @@ public class HttpServer extends NanoHTTPD {
         final CountDownLatch countDownLatch = new CountDownLatch(1);
         try {
             JSONObject js = new JSONObject(param);
-            long amount = js.optLong("amount");
+            String amount = js.optString("amount");
             String memo = js.optString("memo");
             String info = js.optString("info");
-            if (amount >= 0) {
+            if (!TextUtils.isEmpty(amount)) {
                 String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
                 DidLibrary.Ela2Did(fromAddress, amount, new TransCallback() {
                     @Override
@@ -319,10 +322,10 @@ public class HttpServer extends NanoHTTPD {
         final CountDownLatch countDownLatch = new CountDownLatch(1);
         try {
             JSONObject js = new JSONObject(param);
-            long amount = js.optLong("amount");
+            String amount = js.optString("amount");
             String memo = js.optString("memo");
             String info = js.optString("info");
-            if (amount >= 0) {
+            if (!TextUtils.isEmpty(amount)) {
                 String toAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
                 DidLibrary.Tixian(toAddress, amount, new TransCallback() {
                     @Override
@@ -353,10 +356,10 @@ public class HttpServer extends NanoHTTPD {
         try {
             JSONObject js = new JSONObject(param);
             String toAddress = js.optString("toAddress");
-            long amount = js.optLong("amount");
+            String amount = js.optString("amount");
             String memo = js.optString("memo");
             String info = js.optString("info");
-            if (!TextUtils.isEmpty(toAddress) && amount >= 0) {
+            if (!TextUtils.isEmpty(toAddress) && !TextUtils.isEmpty(amount)) {
                 DidLibrary.Zhuanzhang(toAddress, amount, new TransCallback() {
                     @Override
                     public void onSuccess(String result) {
@@ -429,7 +432,7 @@ public class HttpServer extends NanoHTTPD {
     private String getDidInfo="";
     private String dealWithGetDid() {
         final CountDownLatch countDownLatch = new CountDownLatch(1);
-        String url = String.format("%s%s", Urls.DID_GETDID, Utilty.getPreference(Constants.SP_KEY_DID, ""));
+        String url = String.format("%s%s%s", Urls.SERVER_DID, Urls.DID_GETDID, Utilty.getPreference(Constants.SP_KEY_DID, ""));
         HttpRequest.sendRequestWithHttpURLConnection(url, new HttpRequest.HttpCallbackListener() {
             @Override
             public void onFinish(String response) {
@@ -451,4 +454,24 @@ public class HttpServer extends NanoHTTPD {
         LogUtil.d("getDidInfo=" + getDidInfo);
         return getDidInfo;
     }
+
+//    private String parseDidInfo(String str) {
+//        GetDidBean bean = new Gson().fromJson(str, GetDidBean.class);
+//        if (bean.getStatus() != 200 || TextUtils.isEmpty(bean.getResult().trim())) return str;
+//        try {
+//            JSONArray jsonArray = new JSONArray(bean.getResult());
+//            JSONArray newArray = new JSONArray();
+//            for(int k=0,i=0;k<jsonArray.length();k++) {
+//                String key = jsonArray.getJSONObject(k).getString("key");
+//                String value = jsonArray.getJSONObject(k).getString("value");
+//                if ("imei".equals(key.trim().toLowerCase())) {
+//
+//                } else {
+//                }
+//            }
+//        } catch (Exception e) {
+//            LogUtil.e(e.getMessage());
+//            e.printStackTrace();
+//        }
+//    }
 }

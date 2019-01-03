@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -43,6 +45,30 @@ public class SendActivity extends BaseActivity {
                 startActivityForResult(intent, Constants.INTENT_REQUEST_CODE_SCAN);
             }
         });
+
+        et_amount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String temp = editable.toString();
+                int posDot = temp.indexOf(".");
+                if (posDot <= 0) return;
+                if (temp.length() - posDot - 1 > 8)
+                {
+                    editable.delete(posDot + 9, posDot + 10);
+                }
+
+            }
+        });
     }
 
     @Override
@@ -73,6 +99,7 @@ public class SendActivity extends BaseActivity {
     }
 
     public void onOKClick(View view) {
+        if (Utilty.isFastDoubleClick()) return;
         String toAddress = et_scan_address.getText().toString();
         String amount = et_amount.getText().toString();
         if (TextUtils.isEmpty(toAddress) || TextUtils.isEmpty(amount)) {
@@ -104,12 +131,12 @@ public class SendActivity extends BaseActivity {
 
     private void doSend() {
         String toAddress = et_scan_address.getText().toString();
-        String amount = et_amount.getText().toString();
+        String amount = String.format("%.8f", Float.parseFloat(et_amount.getText().toString()));
         if (TextUtils.isEmpty(toAddress) || TextUtils.isEmpty(amount)) {
             Toast.makeText(SendActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
-        DidLibrary.Zhuanzhang(toAddress, Long.parseLong(amount), new TransCallback() {
+        DidLibrary.Zhuanzhang(toAddress, amount, new TransCallback() {
             @Override
             public void onSuccess(final String result) {
                 runOnUiThread(new Runnable() {
@@ -121,10 +148,9 @@ public class SendActivity extends BaseActivity {
                         } else {
                             msg = getString(R.string.dialog_finance_failed);
                         }
-                        Toast.makeText(SendActivity.this, result, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(SendActivity.this, result, Toast.LENGTH_SHORT).show();
                         new DidAlertDialog(SendActivity.this)
                                 .setTitle(msg)
-                                .setMessage(result)
                                 .setRightButton(getString(R.string.btn_ok), null)
                                 .show();
                     }

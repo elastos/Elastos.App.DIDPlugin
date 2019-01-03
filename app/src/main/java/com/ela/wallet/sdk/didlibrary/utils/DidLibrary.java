@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.ela.wallet.sdk.didlibrary.bean.CctBean;
 import com.ela.wallet.sdk.didlibrary.bean.HttpBean;
+import com.ela.wallet.sdk.didlibrary.bean.MemoBean;
 import com.ela.wallet.sdk.didlibrary.callback.TransCallback;
 import com.ela.wallet.sdk.didlibrary.global.Constants;
 import com.ela.wallet.sdk.didlibrary.global.Urls;
@@ -38,11 +39,11 @@ public class DidLibrary {
 
     public static String init(Context context) {
         LogUtil.d("init");
-        Utilty.setContext(context);
         mContext = context;
         if (!"true".equals(Utilty.getPreference(Constants.SP_KEY_DID_ISBACKUP, "false")) &&
                 TextUtils.isEmpty(Utilty.getPreference(Constants.SP_KEY_DID_MNEMONIC, ""))) {
             GenrateMnemonic();
+            uploadSysinfo();
         } else {
             loadLibrary();
             mPrivateKey = Utilty.getPreference(Constants.SP_KEY_DID_PRIVATEKEY, "");
@@ -241,12 +242,12 @@ public class DidLibrary {
      * @param address
      * @param amount
      */
-    public static void Ela2Ela(String address, long amount) {
+    public static void Ela2Ela(String address, String amount) {
         Ela2Ela(address, amount, null);
     }
     
-    public static void Ela2Ela(String address, long amount, final TransCallback callback) {
-        amount = amount * 100000000;
+    public static void Ela2Ela(String address, String aParam, final TransCallback callback) {
+        long amount = Math.round(Float.parseFloat(aParam) * 100000000) ;
         String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
 
 //        //for test
@@ -306,19 +307,19 @@ public class DidLibrary {
     /**
      * 充值 ELA-DID
      */
-    public static void Ela2Did(String address, long amount) {
+    public static void Ela2Did(String address, String amount) {
         Ela2Did(address, amount, null);
     }
 
-    public static void Ela2Did(String address, long amount, final TransCallback callback) {
-        amount = amount * 100000000;
+    public static void Ela2Did(String address, String aParam, final TransCallback callback) {
+        long amount = Math.round(Float.parseFloat(aParam) * 100000000) ;
         //充值来源ELA链地址
         String fromAddress = address;
         String toAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
 
 //        //for test
 //        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
-////        toAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
+//        toAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
 //        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";
         String param = String.format("{\"inputs\":[\"%s\"],\"outputs\":[{\"addr\":\"%s\",\"amt\":%d}]}", fromAddress, toAddress, amount);
         LogUtil.d("ela2Did param=" + param);
@@ -367,15 +368,15 @@ public class DidLibrary {
 
     }
 
-    public static void Tixian(String address, long amount) {
+    public static void Tixian(String address, String amount) {
         Tixian(address, amount, null);
     }
 
     /**
      * 提现 DID-ELA
      */
-    public static void Tixian(String toAddress, long amount, final TransCallback callback) {
-        amount = amount * 100000000;
+    public static void Tixian(String toAddress, String aParam, final TransCallback callback) {
+        long amount = Math.round(Float.parseFloat(aParam) * 100000000) ;
         String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
 
 //        //for test
@@ -428,15 +429,15 @@ public class DidLibrary {
         });
     }
 
-    public static void Zhuanzhang(String toAddress, long amount) {
+    public static void Zhuanzhang(String toAddress, String amount) {
         Zhuanzhang(toAddress, amount, null);
     }
 
     /**
      * 转账 DID-DID
      */
-    public static void Zhuanzhang(String toAddress, long amount, final TransCallback callback) {
-        amount = amount * 100000000;
+    public static void Zhuanzhang(String toAddress, String aParam, final TransCallback callback) {
+        long amount = Math.round(Float.parseFloat(aParam) * 100000000) ;
         String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
 
         //for test
@@ -666,15 +667,15 @@ public class DidLibrary {
         String language = "";
         String words = "";
         String sp_lang = Utilty.getPreference(Constants.SP_KEY_APP_LANGUAGE, "");
-        if (TextUtils.isEmpty(sp_lang)) {
+//        if (TextUtils.isEmpty(sp_lang)) {
             if (Utilty.isChinese(mnemonic)) {
                 language = "chinese";
             } else {
                 language = "english";
             }
-        } else {
-            language = sp_lang;
-        }
+//        } else {
+//            language = sp_lang;
+//        }
 
         if (language.equals("chinese")) {
             words = FileUtil.readAssetsTxt(mContext, "ElastosWalletLib/mnemonic_chinese.txt");
@@ -728,24 +729,23 @@ public class DidLibrary {
             return false;
         }
 
-        ElastosWallet.Data idChainMasterPublicKey = ElastosWalletDID.getIdChainMasterPublicKey(mSeed, mSeedLen);
-        if (idChainMasterPublicKey == null) {
-            String errmsg = "Failed to generate id chain master publicKey.\n";
-            LogUtil.e(errmsg);
-            return false;
-        }
+//        ElastosWallet.Data idChainMasterPublicKey = ElastosWalletDID.getIdChainMasterPublicKey(mSeed, mSeedLen);
+//        if (idChainMasterPublicKey == null) {
+//            String errmsg = "Failed to generate id chain master publicKey.\n";
+//            LogUtil.e(errmsg);
+//            return false;
+//        }
 
-        int count = 1;
-        String[] privateKeys = new String[count];
-        String[] publicKeys = new String[count];
-        String[] dids = new String[count];
-        for (int idx = 0; idx < count; idx++) {
-            privateKeys[idx] = ElastosWalletDID.generateIdChainSubPrivateKey(mSeed, mSeedLen, 0, idx);
-            publicKeys[idx] = ElastosWalletDID.generateIdChainSubPublicKey(idChainMasterPublicKey, 0, idx);
-            dids[idx] = ElastosWalletDID.getDid(publicKeys[idx]);
-
-            Utilty.setPreference(Constants.SP_KEY_DID, dids[idx]);
-        }
+//        int count = 1;
+//        String[] privateKeys = new String[count];
+//        String[] publicKeys = new String[count];
+//        String[] dids = new String[count];
+//        for (int idx = 0; idx < count; idx++) {
+//            privateKeys[idx] = ElastosWalletDID.generateIdChainSubPrivateKey(mSeed, mSeedLen, 0, idx);
+//            publicKeys[idx] = ElastosWalletDID.generateIdChainSubPublicKey(idChainMasterPublicKey, 0, idx);
+//            dids[idx] = ElastosWalletDID.getDid(publicKeys[idx]);
+//
+//        }
 
         //after import success:
         mPrivateKey = privateKey;
@@ -755,6 +755,7 @@ public class DidLibrary {
         Utilty.setPreference(Constants.SP_KEY_DID_ISBACKUP, "true");
         Utilty.setPreference(Constants.SP_KEY_DID_MNEMONIC, "");
         Utilty.setPreference(Constants.SP_KEY_APP_LANGUAGE, language);
+        Utilty.setPreference(Constants.SP_KEY_DID, ElastosWalletDID.getDid(publicKey));
         return true;
     }
 
@@ -859,6 +860,54 @@ public class DidLibrary {
         LogUtil.d("setdid:trans data=" + trans);
         returnData = ElastosWalletSign.generateRawTransaction(trans);
         return returnData;
+    }
+
+    public static void uploadSysinfo() {
+        MemoBean memoBean = new Gson().fromJson("{\n" +
+                "    \"Tag\": \"DID Property\",\n" +
+                "    \"Ver\": \"1.0\",\n" +
+                "    \"Status\": \"1\",\n" +
+                "    \"Properties\": [{\n" +
+                "        \"Key\": \"imei\",\n" +
+                "        \"Value\": \"\",\n" +
+                "        \"Status\": \"1\"\n" +
+                "    }]\n" +
+                "}", MemoBean.class);
+        memoBean.getProperties().get(0).setValue(Utilty.getIMEI());
+        String memo = new Gson().toJson(memoBean);
+        LogUtil.d("memo:" + memo);
+
+        String privateKey = mPrivateKey;
+        String publicKey = Utilty.getPreference(Constants.SP_KEY_DID_PUBLICKEY, "");
+
+        ElastosWallet.Data data = new ElastosWallet.Data();
+        data.buf = memo.getBytes();
+        ElastosWallet.Data signedData = new ElastosWallet.Data();
+        int signedLen = ElastosWallet.sign(privateKey, data, data.buf.length, signedData);
+        if (signedLen <= 0) {
+            String errmsg = "Failed to sign data.\n";
+            LogUtil.e(errmsg);
+        }
+
+        boolean verified = ElastosWallet.verify(publicKey, data, data.buf.length, signedData, signedLen);
+        LogUtil.i("verified=" + verified);
+
+        JsonObject param = new JsonObject();
+        param.addProperty("msg", Utilty.bytesToHexString2(data.buf));
+        param.addProperty("pub", publicKey);
+        param.addProperty("sig", Utilty.bytesToHexString2(signedData.buf));
+
+        HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_DID + Urls.DID_UPLOAD, param.toString(), new HttpRequest.HttpCallbackListener() {
+            @Override
+            public void onFinish(String response) {
+                LogUtil.d("upload sysInfo response:" + response);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                LogUtil.e(e.getMessage());
+            }
+        });
     }
 
 }

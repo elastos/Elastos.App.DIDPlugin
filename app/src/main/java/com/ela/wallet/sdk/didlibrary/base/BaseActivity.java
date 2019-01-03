@@ -1,20 +1,29 @@
 package com.ela.wallet.sdk.didlibrary.base;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.ela.wallet.sdk.didlibrary.R;
 import com.ela.wallet.sdk.didlibrary.activity.BackupTipsActivity;
+import com.ela.wallet.sdk.didlibrary.global.Constants;
 import com.ela.wallet.sdk.didlibrary.utils.LogUtil;
+import com.ela.wallet.sdk.didlibrary.utils.Utilty;
+
+import java.util.Locale;
 
 
 public abstract class BaseActivity extends AppCompatActivity{
@@ -47,6 +56,41 @@ public abstract class BaseActivity extends AppCompatActivity{
 //            getWindow().getDecorView().setFitsSystemWindows(true);
         }
         initData();
+    }
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { // 8.0需要使用createConfigurationContext处理
+            super.attachBaseContext(updateResources(context));
+        } else {
+            super.attachBaseContext(context);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    private Context updateResources(Context context) {
+        Resources resources = context.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        Locale locale;
+        if (getSavedLanguage().equals("chinese")) {
+            locale = Locale.SIMPLIFIED_CHINESE;
+            config.locale = Locale.SIMPLIFIED_CHINESE;
+            LogUtil.i(activityName + ":getSavedLanguage chinese");
+            LogUtil.i(activityName + ":Locale.SIMPLIFIED_CHINESE");
+        } else {
+            locale = Locale.ENGLISH;// getSetLocale方法是获取新设置的语言
+            config.locale = Locale.ENGLISH;
+            LogUtil.i(activityName + ":getSavedLanguage ENGLISH");
+            LogUtil.i(activityName + ":Locale.ENGLISH");
+        }
+
+        resources.updateConfiguration(config, dm);
+
+        Configuration configuration = resources.getConfiguration();
+        configuration.setLocale(locale);
+        configuration.setLocales(new LocaleList(locale));
+        return context.createConfigurationContext(configuration);
     }
 
     protected abstract int getRootViewId();
@@ -103,6 +147,19 @@ public abstract class BaseActivity extends AppCompatActivity{
 
     public void setTitleText(String text) {
         tv_title.setText(text);
+    }
+
+    private String getSavedLanguage() {
+        String language = Utilty.getPreference(Constants.SP_KEY_APP_LANGUAGE, "");
+        if (TextUtils.isEmpty(language)) {
+            if (Locale.getDefault().getLanguage().contains("zh")) {
+                return "chinese";
+            } else {
+                return "english";
+            }
+        } else {
+            return language;
+        }
     }
 
 }

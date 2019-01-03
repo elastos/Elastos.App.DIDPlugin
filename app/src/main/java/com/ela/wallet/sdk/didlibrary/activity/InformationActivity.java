@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 
+import fi.iki.elonen.NanoHTTPD;
+
 public class InformationActivity extends BaseActivity {
 
     private TextView tv_balance;
@@ -64,15 +66,15 @@ public class InformationActivity extends BaseActivity {
         return getString(R.string.me_information);
     }
 
-
     private void loadInfoData() {
-        String url = String.format("%s%s", Urls.DID_GETDID, Utilty.getPreference(Constants.SP_KEY_DID, ""));
+        String url = String.format("%s%s%s", Urls.SERVER_DID, Urls.DID_GETDID, Utilty.getPreference(Constants.SP_KEY_DID, ""));
         HttpRequest.sendRequestWithHttpURLConnection(url, new HttpRequest.HttpCallbackListener() {
             @Override
             public void onFinish(final String response) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        LogUtil.d("loadInfoData:response=" + response);
                         GetDidBean bean = new Gson().fromJson(response, GetDidBean.class);
                         if (bean.getStatus() != 200 || TextUtils.isEmpty(bean.getResult().trim())) return;
                         try {
@@ -81,10 +83,12 @@ public class InformationActivity extends BaseActivity {
                                 String key = jsonArray.getJSONObject(k).getString("key");
                                 String value = jsonArray.getJSONObject(k).getString("value");
                                 if (TextUtils.isEmpty(key) && TextUtils.isEmpty(value)) continue;
+//                                if ("imei".equals(key.trim().toLowerCase())) continue;
                                 mList.add(new RecordsModel(key, null, value));
                             }
                             mAdapter.setData(mList);
                         } catch (Exception e) {
+                            LogUtil.e(e.getMessage());
                             e.printStackTrace();
                         }
                     }

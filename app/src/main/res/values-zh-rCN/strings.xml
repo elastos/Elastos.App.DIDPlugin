@@ -25,7 +25,7 @@
     <string name="charge_reset">重置地址</string>
 
     <string name="send_recipient">收件人</string>
-    <string name="send_enter_address">请输入亦来云地址</string>
+    <string name="send_enter_address">请输入ELA地址</string>
     <string name="send_backup">您的钱包还没有备份</string>
     <string name="send_tips">为保证您的钱包安全，您需要备份您的钱包信息，之后您可以进行支付交易</string>
     <string name="send_enter_pwd">输入消费密码</string>
@@ -44,7 +44,7 @@
     <string name="me_recharge">ELA兑换积分</string>
     <string name="me_withdraw">积分兑换ELA</string>
     <string name="me_records">交易记录</string>
-    <string name="me_finance">交易</string>
+    <string name="me_finance">交易转账</string>
     <string name="me_information">个人信息</string>
     <string name="me_history">充值和提现记录</string>
     <string name="me_preference">偏好设置</string>
@@ -86,7 +86,7 @@
     <string name="dialog_send_success">付款成功</string>
     <string name="dialog_recharge_success">充值成功</string>
     <string name="dialog_withdraw_success">提现成功</string>
-    <string name="dialog_finance_failed">操作失败，请核对参数</string>
+    <string name="dialog_finance_failed">您有未完成的交易，请稍候重试！</string>
 
 
     <string name="scan_noresult">未扫描到二维码，请重试</string>

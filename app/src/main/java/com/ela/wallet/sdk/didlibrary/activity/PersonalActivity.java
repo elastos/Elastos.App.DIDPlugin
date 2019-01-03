@@ -70,6 +70,10 @@ public class PersonalActivity extends BaseActivity {
         rl_did.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!Utilty.isBacked()) {
+                    showBackupDialog();
+                    return;
+                }
                 Intent intent = new Intent();
                 intent.setClass(PersonalActivity.this, ReceiveActivity.class);
                 intent.putExtra(Constants.INTENT_PARAM_KEY_QRCODE_FROM, "did");
@@ -79,6 +83,10 @@ public class PersonalActivity extends BaseActivity {
         rl_ela.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!Utilty.isBacked()) {
+                    showBackupDialog();
+                    return;
+                }
                 Intent intent = new Intent();
                 intent.setClass(PersonalActivity.this, ReceiveActivity.class);
                 intent.putExtra(Constants.INTENT_PARAM_KEY_QRCODE_FROM, "ela");

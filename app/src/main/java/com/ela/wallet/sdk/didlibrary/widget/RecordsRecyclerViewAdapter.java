@@ -76,7 +76,7 @@ public class RecordsRecyclerViewAdapter extends RecyclerView.Adapter<RecordsRecy
     */
     private String stampToDate(String s){
         String res;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:MM");
         long lt = new Long(s)*1000;
         Date date = new Date(lt);
         res = simpleDateFormat.format(date);

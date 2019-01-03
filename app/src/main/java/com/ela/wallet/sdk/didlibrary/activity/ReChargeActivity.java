@@ -2,7 +2,9 @@ package com.ela.wallet.sdk.didlibrary.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.TextureView;
 import android.view.View;
@@ -51,6 +53,30 @@ public class ReChargeActivity extends BaseActivity {
                 startActivityForResult(intent, Constants.INTENT_REQUEST_CODE_SCAN);
             }
         });
+
+        et_amount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String temp = editable.toString();
+                int posDot = temp.indexOf(".");
+                if (posDot <= 0) return;
+                if (temp.length() - posDot - 1 > 8)
+                {
+                    editable.delete(posDot + 9, posDot + 10);
+                }
+
+            }
+        });
     }
 
     @Override
@@ -61,9 +87,10 @@ public class ReChargeActivity extends BaseActivity {
     }
 
     public void onOKClick(View view) {
-        String fromAddress = et_scan_address.getText().toString();
+        if (Utilty.isFastDoubleClick()) return;
+//        String fromAddress = et_scan_address.getText().toString();
         String amount = et_amount.getText().toString();
-        if (TextUtils.isEmpty(fromAddress) || TextUtils.isEmpty(amount)) {
+        if (/*TextUtils.isEmpty(fromAddress) || */TextUtils.isEmpty(amount)) {
             Toast.makeText(ReChargeActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -93,13 +120,13 @@ public class ReChargeActivity extends BaseActivity {
     }
 
     private void doRecharge() {
-        String fromAddress = et_scan_address.getText().toString();
-        String amount = et_amount.getText().toString();
+        String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
+        String amount = String.format("%.8f", Float.parseFloat(et_amount.getText().toString()));
         if (TextUtils.isEmpty(fromAddress) || TextUtils.isEmpty(amount)) {
             Toast.makeText(ReChargeActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
-        DidLibrary.Ela2Did(fromAddress, Long.parseLong(amount), new TransCallback() {
+        DidLibrary.Ela2Did(fromAddress, amount, new TransCallback() {
             @Override
             public void onSuccess(final String result) {
                 runOnUiThread(new Runnable() {
@@ -111,10 +138,9 @@ public class ReChargeActivity extends BaseActivity {
                         } else {
                             msg = getString(R.string.dialog_finance_failed);
                         }
-                        Toast.makeText(ReChargeActivity.this, result, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(ReChargeActivity.this, result, Toast.LENGTH_SHORT).show();
                         new DidAlertDialog(ReChargeActivity.this)
                                 .setTitle(msg)
-                                .setMessage(result)
                                 .setRightButton(getString(R.string.btn_ok), null)
                                 .show();
                     }

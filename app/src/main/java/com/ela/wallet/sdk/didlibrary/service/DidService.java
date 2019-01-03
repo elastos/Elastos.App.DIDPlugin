@@ -13,7 +13,8 @@ import java.io.IOException;
 
 public class DidService extends Service {
 
-    private HttpServer mHttpServer;
+    private static HttpServer mHttpServer;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -23,19 +24,19 @@ public class DidService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Utilty.setServiceContext(this);
-        DidLibrary.init(this);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Utilty.setServiceContext(this);
+        DidLibrary.init(this);
         mHttpServer = new HttpServer(34561);
         try {
             mHttpServer.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 
     @Override
@@ -43,6 +44,8 @@ public class DidService extends Service {
         if (mHttpServer != null) {
             mHttpServer.stop();
         }
-        super.onDestroy();
+        Intent localIntent = new Intent();
+        localIntent.setClass(this, DidService.class);  //销毁时重新启动Service
+        this.startService(localIntent);
     }
 }

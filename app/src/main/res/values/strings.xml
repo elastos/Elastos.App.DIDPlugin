@@ -1,8 +1,8 @@
 <resources>
-    <string name="library_name">DidInfo</string>
+    <string name="library_name">DIDInfo</string>
     <string name="nav_home">home</string>
-    <string name="nav_charges">Transfer between Ela</string>
-    <string name="nav_pay">Transfer between Did Integral</string>
+    <string name="nav_charges">Transfer between ELA</string>
+    <string name="nav_pay">Transfer between DID Integral</string>
     <string name="nav_mine">me</string>
     <string name="nav_all">All</string>
     <string name="nav_record1">DID->DID</string>
@@ -15,11 +15,11 @@
     <string name="home_balance">Walletbalance</string>
     <string name="home_expense">expense</string>
     <string name="home_income">income</string>
-    <string name="home_didinfo">did info</string>
-    <string name="did_balance">Did Balance</string>
-    <string name="ela_balance">Ela Balance</string>
-    <string name="did_qr">Did QrCode</string>
-    <string name="ela_qr">Ela QrCode</string>
+    <string name="home_didinfo">DID info</string>
+    <string name="did_balance">DID Balance</string>
+    <string name="ela_balance">ELA Balance</string>
+    <string name="did_qr">DID QrCode</string>
+    <string name="ela_qr">ELA QrCode</string>
 
     <string name="charge_copytips">(Click to copy address)</string>
     <string name="charge_reset">Reset address</string>
@@ -33,18 +33,18 @@
     <string name="send_creating">Creating transaction</string>
     <string name="send_click">Click to send</string>
 
-    <string name="finance_recharge_addresss">recharge from</string>
-    <string name="finance_recharge_amount">recharge amount</string>
+    <string name="finance_recharge_addresss">Recharge From</string>
+    <string name="finance_recharge_amount">Recharge Amount</string>
     <string name="finance_recharge_phrase">the phrase of recharge account</string>
-    <string name="finance_withdraw_addresss">withdraw to</string>
-    <string name="finance_withdraw_amount">withdraw amount</string>
+    <string name="finance_withdraw_addresss">Withdraw To</string>
+    <string name="finance_withdraw_amount">Withdraw Amount</string>
     <string name="finance_send_addresss">Recipient</string>
-    <string name="finance_send_amount">Recipient amount</string>
+    <string name="finance_send_amount">Recipient Amount</string>
 
-    <string name="me_recharge">Exchange Ela for Integral</string>
-    <string name="me_withdraw">Exchange Integral for Ela</string>
+    <string name="me_recharge">Exchange ELA for Integral</string>
+    <string name="me_withdraw">Exchange Integral for ELA</string>
     <string name="me_records">Records</string>
-    <string name="me_finance">Transaction</string>
+    <string name="me_finance">Transaction Transfer</string>
     <string name="me_information">Personal Information</string>
     <string name="me_history">Recharge and withdraw record</string>
     <string name="me_preference">preference</string>
@@ -84,13 +84,14 @@
     <string name="dialog_send_success">Send Success!</string>
     <string name="dialog_recharge_success">Recharge Success!</string>
     <string name="dialog_withdraw_success">Withdraw Success!</string>
-    <string name="dialog_finance_failed">Failed!, Please check your params!</string>
+    <string name="dialog_finance_failed">The last transaction is not completed. Please try again later.</string>
 
 
     <string name="scan_noresult">There\'s no result, Please retry!</string>
     <string name="toast_pwd_notcorrect">The length of password is too short</string>
     <string name="toast_pwd_same">The passwords are inconsistent</string>
     <string name="toast_pwd_wrong">The password is wrong</string>
+    <string name="toast_import_success">Import Success!</string>
     <string name="toast_copy">Copy success!</string>
 
 
