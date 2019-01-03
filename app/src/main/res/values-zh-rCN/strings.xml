@@ -25,7 +25,7 @@
     <string name="charge_reset">重置地址</string>
 
     <string name="send_recipient">收件人</string>
-    <string name="send_enter_address">请输入亦来云地址</string>
+    <string name="send_enter_address">请输入ELA地址</string>
     <string name="send_backup">您的钱包还没有备份</string>
     <string name="send_tips">为保证您的钱包安全，您需要备份您的钱包信息，之后您可以进行支付交易</string>
     <string name="send_enter_pwd">输入消费密码</string>
