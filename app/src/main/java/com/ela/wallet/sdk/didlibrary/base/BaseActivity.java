@@ -12,6 +12,7 @@ import android.os.LocaleList;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -69,12 +70,22 @@ public abstract class BaseActivity extends AppCompatActivity{
     @TargetApi(Build.VERSION_CODES.N)
     private Context updateResources(Context context) {
         Resources resources = context.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
         Locale locale;
         if (getSavedLanguage().equals("chinese")) {
             locale = Locale.SIMPLIFIED_CHINESE;
+            config.locale = Locale.SIMPLIFIED_CHINESE;
+            LogUtil.i(activityName + ":getSavedLanguage chinese");
+            LogUtil.i(activityName + ":Locale.SIMPLIFIED_CHINESE");
         } else {
             locale = Locale.ENGLISH;// getSetLocale方法是获取新设置的语言
+            config.locale = Locale.ENGLISH;
+            LogUtil.i(activityName + ":getSavedLanguage ENGLISH");
+            LogUtil.i(activityName + ":Locale.ENGLISH");
         }
+
+        resources.updateConfiguration(config, dm);
 
         Configuration configuration = resources.getConfiguration();
         configuration.setLocale(locale);

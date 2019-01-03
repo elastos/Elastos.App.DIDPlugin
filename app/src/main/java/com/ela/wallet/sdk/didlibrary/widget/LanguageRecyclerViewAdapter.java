@@ -1,6 +1,7 @@
 package com.ela.wallet.sdk.didlibrary.widget;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
@@ -57,6 +58,11 @@ public class LanguageRecyclerViewAdapter extends RecyclerView.Adapter<LanguageRe
                         config.locale = Locale.ENGLISH;
                     }
                     resources.updateConfiguration(config, dm);
+
+                    final Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(mContext.getPackageName());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    mContext.startActivity(intent);
+                    System.exit(0);
                 }
             }
         });

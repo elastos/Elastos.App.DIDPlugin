@@ -2,6 +2,7 @@ package com.ela.wallet.sdk.didlibrary.utils;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -14,6 +15,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import com.ela.wallet.sdk.didlibrary.global.Constants;
+import com.ela.wallet.sdk.didlibrary.service.DidService;
 
 import java.lang.reflect.Method;
 import java.util.regex.Matcher;
@@ -38,6 +40,15 @@ public class Utilty {
     public static Context getContext() {
         LogUtil.i("pid=" + Process.myPid() + ";mContext=" + mContext);
         LogUtil.i("pid=" + Process.myPid() + ";sContext=" + sContext);
+        if (sContext == null && mContext != null) {
+            try {
+                Intent intent = new Intent();
+                intent.setClass(mContext, DidService.class);
+                mContext.startService(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return sContext == null ? mContext : sContext;
     }
 
