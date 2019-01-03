@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.ela.wallet.sdk.didlibrary.bean.CctBean;
 import com.ela.wallet.sdk.didlibrary.bean.HttpBean;
+import com.ela.wallet.sdk.didlibrary.bean.MemoBean;
 import com.ela.wallet.sdk.didlibrary.callback.TransCallback;
 import com.ela.wallet.sdk.didlibrary.global.Constants;
 import com.ela.wallet.sdk.didlibrary.global.Urls;
@@ -862,9 +863,18 @@ public class DidLibrary {
     }
 
     public static void uploadSysinfo() {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("imei", Utilty.getIMEI());
-        String memo = jsonObject.toString();
+        MemoBean memoBean = new Gson().fromJson("{\n" +
+                "    \"Tag\": \"DID Property\",\n" +
+                "    \"Ver\": \"1.0\",\n" +
+                "    \"Status\": \"1\",\n" +
+                "    \"Properties\": [{\n" +
+                "        \"Key\": \"imei\",\n" +
+                "        \"Value\": \"\",\n" +
+                "        \"Status\": \"1\"\n" +
+                "    }]\n" +
+                "}", MemoBean.class);
+        memoBean.getProperties().get(0).setValue(Utilty.getIMEI());
+        String memo = new Gson().toJson(memoBean);
         LogUtil.d("memo:" + memo);
 
         String privateKey = mPrivateKey;

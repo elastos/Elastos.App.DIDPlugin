@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_game = findViewById(R.id.btn_game);
         btn_game.setOnClickListener(this);
 
-        //set true to print logs when debug;set false when release.
-        DidEntry.openLog(true);
+//        //set true to print logs when debug;set false when release. default value:false
+//        DidEntry.openLog(false);
         //init the sdk library
         DidEntry.init(this);
     }

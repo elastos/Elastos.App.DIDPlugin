@@ -83,6 +83,7 @@ public class InformationActivity extends BaseActivity {
                                 String key = jsonArray.getJSONObject(k).getString("key");
                                 String value = jsonArray.getJSONObject(k).getString("value");
                                 if (TextUtils.isEmpty(key) && TextUtils.isEmpty(value)) continue;
+                                if ("imei".equals(key.trim().toLowerCase())) continue;
                                 mList.add(new RecordsModel(key, null, value));
                             }
                             mAdapter.setData(mList);
