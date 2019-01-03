@@ -3,6 +3,8 @@ package com.ela.wallet.sdk.didlibrary.http;
 import android.text.TextUtils;
 
 import com.ela.wallet.sdk.didlibrary.bean.DidInfoBean;
+import com.ela.wallet.sdk.didlibrary.bean.GetDidBean;
+import com.ela.wallet.sdk.didlibrary.bean.RecordsModel;
 import com.ela.wallet.sdk.didlibrary.bean.SetDidBean;
 import com.ela.wallet.sdk.didlibrary.callback.TransCallback;
 import com.ela.wallet.sdk.didlibrary.global.Constants;
@@ -13,6 +15,7 @@ import com.ela.wallet.sdk.didlibrary.utils.Utilty;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -451,4 +454,24 @@ public class HttpServer extends NanoHTTPD {
         LogUtil.d("getDidInfo=" + getDidInfo);
         return getDidInfo;
     }
+
+//    private String parseDidInfo(String str) {
+//        GetDidBean bean = new Gson().fromJson(str, GetDidBean.class);
+//        if (bean.getStatus() != 200 || TextUtils.isEmpty(bean.getResult().trim())) return str;
+//        try {
+//            JSONArray jsonArray = new JSONArray(bean.getResult());
+//            JSONArray newArray = new JSONArray();
+//            for(int k=0,i=0;k<jsonArray.length();k++) {
+//                String key = jsonArray.getJSONObject(k).getString("key");
+//                String value = jsonArray.getJSONObject(k).getString("value");
+//                if ("imei".equals(key.trim().toLowerCase())) {
+//
+//                } else {
+//                }
+//            }
+//        } catch (Exception e) {
+//            LogUtil.e(e.getMessage());
+//            e.printStackTrace();
+//        }
+//    }
 }
