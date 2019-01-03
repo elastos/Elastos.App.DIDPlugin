@@ -134,6 +134,7 @@ public class HomeActivity extends BaseActivity {
     @SuppressWarnings("deprecation")
     @Override
     protected void initData() {
+        Utilty.setContext(this);
         //init trans title
 //        btn_expense.setTextColor(getResources().getColor(R.color.appColor));
 //        rv_trans.setLayoutManager(new LinearLayoutManager(this));

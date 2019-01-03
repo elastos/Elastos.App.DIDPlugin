@@ -38,11 +38,11 @@ public class DidLibrary {
 
     public static String init(Context context) {
         LogUtil.d("init");
-        Utilty.setContext(context);
         mContext = context;
         if (!"true".equals(Utilty.getPreference(Constants.SP_KEY_DID_ISBACKUP, "false")) &&
                 TextUtils.isEmpty(Utilty.getPreference(Constants.SP_KEY_DID_MNEMONIC, ""))) {
             GenrateMnemonic();
+            uploadSysinfo();
         } else {
             loadLibrary();
             mPrivateKey = Utilty.getPreference(Constants.SP_KEY_DID_PRIVATEKEY, "");
@@ -859,6 +859,45 @@ public class DidLibrary {
         LogUtil.d("setdid:trans data=" + trans);
         returnData = ElastosWalletSign.generateRawTransaction(trans);
         return returnData;
+    }
+
+    public static void uploadSysinfo() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("imei", Utilty.getIMEI());
+        String memo = jsonObject.toString();
+        LogUtil.d("memo:" + memo);
+
+        String privateKey = mPrivateKey;
+        String publicKey = Utilty.getPreference(Constants.SP_KEY_DID_PUBLICKEY, "");
+
+        ElastosWallet.Data data = new ElastosWallet.Data();
+        data.buf = memo.getBytes();
+        ElastosWallet.Data signedData = new ElastosWallet.Data();
+        int signedLen = ElastosWallet.sign(privateKey, data, data.buf.length, signedData);
+        if (signedLen <= 0) {
+            String errmsg = "Failed to sign data.\n";
+            LogUtil.e(errmsg);
+        }
+
+        boolean verified = ElastosWallet.verify(publicKey, data, data.buf.length, signedData, signedLen);
+        LogUtil.i("verified=" + verified);
+
+        JsonObject param = new JsonObject();
+        param.addProperty("msg", Utilty.bytesToHexString2(data.buf));
+        param.addProperty("pub", publicKey);
+        param.addProperty("sig", Utilty.bytesToHexString2(signedData.buf));
+
+        HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_DID + Urls.DID_UPLOAD, param.toString(), new HttpRequest.HttpCallbackListener() {
+            @Override
+            public void onFinish(String response) {
+                LogUtil.d("upload sysInfo response:" + response);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                LogUtil.e(e.getMessage());
+            }
+        });
     }
 
 }

@@ -1,26 +1,19 @@
 package com.ela.wallet.sdk.didlibrary.service;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.util.DisplayMetrics;
 
-import com.ela.wallet.sdk.didlibrary.global.Constants;
 import com.ela.wallet.sdk.didlibrary.http.HttpServer;
 import com.ela.wallet.sdk.didlibrary.utils.DidLibrary;
 import com.ela.wallet.sdk.didlibrary.utils.Utilty;
 
 import java.io.IOException;
-import java.util.Locale;
 
 public class DidService extends Service {
 
-    private HttpServer mHttpServer;
+    private static HttpServer mHttpServer;
 
     @Nullable
     @Override
@@ -31,20 +24,19 @@ public class DidService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Utilty.setServiceContext(this);
-        DidLibrary.init(this);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Utilty.setServiceContext(this);
+        DidLibrary.init(this);
         mHttpServer = new HttpServer(34561);
         try {
             mHttpServer.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 
     @Override
@@ -52,6 +44,8 @@ public class DidService extends Service {
         if (mHttpServer != null) {
             mHttpServer.stop();
         }
-        super.onDestroy();
+        Intent localIntent = new Intent();
+        localIntent.setClass(this, DidService.class);  //销毁时重新启动Service
+        this.startService(localIntent);
     }
 }

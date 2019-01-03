@@ -1,12 +1,21 @@
 package com.ela.wallet.sdk.didlibrary.utils;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Process;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
 import com.ela.wallet.sdk.didlibrary.global.Constants;
 
+import java.lang.reflect.Method;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,7 +29,6 @@ public class Utilty {
 
     public static void setContext(Context context) {
         mContext = context;
-        LogUtil.w("context=" + mContext);
     }
 
     public static void setServiceContext(Context context) {
@@ -28,6 +36,8 @@ public class Utilty {
     }
 
     public static Context getContext() {
+        LogUtil.i("pid=" + Process.myPid() + ";mContext=" + mContext);
+        LogUtil.i("pid=" + Process.myPid() + ";sContext=" + sContext);
         return sContext == null ? mContext : sContext;
     }
 
@@ -48,14 +58,14 @@ public class Utilty {
         }
         if (sp == null) {
             try {
-                LogUtil.w("mContext=" + mContext);
-                LogUtil.w("sContext=" + sContext);
                 sp = getContext().getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
             } catch (Exception e) {
                 LogUtil.e(e.getMessage());
             }
         }
-
+        if (sp == null) {
+            return "";
+        }
         return sp.getString(key, defValue);
     }
 
@@ -220,9 +230,132 @@ public class Utilty {
         return false;
     }
 
-    public static boolean isOnlyPointNumber(String number) {//保留两位小数正则
-        Pattern pattern = Pattern.compile("^\\d+\\.?\\d{0,8}$");
-        Matcher matcher = pattern.matcher(number);
-        return matcher.matches();
+    public static String getIMEI() {
+        if (TextUtils.isEmpty(getDeviceIdForGeneral(getContext()))) {
+            return "";
+        }
+        return getDeviceIdForGeneral(getContext());
+
     }
+
+    public static String getIMSI() {
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+            try {
+                TelephonyManager tm = (TelephonyManager) getContext().getSystemService(Context.TELEPHONY_SERVICE);
+                return tm.getSubscriberId();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "0000000000";
+            }
+        } else {
+            return "0000000000";
+        }
+    }
+
+    private static String getDeviceIdForGeneral(Context var0) {
+        String var1 = "";
+        if(var0 == null) {
+            return var1;
+        } else {
+            if(Build.VERSION.SDK_INT < 23) {
+                var1 = getIMEI(var0);
+                if(TextUtils.isEmpty(var1)) {
+                    if(TextUtils.isEmpty(var1)) {
+                        var1 = Settings.Secure.getString(var0.getContentResolver(), "android_id");
+                        if(TextUtils.isEmpty(var1)) {
+                            var1 = getSerialNo();
+                        }
+                    }
+                }
+            } else if(Build.VERSION.SDK_INT == 23) {
+                var1 = getIMEI(var0);
+                if(TextUtils.isEmpty(var1)) {
+                    if(TextUtils.isEmpty(var1)) {
+                        var1 = Settings.Secure.getString(var0.getContentResolver(), "android_id");
+
+                        if(TextUtils.isEmpty(var1)) {
+                            var1 = getSerialNo();
+                        }
+                    }
+                }
+            } else {
+                var1 = getIMEI(var0);
+                if(TextUtils.isEmpty(var1)) {
+                    var1 = getSerialNo();
+                    if(TextUtils.isEmpty(var1)) {
+                        var1 = Settings.Secure.getString(var0.getContentResolver(), "android_id");
+                    }
+                }
+            }
+
+            return var1;
+        }
+    }
+
+    private static String getIMEI(Context var0) {
+        String var1 = "";
+        if(var0 == null) {
+            return var1;
+        } else {
+            TelephonyManager var2 = (TelephonyManager)var0.getSystemService(Context.TELEPHONY_SERVICE);
+            if(var2 != null) {
+                try {
+                    if(checkPermission(var0, "android.permission.READ_PHONE_STATE")) {
+                        var1 = var2.getDeviceId();
+                    }
+                } catch (Throwable var4) {
+                }
+            }
+
+            return var1;
+        }
+    }
+
+    private static String getSerialNo() {
+        String var0 = "";
+        if(Build.VERSION.SDK_INT >= 9) {
+            if(Build.VERSION.SDK_INT >= 26) {
+                try {
+                    Class var1 = Class.forName("android.os.Build");
+                    Method var2 = var1.getMethod("getSerial", new Class[0]);
+                    var0 = (String)var2.invoke(var1, new Object[0]);
+                } catch (Throwable var3) {
+                }
+            } else {
+                var0 = Build.SERIAL;
+            }
+        }
+
+        return var0;
+    }
+
+    public static boolean checkPermission(Context var0, String var1) {
+        boolean var2 = false;
+        if(var0 == null) {
+            return var2;
+        } else {
+            if(Build.VERSION.SDK_INT >= 23) {
+                try {
+                    Class var3 = Class.forName("android.content.Context");
+                    Method var4 = var3.getMethod("checkSelfPermission", new Class[]{String.class});
+                    int var5 = ((Integer)var4.invoke(var0, new Object[]{var1})).intValue();
+                    if(var5 == 0) {
+                        var2 = true;
+                    } else {
+                        var2 = false;
+                    }
+                } catch (Throwable var6) {
+                    var2 = false;
+                }
+            } else {
+                PackageManager var7 = var0.getPackageManager();
+                if(var7.checkPermission(var1, var0.getPackageName()) == PackageManager.PERMISSION_GRANTED) {
+                    var2 = true;
+                }
+            }
+
+            return var2;
+        }
+    }
+
 }
