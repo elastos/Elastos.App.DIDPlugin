@@ -126,6 +126,8 @@ public class ReChargeActivity extends BaseActivity {
             Toast.makeText(ReChargeActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
+        et_amount.setText("");
+        et_scan_address.setText("");
         DidLibrary.Ela2Did(fromAddress, amount, new TransCallback() {
             @Override
             public void onSuccess(final String result) {

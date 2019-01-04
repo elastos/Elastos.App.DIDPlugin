@@ -124,6 +124,8 @@ public class WithDrawActivity extends BaseActivity {
             Toast.makeText(WithDrawActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
+        et_amount.setText("");
+        et_scan_address.setText("");
         DidLibrary.Tixian(toAddress, amount, new TransCallback() {
             @Override
             public void onSuccess(final String result) {

@@ -133,6 +133,8 @@ public class Ela2ElaActivity extends BaseActivity {
             Toast.makeText(Ela2ElaActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
+        et_amount.setText("");
+        et_scan_address.setText("");
         DidLibrary.Ela2Ela(toAddress, amount, new TransCallback() {
             @Override
             public void onSuccess(final String result) {
