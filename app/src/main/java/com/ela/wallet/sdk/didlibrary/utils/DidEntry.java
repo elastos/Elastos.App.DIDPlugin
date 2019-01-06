@@ -4,6 +4,7 @@ import android.app.Application;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
 import com.ela.wallet.sdk.didlibrary.activity.HomeActivity;
 import com.ela.wallet.sdk.didlibrary.service.DidService;
@@ -33,7 +34,11 @@ public class DidEntry {
         try {
             Intent intent = new Intent();
             intent.setClass(context, DidService.class);
-            context.startService(intent);
+            if (Build.VERSION.SDK_INT >= 26) {
+                context.startForegroundService(intent);
+            } else {
+                context.startService(intent);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

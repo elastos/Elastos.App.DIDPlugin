@@ -85,6 +85,8 @@
     <string name="dialog_recharge_success">Recharge Success!</string>
     <string name="dialog_withdraw_success">Withdraw Success!</string>
     <string name="dialog_finance_failed">The last transaction is not completed. Please try again later.</string>
+    <string name="dialog_trans_notenough">Not Enough Balance!</string>
+    <string name="dialog_trans_failed">Send transaction failed, Please try again later.</string>
 
 
     <string name="scan_noresult">There\'s no result, Please retry!</string>
@@ -93,6 +95,9 @@
     <string name="toast_pwd_wrong">The password is wrong</string>
     <string name="toast_import_success">Import Success!</string>
     <string name="toast_copy">Copy success!</string>
+
+    <string name="loading">Loading···</string>
+    <string name="trans_sending">Sending Transaction···</string>
 
 
     <string name="btn_import">import</string>

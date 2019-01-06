@@ -20,6 +20,7 @@ import com.ela.wallet.sdk.didlibrary.http.HttpRequest;
 import com.ela.wallet.sdk.didlibrary.utils.LogUtil;
 import com.ela.wallet.sdk.didlibrary.utils.Utilty;
 import com.ela.wallet.sdk.didlibrary.widget.RecordsRecyclerViewAdapter;
+import com.ela.wallet.sdk.didlibrary.widget.SweetAlertDialog;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
@@ -39,6 +40,8 @@ public class InformationActivity extends BaseActivity {
     private RecyclerView rv_trans;
     private RecordsRecyclerViewAdapter mAdapter;
     private List<RecordsModel> mList;
+
+    private SweetAlertDialog mDialog;
 
     @Override
     protected int getRootViewId() {
@@ -67,6 +70,12 @@ public class InformationActivity extends BaseActivity {
     }
 
     private void loadInfoData() {
+        if (mDialog == null) {
+            mDialog = new SweetAlertDialog(this);
+        }
+        mDialog.setTitle(getString(R.string.loading));
+        mDialog.show();
+
         String url = String.format("%s%s%s", Urls.SERVER_DID, Urls.DID_GETDID, Utilty.getPreference(Constants.SP_KEY_DID, ""));
         HttpRequest.sendRequestWithHttpURLConnection(url, new HttpRequest.HttpCallbackListener() {
             @Override
@@ -75,6 +84,10 @@ public class InformationActivity extends BaseActivity {
                     @Override
                     public void run() {
                         LogUtil.d("loadInfoData:response=" + response);
+                        if (mDialog != null && mDialog.isShowing()) {
+                            mDialog.dismiss();
+                        }
+
                         GetDidBean bean = new Gson().fromJson(response, GetDidBean.class);
                         if (bean.getStatus() != 200 || TextUtils.isEmpty(bean.getResult().trim())) return;
                         try {
@@ -91,6 +104,7 @@ public class InformationActivity extends BaseActivity {
                             LogUtil.e(e.getMessage());
                             e.printStackTrace();
                         }
+
                     }
                 });
             }
@@ -100,10 +114,20 @@ public class InformationActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
+                        if (mDialog != null && mDialog.isShowing()) {
+                            mDialog.dismiss();
+                        }
                     }
                 });
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
     }
 }

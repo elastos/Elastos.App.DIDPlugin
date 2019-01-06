@@ -754,7 +754,7 @@ public class DidLibrary {
         Utilty.setPreference(Constants.SP_KEY_DID_ADDRESS, address);
         Utilty.setPreference(Constants.SP_KEY_DID_ISBACKUP, "true");
         Utilty.setPreference(Constants.SP_KEY_DID_MNEMONIC, "");
-        Utilty.setPreference(Constants.SP_KEY_APP_LANGUAGE, language);
+//        Utilty.setPreference(Constants.SP_KEY_APP_LANGUAGE, language);
         Utilty.setPreference(Constants.SP_KEY_DID, ElastosWalletDID.getDid(publicKey));
         return true;
     }

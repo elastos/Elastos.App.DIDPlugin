@@ -18,6 +18,7 @@ import com.ela.wallet.sdk.didlibrary.global.Urls;
 import com.ela.wallet.sdk.didlibrary.http.HttpRequest;
 import com.ela.wallet.sdk.didlibrary.utils.Utilty;
 import com.ela.wallet.sdk.didlibrary.widget.RecordsRecyclerViewAdapter;
+import com.ela.wallet.sdk.didlibrary.widget.SweetAlertDialog;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -34,6 +35,8 @@ public class RecordsActivity extends BaseActivity {
     private List<RecordsModel> mList2;
     private List<RecordsModel> mList3;
     private List<RecordsModel> mList4;
+
+    private SweetAlertDialog mDialog;
 
     @Override
     protected int getRootViewId() {
@@ -133,6 +136,12 @@ public class RecordsActivity extends BaseActivity {
     }
 
     private void loadDidTxData() {
+        if (mDialog == null) {
+            mDialog = new SweetAlertDialog(this);
+        }
+        mDialog.setTitle(getString(R.string.loading));
+        mDialog.show();
+
 //        String url = String.format("%s%s%s", Urls.SERVER_DID_HISTORY, Urls.DID_HISTORY, "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4");
         String url = String.format("%s%s%s", Urls.SERVER_DID_HISTORY, Urls.DID_HISTORY, Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, ""));
         HttpRequest.sendRequestWithHttpURLConnection(url, new HttpRequest.HttpCallbackListener() {
@@ -181,7 +190,9 @@ public class RecordsActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
+                        if (mDialog != null && mDialog.isShowing()) {
+                            mDialog.dismiss();
+                        }
                     }
                 });
             }
@@ -211,6 +222,9 @@ public class RecordsActivity extends BaseActivity {
                             }
                         }
                         parseTransData();
+                        if (mDialog != null && mDialog.isShowing()) {
+                            mDialog.dismiss();
+                        }
                     }
                 });
             }
@@ -220,7 +234,9 @@ public class RecordsActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
+                        if (mDialog != null && mDialog.isShowing()) {
+                            mDialog.dismiss();
+                        }
                     }
                 });
             }
@@ -233,6 +249,15 @@ public class RecordsActivity extends BaseActivity {
         Collections.reverse(mList2);
         Collections.reverse(mList3);
         Collections.reverse(mList4);
+        mTab.getTabAt(0).select();
         mAdapter.setData(mList);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
     }
 }
