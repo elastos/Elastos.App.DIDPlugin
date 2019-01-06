@@ -151,7 +151,10 @@ public class RecordsActivity extends BaseActivity {
                     @Override
                     public void run() {
                         AllTxsBean allTxsBean = new Gson().fromJson(response, AllTxsBean.class);
-                        if (allTxsBean.getStatus() != 200) {
+                        if (allTxsBean.getStatus() != 200 || allTxsBean.getResult().getTotalNum() == 0) {
+                            if (mDialog != null && mDialog.isShowing()) {
+                                mDialog.dismiss();
+                            }
                             return;
                         }
                         if (allTxsBean.getResult().getTotalNum() > 0) {
@@ -179,8 +182,8 @@ public class RecordsActivity extends BaseActivity {
 //                                mList.add(new RecordsModel(historyBean.getType(), historyBean.getCreateTime()+"", prefix + historyBean.getValue()));
                             }
 //                            mAdapter.setData(mList);
-                            loadElaTxData();
                         }
+                        loadElaTxData();
                     }
                 });
             }
@@ -207,6 +210,9 @@ public class RecordsActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        if (mDialog != null && mDialog.isShowing()) {
+                            mDialog.dismiss();
+                        }
                         AllTxsBean allTxsBean = new Gson().fromJson(response, AllTxsBean.class);
                         if (allTxsBean.getStatus() != 200) {
                             return;

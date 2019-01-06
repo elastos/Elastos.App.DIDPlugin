@@ -117,6 +117,7 @@ public abstract class BaseActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         LogUtil.i(activityName + ":onResume");
+        Utilty.getContext();
     }
 
     @Override
