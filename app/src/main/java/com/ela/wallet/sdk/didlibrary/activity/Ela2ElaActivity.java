@@ -134,8 +134,6 @@ public class Ela2ElaActivity extends BaseActivity {
             Toast.makeText(Ela2ElaActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
-        et_amount.setText("");
-        et_scan_address.setText("");
         Snackbar.make(et_amount, getString(R.string.trans_sending), Snackbar.LENGTH_SHORT).show();
         DidLibrary.Ela2Ela(toAddress, amount, new TransCallback() {
             @Override
@@ -152,7 +150,13 @@ public class Ela2ElaActivity extends BaseActivity {
 //                        Toast.makeText(Ela2ElaActivity.this, result, Toast.LENGTH_SHORT).show();
                         new DidAlertDialog(Ela2ElaActivity.this)
                                 .setTitle(msg)
-                                .setRightButton(getString(R.string.btn_ok), null)
+                                .setRightButton(getString(R.string.btn_ok), new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        et_amount.setText("");
+                                        et_scan_address.setText("");
+                                    }
+                                })
                                 .show();
                     }
                 });
@@ -171,7 +175,13 @@ public class Ela2ElaActivity extends BaseActivity {
                         }
                         new DidAlertDialog(Ela2ElaActivity.this)
                                 .setTitle(msg)
-                                .setRightButton(getString(R.string.btn_ok), null)
+                                .setRightButton(getString(R.string.btn_ok), new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        et_amount.setText("");
+                                        et_scan_address.setText("");
+                                    }
+                                })
                                 .show();
                     }
                 });

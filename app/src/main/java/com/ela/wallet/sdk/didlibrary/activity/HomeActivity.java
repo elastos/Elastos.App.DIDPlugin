@@ -126,7 +126,7 @@ public class HomeActivity extends BaseActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(HomeActivity.this, ImportWalletActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, Constants.INTENT_REQUEST_CODE_IMPORT);
             }
         });
     }
@@ -246,6 +246,9 @@ public class HomeActivity extends BaseActivity {
                 resultCode == Activity.RESULT_OK) {
             finish();
             startActivity(getIntent());
+        } else if (requestCode == Constants.INTENT_REQUEST_CODE_IMPORT &&
+                resultCode == Activity.RESULT_OK) {
+            tv_balance.setText(Utilty.getPreference(Constants.SP_KEY_DID, ""));
         }
     }
 }

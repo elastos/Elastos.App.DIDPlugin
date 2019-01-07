@@ -39,6 +39,7 @@ public class DidEntry {
             } else {
                 context.startService(intent);
             }
+            Utilty.setAppContext(context);
         } catch (Exception e) {
             e.printStackTrace();
         }

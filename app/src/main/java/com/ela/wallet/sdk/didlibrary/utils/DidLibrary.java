@@ -866,11 +866,11 @@ public class DidLibrary {
         MemoBean memoBean = new Gson().fromJson("{\n" +
                 "    \"Tag\": \"DID Property\",\n" +
                 "    \"Ver\": \"1.0\",\n" +
-                "    \"Status\": \"1\",\n" +
+                "    \"Status\": \"Normal\",\n" +
                 "    \"Properties\": [{\n" +
                 "        \"Key\": \"imei\",\n" +
                 "        \"Value\": \"\",\n" +
-                "        \"Status\": \"1\"\n" +
+                "        \"Status\": \"Normal\"\n" +
                 "    }]\n" +
                 "}", MemoBean.class);
         memoBean.getProperties().get(0).setValue(Utilty.getIMEI());

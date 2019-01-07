@@ -1,5 +1,6 @@
 package com.ela.wallet.sdk.didlibrary.activity;
 
+import android.app.Activity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -83,6 +84,7 @@ public class ImportWalletActivity extends BaseActivity {
                             Utilty.setPreference(Constants.SP_KEY_DID_PASSWORD, et_pwd.getText().toString());
                             int id = getResources().getIdentifier("toast_import_success", "string", getPackageName());
                             Toast.makeText(ImportWalletActivity.this, id, Toast.LENGTH_SHORT).show();
+                            setResult(Activity.RESULT_OK);
                             ImportWalletActivity.this.finish();
                         } else {
                             showErrorDialog();
@@ -107,5 +109,17 @@ public class ImportWalletActivity extends BaseActivity {
                 .setMessageGravity(Gravity.CENTER)
                 .setRightButton(getString(R.string.btn_ok), null)
                 .show();
+    }
+
+    @Override
+    public void onLeftNavClick(View view) {
+        setResult(Activity.RESULT_OK);
+        super.onLeftNavClick(view);
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(Activity.RESULT_OK);
+        super.onBackPressed();
     }
 }

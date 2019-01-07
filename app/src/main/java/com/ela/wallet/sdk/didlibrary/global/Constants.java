@@ -17,6 +17,7 @@ public class Constants {
 
     public static final int INTENT_REQUEST_CODE_SCAN = 1001;
     public static final int INTENT_REQUEST_CODE_LANGUAGE = 1002;
+    public static final int INTENT_REQUEST_CODE_IMPORT = 1003;
 
     public static final String INTENT_PARAM_KEY_SCANRESUTL = "scan_result";
     public static final String INTENT_PARAM_KEY_QRCODE_FROM = "qrcode_from";

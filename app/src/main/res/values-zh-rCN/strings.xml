@@ -56,7 +56,7 @@
 
     <string name="word_issafe">您的使用环境安全吗</string>
     <string name="word_besafe">请确保周围环境没有隐形摄像头等不安全因素</string>
-    <string name="word_resume">任何人只有持有您的恢复短语，就可以访问或者花掉您的亦来币</string>
+    <string name="word_resume">任何人只要持有您的恢复短语，就可以访问或者花掉您的亦来币</string>
     <string name="word_remember">请仔细记下这句话</string>
     <string name="word_confirm">我们会在下一个屏幕上确认</string>
     <string name="word_written">我已经把它写下来</string>

@@ -125,8 +125,6 @@ public class WithDrawActivity extends BaseActivity {
             Toast.makeText(WithDrawActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
-        et_amount.setText("");
-        et_scan_address.setText("");
         Snackbar.make(et_amount, getString(R.string.trans_sending), Snackbar.LENGTH_SHORT).show();
         DidLibrary.Tixian(toAddress, amount, new TransCallback() {
             @Override
@@ -143,7 +141,13 @@ public class WithDrawActivity extends BaseActivity {
 //                        Toast.makeText(WithDrawActivity.this, result, Toast.LENGTH_SHORT).show();
                         new DidAlertDialog(WithDrawActivity.this)
                                 .setTitle(msg)
-                                .setRightButton(getString(R.string.btn_ok), null)
+                                .setRightButton(getString(R.string.btn_ok), new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        et_amount.setText("");
+                                        et_scan_address.setText("");
+                                    }
+                                })
                                 .show();
                     }
                 });
@@ -162,7 +166,13 @@ public class WithDrawActivity extends BaseActivity {
                         }
                         new DidAlertDialog(WithDrawActivity.this)
                                 .setTitle(msg)
-                                .setRightButton(getString(R.string.btn_ok), null)
+                                .setRightButton(getString(R.string.btn_ok), new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        et_amount.setText("");
+                                        et_scan_address.setText("");
+                                    }
+                                })
                                 .show();
                     }
                 });

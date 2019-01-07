@@ -137,8 +137,6 @@ public class SendActivity extends BaseActivity {
             Toast.makeText(SendActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
-        et_amount.setText("");
-        et_scan_address.setText("");
         Snackbar.make(et_amount, getString(R.string.trans_sending), Snackbar.LENGTH_SHORT).show();
         DidLibrary.Zhuanzhang(toAddress, amount, new TransCallback() {
             @Override
@@ -155,7 +153,13 @@ public class SendActivity extends BaseActivity {
 //                        Toast.makeText(SendActivity.this, result, Toast.LENGTH_SHORT).show();
                         new DidAlertDialog(SendActivity.this)
                                 .setTitle(msg)
-                                .setRightButton(getString(R.string.btn_ok), null)
+                                .setRightButton(getString(R.string.btn_ok), new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        et_amount.setText("");
+                                        et_scan_address.setText("");
+                                    }
+                                })
                                 .show();
                     }
                 });
@@ -174,8 +178,15 @@ public class SendActivity extends BaseActivity {
                         }
                         new DidAlertDialog(SendActivity.this)
                                 .setTitle(msg)
-                                .setRightButton(getString(R.string.btn_ok), null)
-                                .show();                    }
+                                .setRightButton(getString(R.string.btn_ok), new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        et_amount.setText("");
+                                        et_scan_address.setText("");
+                                    }
+                                })
+                                .show();
+                    }
                 });
             }
         });

@@ -17,7 +17,7 @@ public class SetDidBean {
 
     private String Tag;
     private String Ver;
-    private int Status;
+    private String Status;
     private List<PropertiesBean> Properties;
 
     public String getTag() {
@@ -36,11 +36,11 @@ public class SetDidBean {
         this.Ver = Ver;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return Status;
     }
 
-    public void setStatus(int Status) {
+    public void setStatus(String Status) {
         this.Status = Status;
     }
 
@@ -61,7 +61,7 @@ public class SetDidBean {
 
         private String Key;
         private String Value;
-        private int Status;
+        private String Status;
 
         public String getKey() {
             return Key;
@@ -79,11 +79,11 @@ public class SetDidBean {
             this.Value = Value;
         }
 
-        public int getStatus() {
+        public String getStatus() {
             return Status;
         }
 
-        public void setStatus(int Status) {
+        public void setStatus(String Status) {
             this.Status = Status;
         }
     }
