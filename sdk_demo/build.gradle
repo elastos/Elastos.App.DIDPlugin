@@ -35,7 +35,7 @@ dependencies {
     implementation 'com.github.qingmei2:QrCodeScannerView-Android:1.1.2'
     implementation 'com.google.zxing:core:3.3.0'
     implementation(name: 'Elastos.ORG.Wallet.Lib-v0.1.6', ext: 'aar')
-    implementation(name: 'Elastos.ORG.Did.Lib-v0.2.0', ext: 'aar')
+    implementation(name: 'Elastos.ORG.Did.Lib-v0.2.1', ext: 'aar')
     implementation(name: 'customdialog', ext: 'aar')
 
     configurations.all {
