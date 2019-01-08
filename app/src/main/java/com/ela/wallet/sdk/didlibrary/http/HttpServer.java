@@ -393,9 +393,9 @@ public class HttpServer extends NanoHTTPD {
         SetDidBean setDidBean = new SetDidBean();
         setDidBean.setTag("DID Property");
         setDidBean.setVer("1.0");
-        setDidBean.setStatus(1);
+        setDidBean.setStatus("Normal");
         SetDidBean.PropertiesBean propertiesBean = new SetDidBean.PropertiesBean();
-        propertiesBean.setStatus(1);
+        propertiesBean.setStatus("Normal");
         propertiesBean.setKey(infoBean.getKey());
         propertiesBean.setValue(infoBean.getValue());
         List<SetDidBean.PropertiesBean> mList = new ArrayList<>();

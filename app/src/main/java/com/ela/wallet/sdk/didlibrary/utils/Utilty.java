@@ -25,12 +25,17 @@ public class Utilty {
 
     private static Context mContext;
     private static Context sContext;
+    private static Context aContext;
 
     private static final String SP_NAME = "didlibrary";
     private static SharedPreferences sp;
 
     public static void setContext(Context context) {
         mContext = context;
+    }
+
+    public static void setAppContext(Context context) {
+        aContext = context;
     }
 
     public static void setServiceContext(Context context) {
@@ -48,6 +53,9 @@ public class Utilty {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else if (sContext == null && mContext == null && aContext != null) {
+            DidEntry.init(aContext);
+            return null;
         }
         return sContext == null ? mContext : sContext;
     }

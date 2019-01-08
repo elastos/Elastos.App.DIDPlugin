@@ -18,6 +18,7 @@ import com.ela.wallet.sdk.didlibrary.global.Urls;
 import com.ela.wallet.sdk.didlibrary.http.HttpRequest;
 import com.ela.wallet.sdk.didlibrary.utils.Utilty;
 import com.ela.wallet.sdk.didlibrary.widget.RecordsRecyclerViewAdapter;
+import com.ela.wallet.sdk.didlibrary.widget.SweetAlertDialog;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -34,6 +35,8 @@ public class RecordsActivity extends BaseActivity {
     private List<RecordsModel> mList2;
     private List<RecordsModel> mList3;
     private List<RecordsModel> mList4;
+
+    private SweetAlertDialog mDialog;
 
     @Override
     protected int getRootViewId() {
@@ -133,6 +136,12 @@ public class RecordsActivity extends BaseActivity {
     }
 
     private void loadDidTxData() {
+        if (mDialog == null) {
+            mDialog = new SweetAlertDialog(this);
+        }
+        mDialog.setTitle(getString(R.string.loading));
+        mDialog.show();
+
 //        String url = String.format("%s%s%s", Urls.SERVER_DID_HISTORY, Urls.DID_HISTORY, "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4");
         String url = String.format("%s%s%s", Urls.SERVER_DID_HISTORY, Urls.DID_HISTORY, Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, ""));
         HttpRequest.sendRequestWithHttpURLConnection(url, new HttpRequest.HttpCallbackListener() {
@@ -142,36 +151,41 @@ public class RecordsActivity extends BaseActivity {
                     @Override
                     public void run() {
                         AllTxsBean allTxsBean = new Gson().fromJson(response, AllTxsBean.class);
-                        if (allTxsBean.getStatus() != 200) {
+                        if (allTxsBean.getStatus() != 200 || allTxsBean.getResult().getTotalNum() == 0) {
+                            if (mDialog != null && mDialog.isShowing()) {
+                                mDialog.dismiss();
+                            }
                             return;
                         }
+                        mList.clear();
                         if (allTxsBean.getResult().getTotalNum() > 0) {
-                            mList.clear();
                             mList1.clear();
                             mList2.clear();
                             mList4.clear();
                             for (AllTxsBean.ResultBean.HistoryBean historyBean : allTxsBean.getResult().getHistory()) {
+                                long reallyValue = historyBean.getValue() - historyBean.getFee();
+                                if (reallyValue == 0) continue;
                                 if ("spend".equals(historyBean.getType()) && "TransferCrossChainAsset".equals(historyBean.getTxType())) {
-                                    mList2.add(new RecordsModel(getString(R.string.nav_record2), historyBean.getCreateTime()+"", "-" + historyBean.getValue()));
-                                    mList.add(new RecordsModel(getString(R.string.nav_record2), historyBean.getCreateTime()+"", "-" + historyBean.getValue()));
+                                    mList2.add(new RecordsModel(getString(R.string.nav_record2), historyBean.getCreateTime()+"", "-" + reallyValue));
+                                    mList.add(new RecordsModel(getString(R.string.nav_record2), historyBean.getCreateTime()+"", "-" + reallyValue));
                                 } else if ("income".equals(historyBean.getType()) && "RechargeToSideChain".equals(historyBean.getTxType())) {
-                                    mList4.add(new RecordsModel(getString(R.string.nav_record4), historyBean.getCreateTime()+"", "+" + historyBean.getValue()));
-                                    mList.add(new RecordsModel(getString(R.string.nav_record4), historyBean.getCreateTime()+"", "+" + historyBean.getValue()));
+                                    mList4.add(new RecordsModel(getString(R.string.nav_record4), historyBean.getCreateTime()+"", "+" + reallyValue));
+                                    mList.add(new RecordsModel(getString(R.string.nav_record4), historyBean.getCreateTime()+"", "+" + reallyValue));
                                 } else {
                                     if ("spend".equals(historyBean.getType())) {
-                                        mList1.add(new RecordsModel(getString(R.string.nav_record1), historyBean.getCreateTime()+"", "-" + historyBean.getValue()));
-                                        mList.add(new RecordsModel(getString(R.string.nav_record1), historyBean.getCreateTime()+"", "-" + historyBean.getValue()));
+                                        mList1.add(new RecordsModel(getString(R.string.nav_record1), historyBean.getCreateTime()+"", "-" + reallyValue));
+                                        mList.add(new RecordsModel(getString(R.string.nav_record1), historyBean.getCreateTime()+"", "-" + reallyValue));
                                     } else {
-                                        mList1.add(new RecordsModel(getString(R.string.nav_record1), historyBean.getCreateTime()+"", "+" + historyBean.getValue()));
-                                        mList.add(new RecordsModel(getString(R.string.nav_record1), historyBean.getCreateTime()+"", "+" + historyBean.getValue()));
+                                        mList1.add(new RecordsModel(getString(R.string.nav_record1), historyBean.getCreateTime()+"", "+" + reallyValue));
+                                        mList.add(new RecordsModel(getString(R.string.nav_record1), historyBean.getCreateTime()+"", "+" + reallyValue));
                                     }
                                 }
 //                                String prefix = historyBean.getType().equals("income") ? "+" : "-";
 //                                mList.add(new RecordsModel(historyBean.getType(), historyBean.getCreateTime()+"", prefix + historyBean.getValue()));
                             }
 //                            mAdapter.setData(mList);
-                            loadElaTxData();
                         }
+                        loadElaTxData();
                     }
                 });
             }
@@ -181,7 +195,9 @@ public class RecordsActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
+                        if (mDialog != null && mDialog.isShowing()) {
+                            mDialog.dismiss();
+                        }
                     }
                 });
             }
@@ -196,6 +212,9 @@ public class RecordsActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        if (mDialog != null && mDialog.isShowing()) {
+                            mDialog.dismiss();
+                        }
                         AllTxsBean allTxsBean = new Gson().fromJson(response, AllTxsBean.class);
                         if (allTxsBean.getStatus() != 200) {
                             return;
@@ -203,14 +222,19 @@ public class RecordsActivity extends BaseActivity {
                         if (allTxsBean.getResult().getTotalNum() > 0) {
                             mList3.clear();
                             for (AllTxsBean.ResultBean.HistoryBean historyBean : allTxsBean.getResult().getHistory()) {
+                                long reallyValue = historyBean.getValue() - historyBean.getFee();
+                                if (reallyValue == 0) continue;
                                 String prefix = historyBean.getType().equals("income") ? "+" : "-";
                                 if (!historyBean.getTxType().equals("WithdrawFromSideChain") && !historyBean.getTxType().equals("TransferCrossChainAsset")) {
-                                    mList3.add(new RecordsModel(getString(R.string.nav_record3), historyBean.getCreateTime()+"", prefix + historyBean.getValue()));
-                                    mList.add(new RecordsModel(getString(R.string.nav_record3), historyBean.getCreateTime()+"", prefix + historyBean.getValue()));
+                                    mList3.add(new RecordsModel(getString(R.string.nav_record3), historyBean.getCreateTime()+"", prefix + reallyValue));
+                                    mList.add(new RecordsModel(getString(R.string.nav_record3), historyBean.getCreateTime()+"", prefix + reallyValue));
                                 }
                             }
                         }
                         parseTransData();
+                        if (mDialog != null && mDialog.isShowing()) {
+                            mDialog.dismiss();
+                        }
                     }
                 });
             }
@@ -220,7 +244,9 @@ public class RecordsActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
+                        if (mDialog != null && mDialog.isShowing()) {
+                            mDialog.dismiss();
+                        }
                     }
                 });
             }
@@ -228,11 +254,20 @@ public class RecordsActivity extends BaseActivity {
     }
 
     private void parseTransData() {
-        Collections.reverse(mList);
+        Collections.sort(mList);
         Collections.reverse(mList1);
         Collections.reverse(mList2);
         Collections.reverse(mList3);
         Collections.reverse(mList4);
+        mTab.getTabAt(0).select();
         mAdapter.setData(mList);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
     }
 }

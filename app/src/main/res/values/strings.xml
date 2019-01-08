@@ -66,7 +66,7 @@
     <string name="word_cleanup">clean up</string>
     <string name="word_wrong">Phrase not correct, Please retry!</string>
     <string name="word_backdup">Your wallet has been backed up</string>
-    <string name="word_tips">Please store your phrases in a safe place. If the program is deleted, no phrase will be able to recover the wallet.</string>
+    <string name="word_tips">Please store your phrases in a safe place. If the program is deleted, no phrase will not be able to recover the wallet.</string>
     <string name="word_newpwd">Please enter a new payment password</string>
     <string name="input_pwd">Input Password</string>
     <string name="word_pwdtips">Payment password can not be resumed. Be sure to remember it well.(at least 8 bits)</string>
@@ -85,7 +85,8 @@
     <string name="dialog_recharge_success">Recharge Success!</string>
     <string name="dialog_withdraw_success">Withdraw Success!</string>
     <string name="dialog_finance_failed">The last transaction is not completed. Please try again later.</string>
-
+    <string name="dialog_trans_notenough">Not Enough Balance!</string>
+    <string name="dialog_trans_failed">Send transaction failed, Please try again later.</string>
 
     <string name="scan_noresult">There\'s no result, Please retry!</string>
     <string name="toast_pwd_notcorrect">The length of password is too short</string>
@@ -93,6 +94,9 @@
     <string name="toast_pwd_wrong">The password is wrong</string>
     <string name="toast_import_success">Import Success!</string>
     <string name="toast_copy">Copy success!</string>
+
+    <string name="loading">Loading···</string>
+    <string name="trans_sending">Sending Transaction···</string>
 
 
     <string name="btn_import">import</string>

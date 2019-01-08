@@ -75,7 +75,7 @@ public class AllTxsBean {
             private String Address;
             private String Txid;
             private String Type;
-            private int Value;
+            private long Value;
             private int CreateTime;
             private int Height;
             private int Fee;
@@ -108,11 +108,11 @@ public class AllTxsBean {
                 this.Type = Type;
             }
 
-            public int getValue() {
+            public long getValue() {
                 return Value;
             }
 
-            public void setValue(int Value) {
+            public void setValue(long Value) {
                 this.Value = Value;
             }
 

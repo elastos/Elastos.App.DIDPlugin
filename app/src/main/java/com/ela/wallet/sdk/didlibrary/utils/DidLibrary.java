@@ -440,10 +440,10 @@ public class DidLibrary {
         long amount = Math.round(Float.parseFloat(aParam) * 100000000) ;
         String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
 
-        //for test
-        toAddress = fromAddress;
-        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
-        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";
+//        //for test
+//        toAddress = fromAddress;
+//        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
+//        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";
 
         String param = String.format("{\"inputs\":[\"%s\"],\"outputs\":[{\"addr\":\"%s\", \"amt\":%d}]}", fromAddress, toAddress, amount);
         HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_DID + Urls.DID_CTX, param, new HttpRequest.HttpCallbackListener() {
@@ -754,7 +754,7 @@ public class DidLibrary {
         Utilty.setPreference(Constants.SP_KEY_DID_ADDRESS, address);
         Utilty.setPreference(Constants.SP_KEY_DID_ISBACKUP, "true");
         Utilty.setPreference(Constants.SP_KEY_DID_MNEMONIC, "");
-        Utilty.setPreference(Constants.SP_KEY_APP_LANGUAGE, language);
+//        Utilty.setPreference(Constants.SP_KEY_APP_LANGUAGE, language);
         Utilty.setPreference(Constants.SP_KEY_DID, ElastosWalletDID.getDid(publicKey));
         return true;
     }
@@ -866,11 +866,11 @@ public class DidLibrary {
         MemoBean memoBean = new Gson().fromJson("{\n" +
                 "    \"Tag\": \"DID Property\",\n" +
                 "    \"Ver\": \"1.0\",\n" +
-                "    \"Status\": \"1\",\n" +
+                "    \"Status\": \"Normal\",\n" +
                 "    \"Properties\": [{\n" +
                 "        \"Key\": \"imei\",\n" +
                 "        \"Value\": \"\",\n" +
-                "        \"Status\": \"1\"\n" +
+                "        \"Status\": \"Normal\"\n" +
                 "    }]\n" +
                 "}", MemoBean.class);
         memoBean.getProperties().get(0).setValue(Utilty.getIMEI());

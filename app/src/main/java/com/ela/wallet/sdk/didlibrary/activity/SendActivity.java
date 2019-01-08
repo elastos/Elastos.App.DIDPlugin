@@ -3,6 +3,7 @@ package com.ela.wallet.sdk.didlibrary.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -136,6 +137,7 @@ public class SendActivity extends BaseActivity {
             Toast.makeText(SendActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
+        Snackbar.make(et_amount, getString(R.string.trans_sending), Snackbar.LENGTH_SHORT).show();
         DidLibrary.Zhuanzhang(toAddress, amount, new TransCallback() {
             @Override
             public void onSuccess(final String result) {
@@ -151,7 +153,13 @@ public class SendActivity extends BaseActivity {
 //                        Toast.makeText(SendActivity.this, result, Toast.LENGTH_SHORT).show();
                         new DidAlertDialog(SendActivity.this)
                                 .setTitle(msg)
-                                .setRightButton(getString(R.string.btn_ok), null)
+                                .setRightButton(getString(R.string.btn_ok), new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        et_amount.setText("");
+                                        et_scan_address.setText("");
+                                    }
+                                })
                                 .show();
                     }
                 });
@@ -162,7 +170,22 @@ public class SendActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(SendActivity.this, result, Toast.LENGTH_SHORT).show();
+                        String msg = "";
+                        if (result.contains("400") && result.contains("Not Enough UTXO")) {
+                            msg = getString(R.string.dialog_trans_notenough);
+                        } else {
+                            msg = getString(R.string.dialog_trans_failed);
+                        }
+                        new DidAlertDialog(SendActivity.this)
+                                .setTitle(msg)
+                                .setRightButton(getString(R.string.btn_ok), new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        et_amount.setText("");
+                                        et_scan_address.setText("");
+                                    }
+                                })
+                                .show();
                     }
                 });
             }

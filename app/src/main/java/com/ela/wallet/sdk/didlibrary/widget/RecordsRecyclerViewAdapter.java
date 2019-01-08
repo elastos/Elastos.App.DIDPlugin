@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class RecordsRecyclerViewAdapter extends RecyclerView.Adapter<RecordsRecyclerViewAdapter.RecordsViewHolder> {
 
@@ -76,7 +77,7 @@ public class RecordsRecyclerViewAdapter extends RecyclerView.Adapter<RecordsRecy
     */
     private String stampToDate(String s){
         String res;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:MM");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm", Locale.getDefault());
         long lt = new Long(s)*1000;
         Date date = new Date(lt);
         res = simpleDateFormat.format(date);

@@ -1,6 +1,8 @@
 package com.ela.wallet.sdk.didlibrary.bean;
 
-public class RecordsModel {
+import android.support.annotation.NonNull;
+
+public class RecordsModel implements Comparable<RecordsModel>{
 
     private String type;
     private String time;
@@ -37,5 +39,10 @@ public class RecordsModel {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    @Override
+    public int compareTo(@NonNull RecordsModel recordsModel) {
+        return recordsModel.getTime().compareTo(this.getTime());
     }
 }

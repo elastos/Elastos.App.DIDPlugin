@@ -1,7 +1,9 @@
 package com.ela.wallet.sdk.didlibrary.service;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
@@ -36,6 +38,8 @@ public class DidService extends Service {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (Build.VERSION.SDK_INT >= 26)
+            startForeground(34561, new Notification());
         return START_STICKY;
     }
 

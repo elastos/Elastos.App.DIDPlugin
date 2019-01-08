@@ -156,25 +156,17 @@ public class PersonalActivity extends BaseActivity {
             }
         });
 
-        loadDidBalanceData();
-        loadElaBalanceData();
+//        loadDidBalanceData();
+//        loadElaBalanceData();
     }
 
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        String language = Utilty.getPreference(Constants.SP_KEY_APP_LANGUAGE, "");
-//        if (TextUtils.isEmpty(language)) {
-//            if (Locale.getDefault().getLanguage().contains("zh")) {
-//                tv_language_tips.setText("中文（简体）");
-//            } else {
-//                tv_language_tips.setText("ENGLISH");
-//            }
-//        } else {
-//            tv_language_tips.setText(language.equals("english") ? "ENGLISH" : "中文（简体）");
-//        }
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadDidBalanceData();
+        loadElaBalanceData();
+    }
 
     private void loadDidBalanceData() {
         String url = String.format("%s%s%s", Urls.SERVER_DID, Urls.DID_BALANCE, Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, ""));

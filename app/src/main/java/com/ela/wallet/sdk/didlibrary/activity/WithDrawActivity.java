@@ -2,6 +2,7 @@ package com.ela.wallet.sdk.didlibrary.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -124,6 +125,7 @@ public class WithDrawActivity extends BaseActivity {
             Toast.makeText(WithDrawActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
+        Snackbar.make(et_amount, getString(R.string.trans_sending), Snackbar.LENGTH_SHORT).show();
         DidLibrary.Tixian(toAddress, amount, new TransCallback() {
             @Override
             public void onSuccess(final String result) {
@@ -139,7 +141,13 @@ public class WithDrawActivity extends BaseActivity {
 //                        Toast.makeText(WithDrawActivity.this, result, Toast.LENGTH_SHORT).show();
                         new DidAlertDialog(WithDrawActivity.this)
                                 .setTitle(msg)
-                                .setRightButton(getString(R.string.btn_ok), null)
+                                .setRightButton(getString(R.string.btn_ok), new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        et_amount.setText("");
+                                        et_scan_address.setText("");
+                                    }
+                                })
                                 .show();
                     }
                 });
@@ -150,7 +158,22 @@ public class WithDrawActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(WithDrawActivity.this, result, Toast.LENGTH_SHORT).show();
+                        String msg = "";
+                        if (result.contains("400") && result.contains("Not Enough UTXO")) {
+                            msg = getString(R.string.dialog_trans_notenough);
+                        } else {
+                            msg = getString(R.string.dialog_trans_failed);
+                        }
+                        new DidAlertDialog(WithDrawActivity.this)
+                                .setTitle(msg)
+                                .setRightButton(getString(R.string.btn_ok), new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        et_amount.setText("");
+                                        et_scan_address.setText("");
+                                    }
+                                })
+                                .show();
                     }
                 });
             }
