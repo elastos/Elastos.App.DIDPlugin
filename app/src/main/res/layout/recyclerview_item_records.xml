@@ -15,48 +15,74 @@
         android:src="@drawable/ic_wallet_white"
         android:visibility="gone"/>
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginLeft="50dp"
-        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_toRightOf="@id/iv_records_img"
-        android:layout_centerVertical="true">
-        <TextView
-            android:id="@+id/tv_records_title"
+        android:layout_alignWithParentIfMissing="true"
+        android:gravity="center_vertical">
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="22dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/textBlack"
-            android:textSize="16dp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            tools:text="@string/nav_charges"/>
-        <TextView
-            android:id="@+id/tv_records_subtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginTop="7dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/hintGray"
-            android:textSize="14sp"
-            android:singleLine="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:visibility="visible"
-            tools:text="@string/library_name"/>
+            android:layout_height="50dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/tv_records_title"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/textBlack"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                tools:text="@string/nav_charges"/>
+            <TextView
+                android:id="@+id/tv_records_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginTop="7dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/hintGray"
+                android:textSize="14sp"
+                android:singleLine="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:visibility="visible"
+                tools:text="@string/library_name"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <com.ela.wallet.sdk.didlibrary.widget.RollTextView
+                android:id="@+id/tv_records_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textColor="@color/textBlack"
+                android:textSize="16sp"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                tools:text="+0.01 ELA"/>
+            <TextView
+                android:id="@+id/tv_records_subnext"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginTop="7dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/hintGray"
+                android:textSize="14sp"
+                android:singleLine="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:visibility="visible"
+                tools:text="@string/library_name"/>
+        </LinearLayout>
     </LinearLayout>
-    <TextView
-        android:id="@+id/tv_records_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:gravity="center_vertical"
-        android:textColor="@color/textBlack"
-        android:textSize="16dp"
-        tools:text="+0.01 ELA"/>
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"

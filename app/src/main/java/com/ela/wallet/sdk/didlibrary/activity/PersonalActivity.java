@@ -29,6 +29,11 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class PersonalActivity extends BaseActivity {
 
@@ -45,6 +50,8 @@ public class PersonalActivity extends BaseActivity {
     private RecyclerView rv_personal;
     private PersonalRecyclerViewAdapter mAdapter;
     private List<SettingModel> mList;
+
+    private ScheduledExecutorService scheduledThreadPool;
 
 
     @Override
@@ -113,6 +120,7 @@ public class PersonalActivity extends BaseActivity {
 //                startActivity(intent);
 //            }
 //        });
+        scheduledThreadPool = Executors.newScheduledThreadPool(1);
     }
 
     @Override
@@ -156,16 +164,29 @@ public class PersonalActivity extends BaseActivity {
             }
         });
 
-//        loadDidBalanceData();
-//        loadElaBalanceData();
+        scheduledThreadPool.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                loadDidBalanceData();
+                loadElaBalanceData();
+            }
+        }, 0, 10, TimeUnit.SECONDS);
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        loadDidBalanceData();
-        loadElaBalanceData();
+//        loadDidBalanceData();
+//        loadElaBalanceData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (scheduledThreadPool != null) {
+            scheduledThreadPool.shutdown();
+        }
     }
 
     private void loadDidBalanceData() {
