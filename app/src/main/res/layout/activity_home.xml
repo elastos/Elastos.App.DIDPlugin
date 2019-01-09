@@ -29,6 +29,7 @@
             android:id="@+id/iv_home_did_icon"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:padding="5dp"
             android:layout_marginTop="22dp"
             android:layout_marginLeft="20dp"
             android:layout_below="@id/tv_home_did_title"
@@ -335,4 +336,18 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_right"/>
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10.5dp"
+        android:background="@color/bgGray"/>
+
+    <TextView
+        android:id="@+id/tv_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/hintGray"
+        android:text="@string/version"/>
 </LinearLayout>

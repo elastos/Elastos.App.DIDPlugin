@@ -225,9 +225,21 @@ public class HttpServer extends NanoHTTPD {
     private String txResult;
     private String dealWithGetTx(String params) {
         LogUtil.d("dealWithGetTx:params=" + params);
-        String txId = params.substring(5);
         final CountDownLatch countDownLatch = new CountDownLatch(1);
-        String url = String.format("%s%s%s", Urls.SERVER_DID, Urls.DID_TX, txId);
+        String txId;
+        String url;
+        if (!params.contains("&")){
+            txId = params.substring(5);
+            url = String.format("%s%s%s", Urls.SERVER_DID, Urls.DID_TX, txId);
+        } else {
+            String[] ss = params.split("&");
+            txId = ss[0].substring(5);
+            if (ss[1].contains("did")) {
+                url = String.format("%s%s%s", Urls.SERVER_DID, Urls.DID_TX, txId);
+            } else {
+                url = String.format("%s%s%s", Urls.SERVER_WALLET, Urls.ELA_TX, txId);
+            }
+        }
         HttpRequest.sendRequestWithHttpURLConnection(url, new HttpRequest.HttpCallbackListener() {
             @Override
             public void onFinish(String response) {

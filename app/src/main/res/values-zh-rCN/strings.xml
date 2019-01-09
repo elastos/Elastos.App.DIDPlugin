@@ -1,5 +1,5 @@
 <resources>
-    <string name="library_name">DID信息</string>
+    <string name="library_name">Elastos DID</string>
     <string name="nav_home">首页</string>
     <string name="nav_charges">ELA间转账</string>
     <string name="nav_pay">积分间转账</string>
@@ -44,7 +44,7 @@
     <string name="me_recharge">ELA兑换积分</string>
     <string name="me_withdraw">积分兑换ELA</string>
     <string name="me_records">交易记录</string>
-    <string name="me_finance">交易转账</string>
+    <string name="me_finance">资产管理</string>
     <string name="me_information">个人信息</string>
     <string name="me_history">充值和提现记录</string>
     <string name="me_preference">偏好设置</string>
@@ -109,6 +109,6 @@
     <string name="btn_ok">确定</string>
     <string name="btn_backup">备份</string>
 
-
+    <string name="version">由 Elastos Application Lab 制作。\n版本号 </string>
 
 </resources>
