@@ -100,6 +100,8 @@
 
     <string name="loading">请稍候···</string>
     <string name="trans_sending">交易发送中···</string>
+    <string name="amount">金额: </string>
+    <string name="fee">手续费: </string>
 
     <string name="btn_last">上一步</string>
     <string name="btn_next">下一步</string>

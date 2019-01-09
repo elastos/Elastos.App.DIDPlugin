@@ -20,16 +20,12 @@ import com.ela.wallet.sdk.didlibrary.R;
 import com.ela.wallet.sdk.didlibrary.base.BaseActivity;
 import com.ela.wallet.sdk.didlibrary.bean.AllTxsBean;
 import com.ela.wallet.sdk.didlibrary.bean.BalanceBean;
-import com.ela.wallet.sdk.didlibrary.bean.RecordsModel;
 import com.ela.wallet.sdk.didlibrary.global.Constants;
 import com.ela.wallet.sdk.didlibrary.global.Urls;
 import com.ela.wallet.sdk.didlibrary.http.HttpRequest;
 import com.ela.wallet.sdk.didlibrary.utils.Utilty;
-import com.ela.wallet.sdk.didlibrary.widget.RecordsRecyclerViewAdapter;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class HomeActivity extends BaseActivity {

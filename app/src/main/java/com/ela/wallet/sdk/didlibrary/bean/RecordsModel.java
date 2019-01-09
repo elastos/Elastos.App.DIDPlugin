@@ -7,6 +7,7 @@ public class RecordsModel implements Comparable<RecordsModel>{
     private String type;
     private String time;
     private String value;
+    private int fee;
 
     public RecordsModel() {
     }
@@ -15,6 +16,13 @@ public class RecordsModel implements Comparable<RecordsModel>{
         this.type = type;
         this.time = time;
         this.value = value;
+    }
+
+    public RecordsModel(String type, String time, String value, int fee) {
+        this.type = type;
+        this.time = time;
+        this.value = value;
+        this.fee = fee;
     }
 
     public String getType() {
@@ -39,6 +47,14 @@ public class RecordsModel implements Comparable<RecordsModel>{
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public int getFee() {
+        return fee;
+    }
+
+    public void setFee(int fee) {
+        this.fee = fee;
     }
 
     @Override

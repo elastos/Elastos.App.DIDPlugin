@@ -97,7 +97,8 @@
 
     <string name="loading">Loading···</string>
     <string name="trans_sending">Sending Transaction···</string>
-
+    <string name="amount">Amount: </string>
+    <string name="fee">Fee: </string>
 
     <string name="btn_import">import</string>
     <string name="btn_last">LAST</string>

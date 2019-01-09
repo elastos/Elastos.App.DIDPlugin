@@ -62,9 +62,18 @@ public class RecordsRecyclerViewAdapter extends RecyclerView.Adapter<RecordsRecy
             String preFix = value.substring(0,1);
             String realValue = value.substring(1);
 
-            String text = String.format("%s%.8f%s", preFix, Long.parseLong(realValue)/100000000.0f , " ELA");
+            String text = String.format(Locale.getDefault(),"%s %s%.8f%s", mContext.getString(R.string.amount),preFix, Long.parseLong(realValue)/100000000.0f , " ELA");
             holder.tv_next.setText(text);
         }
+
+        if (mList.get(position).getFee() == 0) {
+            holder.tv_subnext.setVisibility(View.GONE);
+        } else {
+            holder.tv_subnext.setVisibility(View.VISIBLE);
+            String fee = String.format(Locale.getDefault(),"%s %s%.8f%s", mContext.getString(R.string.fee), "-", mList.get(position).getFee()/100000000.0f , " ELA");
+            holder.tv_subnext.setText(fee);
+        }
+
         if (position + 1 == getItemCount()) {
             holder.line.setVisibility(View.GONE);
         } else {
@@ -95,6 +104,7 @@ public class RecordsRecyclerViewAdapter extends RecyclerView.Adapter<RecordsRecy
         private TextView tv_title;
         private TextView tv_subtitle;
         private TextView tv_next;
+        private TextView tv_subnext;
         private View line;
 
         public RecordsViewHolder(View itemView) {
@@ -103,6 +113,7 @@ public class RecordsRecyclerViewAdapter extends RecyclerView.Adapter<RecordsRecy
             tv_title = itemView.findViewById(R.id.tv_records_title);
             tv_subtitle = itemView.findViewById(R.id.tv_records_subtitle);
             tv_next = itemView.findViewById(R.id.tv_records_next);
+            tv_subnext = itemView.findViewById(R.id.tv_records_subnext);
             line = itemView.findViewById(R.id.line);
         }
     }
