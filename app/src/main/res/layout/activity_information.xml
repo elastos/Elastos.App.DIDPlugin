@@ -30,6 +30,7 @@
             android:id="@+id/iv_home_did_icon"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:padding="5dp"
             android:layout_marginTop="22dp"
             android:layout_marginLeft="20dp"
             android:layout_below="@id/tv_home_did_title"

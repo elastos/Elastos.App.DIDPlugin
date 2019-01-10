@@ -227,7 +227,35 @@
         function get3(url) {
             var txId = document.getElementById('id_getTx').value;
             xhr=new XMLHttpRequest();
-		    xhr.open("get",url + txId,true);
+		    xhr.open("get",url + txId + "&type=did",true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if(xhr.getResponseHeader('content-type')==='application/json'){
+                        var result = JSON.parse(xhr.responseText);
+
+                        //todo:do something
+                    } else{
+                        console.log(xhr.responseText);
+                    }
+
+                    //for example:
+                    iptBox = document.getElementById('ipt_box')
+                    iptBox.value = xhr.responseText;
+
+                }
+            }
+            xhr.send(null);
+
+            //for example: ui tips:
+            iptBox = document.getElementById('ipt_box');
+            iptBox.value = "waiting for result......";
+        }
+
+        function get5(url) {
+            var txId = document.getElementById('id_getTx').value;
+            xhr=new XMLHttpRequest();
+		    xhr.open("get",url + txId + "&type=ela",true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4) {
@@ -291,7 +319,8 @@
         <textarea id="send3_amount" style="width: 100%; height: 20px;" placeholder="请输入积分提现数量："></textarea>
         <p onclick="post1('http://127.0.0.1:34561/api/v1/sendTransfer', 3)"><u>DID积分提现[post]</u></p>
         <textarea id="id_getTx" style="width: 100%; height: 20px;" placeholder="请输入交易id(txId:转账充值提现返回的result字段)："></textarea>
-        <p onclick="get3('http://127.0.0.1:34561/api/v1/getTxById?txId=')"><u>查询指定交易记录</u></p>
+        <p onclick="get3('http://127.0.0.1:34561/api/v1/getTxById?txId=')"><u>查询DID链指定交易记录</u></p>
+        <p onclick="get5('http://127.0.0.1:34561/api/v1/getTxById?txId=')"><u>查询ELA链指定交易记录</u></p>
         <p onclick="get4('http://127.0.0.1:34561/api/v1/getAllTxs')"><u>查询该DID所有交易历史</u></p>
         <textarea id="ipt_box" style="margin-top: 20px; width: 100%; height: 80px;" placeholder="http response:"></textarea>
 

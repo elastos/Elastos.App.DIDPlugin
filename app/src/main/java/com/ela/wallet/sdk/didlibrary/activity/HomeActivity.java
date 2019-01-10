@@ -2,17 +2,8 @@ package com.ela.wallet.sdk.didlibrary.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,6 +14,7 @@ import com.ela.wallet.sdk.didlibrary.bean.BalanceBean;
 import com.ela.wallet.sdk.didlibrary.global.Constants;
 import com.ela.wallet.sdk.didlibrary.global.Urls;
 import com.ela.wallet.sdk.didlibrary.http.HttpRequest;
+import com.ela.wallet.sdk.didlibrary.utils.GetVersionInfo;
 import com.ela.wallet.sdk.didlibrary.utils.Utilty;
 import com.google.gson.Gson;
 
@@ -33,15 +25,7 @@ public class HomeActivity extends BaseActivity {
     private RelativeLayout rl_did;
 
     private TextView tv_balance;
-
-//    private Button btn_expense;
-//    private Button btn_income;
-//    private RecyclerView rv_trans;
-//    private RecordsRecyclerViewAdapter mAdapter;
-//    private List<RecordsModel> mList;
-//    private List<RecordsModel> mList1;
-//    private List<RecordsModel> mList2;
-
+    private TextView tv_version;
 
     private RelativeLayout rl_finance;
     private RelativeLayout rl_record;
@@ -55,34 +39,7 @@ public class HomeActivity extends BaseActivity {
     protected void initView() {
         rl_did = findViewById(R.id.rl_home_did);
         tv_balance = findViewById(R.id.tv_home_did_balance);
-//        btn_expense = findViewById(R.id.btn_home_trans_expense);
-//        btn_income = findViewById(R.id.btn_home_trans_income);
-        rl_did.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent intent = new Intent();
-//                intent.setClass(HomeActivity.this, PersonalActivity.class);
-//                startActivity(intent);
-            }
-        });
-//        btn_expense.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                btn_income.setTextColor(getResources().getColor(R.color.textBlack));
-//                btn_expense.setTextColor(getResources().getColor(R.color.appColor));
-//                mAdapter.setData(mList2);
-//            }
-//        });
-//        btn_income.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                btn_expense.setTextColor(getResources().getColor(R.color.textBlack));
-//                btn_income.setTextColor(getResources().getColor(R.color.appColor));
-//                mAdapter.setData(mList1);
-//            }
-//        });
-//        rv_trans = findViewById(R.id.rv_home);
-
+        tv_version = findViewById(R.id.tv_version);
 
         rl_finance = findViewById(R.id.rl_personal_finance);
         rl_record = findViewById(R.id.rl_personal_record);
@@ -131,20 +88,8 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void initData() {
         Utilty.setContext(this);
-        //init trans title
-//        btn_expense.setTextColor(getResources().getColor(R.color.appColor));
-//        rv_trans.setLayoutManager(new LinearLayoutManager(this));
-        //load wallet balance data
-//        loadBalanceData();
-        //load trans data
-//        loadTransData();
-//        loadLocalTransData();
-
-//        mAdapter = new RecordsRecyclerViewAdapter(this, mList1);
-//        rv_trans.setAdapter(mAdapter);
-//        mAdapter.setData(mList2);
-
         tv_balance.setText(Utilty.getPreference(Constants.SP_KEY_DID, ""));
+        tv_version.append(GetVersionInfo.getMetaData());
     }
 
     @Override
@@ -205,20 +150,6 @@ public class HomeActivity extends BaseActivity {
             }
         });
     }
-
-//    private void loadLocalTransData() {
-//        mList = new ArrayList<>();
-//        mList1 = new ArrayList<>();
-//        mList2 = new ArrayList<>();
-//        mList.add(new RecordsModel("did1@did.com", "1585555555555", "02/12/2018"));
-//        for(RecordsModel records : mList) {
-////            if (getString(R.string.nav_charges).equals(records.getType())) {
-//                mList1.add(records);
-////            } else if(getString(R.string.nav_pay).equals(records.getType())) {
-//                mList2.add(records);
-////            }
-//        }
-//    }
 
     @Override
     protected void onResume() {

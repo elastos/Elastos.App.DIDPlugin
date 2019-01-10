@@ -1,5 +1,5 @@
 <resources>
-    <string name="library_name">DIDInfo</string>
+    <string name="library_name">Elastos DID</string>
     <string name="nav_home">home</string>
     <string name="nav_charges">Transfer between ELA</string>
     <string name="nav_pay">Transfer between DID Integral</string>
@@ -44,7 +44,7 @@
     <string name="me_recharge">Exchange ELA for Integral</string>
     <string name="me_withdraw">Exchange Integral for ELA</string>
     <string name="me_records">Records</string>
-    <string name="me_finance">Transaction Transfer</string>
+    <string name="me_finance">Asset Management</string>
     <string name="me_information">Personal Information</string>
     <string name="me_history">Recharge and withdraw record</string>
     <string name="me_preference">preference</string>
@@ -106,4 +106,7 @@
     <string name="btn_cancel">cancel</string>
     <string name="btn_ok">ok</string>
     <string name="btn_backup">Back Up</string>
+
+    <string name="version">Made by the Elastos Application Lab. \nVersion </string>
+
 </resources>
