@@ -19,7 +19,9 @@ import org.elastos.wallet.lib.ElastosWalletHD;
 import org.elastos.wallet.lib.ElastosWalletSign;
 
 import java.security.PublicKey;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.security.auth.callback.Callback;
 
@@ -897,7 +899,11 @@ public class DidLibrary {
         param.addProperty("pub", publicKey);
         param.addProperty("sig", Utilty.bytesToHexString2(signedData.buf));
 
-        HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_DID + Urls.DID_UPLOAD, param.toString(), new HttpRequest.HttpCallbackListener() {
+        HashMap<String, String> header = new HashMap<>(2);
+        String header_value = getHeaderValue();
+        LogUtil.i("header value:" + header_value);
+        header.put("X-Elastos-Agent-Auth", header_value);
+        HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_DID + Urls.DID_UPLOAD, header, param.toString(), new HttpRequest.HttpCallbackListener() {
             @Override
             public void onFinish(String response) {
                 LogUtil.d("upload sysInfo response:" + response);
@@ -908,6 +914,14 @@ public class DidLibrary {
                 LogUtil.e(e.getMessage());
             }
         });
+    }
+
+    private static String getHeaderValue() {
+        String appid = "org.elastos.app.didplugin";
+        String appkey = "b2gvzUM79yLhCbbGNWCuhSsGdqYhA7sS";
+        long time = System.currentTimeMillis();
+        String auth = Utilty.getMd5(appkey + time).toLowerCase();
+        return String.format(Locale.getDefault(), "id=%s;time=%s;auth=%s", appid, time, auth);
     }
 
 }

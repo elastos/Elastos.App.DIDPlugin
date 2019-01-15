@@ -8,6 +8,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * @version 2015.3.17
@@ -73,6 +76,11 @@ public class HttpRequest {
 		}).start();
 		
 	}
+
+	public static void sendRequestWithHttpURLConnection(final String url, final String data, final
+		HttpCallbackListener listener) {
+		sendRequestWithHttpURLConnection(url, null, data, listener);
+	}
 	
 	/**
 	 * 使用HttpURLConnection post方式打开链接
@@ -84,7 +92,7 @@ public class HttpRequest {
 	 * @param listener
 	 * 			访问网络响应状态回调。返回的响应在onFinish()方法。
 	 */
-	public static void sendRequestWithHttpURLConnection(final String url, final String data, final
+	public static void sendRequestWithHttpURLConnection(final String url, final HashMap<String, String> header, final String data, final
 			HttpCallbackListener listener) {
 		
 		new Thread(new Runnable() {
@@ -103,6 +111,13 @@ public class HttpRequest {
 					connection.setDoOutput(true);
 					connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
 					connection.setRequestProperty("accept","application/json");
+					if (header != null && header.size() > 0) {
+						Iterator iterator = header.entrySet().iterator();
+						while (iterator.hasNext()) {
+							Map.Entry entry = (Map.Entry) iterator.next();
+							connection.setRequestProperty((String)entry.getKey(), (String)entry.getValue());
+						}
+					}
 					DataOutputStream out = new DataOutputStream(connection.getOutputStream());
 					out.writeBytes(data);
 
