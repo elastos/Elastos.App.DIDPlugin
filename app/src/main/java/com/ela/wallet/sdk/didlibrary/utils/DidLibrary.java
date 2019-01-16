@@ -917,7 +917,7 @@ public class DidLibrary {
     }
 
     private static String getHeaderValue() {
-        String appid = "org.elastos.app.didplugin";
+        String appid = "org.elastos.debug.didagent";
         String appkey = "b2gvzUM79yLhCbbGNWCuhSsGdqYhA7sS";
         long time = System.currentTimeMillis();
         String auth = Utilty.getMd5(appkey + time).toLowerCase();
