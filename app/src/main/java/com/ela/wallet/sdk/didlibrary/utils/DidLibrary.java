@@ -870,12 +870,13 @@ public class DidLibrary {
                 "    \"Ver\": \"1.0\",\n" +
                 "    \"Status\": \"Normal\",\n" +
                 "    \"Properties\": [{\n" +
-                "        \"Key\": \"imei\",\n" +
+                "        \"Key\": \"uuid\",\n" +
                 "        \"Value\": \"\",\n" +
                 "        \"Status\": \"Normal\"\n" +
                 "    }]\n" +
                 "}", MemoBean.class);
-        memoBean.getProperties().get(0).setValue(Utilty.getIMEI());
+        String uuid = Utilty.getUUID();
+        memoBean.getProperties().get(0).setValue(uuid);
         String memo = new Gson().toJson(memoBean);
         LogUtil.d("memo:" + memo);
 

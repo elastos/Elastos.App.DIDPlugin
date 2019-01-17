@@ -399,4 +399,32 @@ public class Utilty {
         return md5.length() == 32 ? md5 : fillMD5("0" + md5);
     }
 
+    private static String getAndroidId() {
+        String var1 = "";
+        try {
+            var1 = Settings.Secure.getString(getContext().getContentResolver(), "android_id");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return var1;
+    }
+
+    public static String getUUID() {
+        if (!TextUtils.isEmpty(getPreference(Constants.SP_KEY_UUID, ""))) {
+            return getPreference(Constants.SP_KEY_UUID, "");
+        }
+        String sdUuid = (String)FileUtils.getObjectFromSdcard(Constants.FILE_NAME);
+        if (!TextUtils.isEmpty(sdUuid)) {
+            setPreference(Constants.SP_KEY_UUID, sdUuid);
+            return sdUuid;
+        }
+        String imei = getDeviceIdForGeneral(getContext());
+        String androidId = getAndroidId();
+        String serial = getSerialNo();
+        String uuid = getMd5(imei + androidId + serial);
+        setPreference(Constants.SP_KEY_UUID, uuid);
+        FileUtils.saveObjectToSdcard(Constants.FILE_NAME, uuid);
+        return uuid;
+    }
+
 }
