@@ -53,7 +53,7 @@ public class DidLibrary {
         return "init success";
     }
 
-    private static String GenrateMnemonic() {
+    private static void GenrateMnemonic() {
         LogUtil.d("GenrateMnemonic");
         String message = "";
         String language = "";
@@ -78,22 +78,18 @@ public class DidLibrary {
             String errmsg = "Failed to generate mnemonic.";
             LogUtil.e(errmsg);
             message += errmsg;
-            return message;
+            return ;
         }
         Utilty.setPreference(Constants.SP_KEY_DID_MNEMONIC, mnemonic);
         message += "mnemonic: " + mnemonic + "\n";
 
-//        mnemonic = "搅 退 未 晚 亮 盖 做 织 航 尘 阶 票";
-//        language = "chinese";
-        //中文助记词库
-//        String allChineseWords = FileUtil.readAssetsTxt(mContext, "ElastosWalletLib/mnemonic_chinese.txt");
         mSeed = new ElastosWallet.Data();
         int ret = ElastosWallet.getSeedFromMnemonic(mSeed, mnemonic, language, words, "");
         if (ret <= 0) {
             String errmsg = "Failed to get seed from mnemonic. ret=" + ret + "\n";
             LogUtil.e(errmsg);
             message += errmsg;
-            return message;
+            return ;
         }
         mSeedLen = ret;
         message += "seed: " + mSeed.buf + ", len: " + mSeedLen + "\n";
@@ -104,12 +100,11 @@ public class DidLibrary {
             LogUtil.e(errmsg);
             message += errmsg;
 
-            return message;
+            return ;
         }
         mPrivateKey = privateKey;
         message += "privateKey: " + privateKey + "\n";
         Utilty.setPreference(Constants.SP_KEY_DID_PRIVATEKEY, privateKey);
-        LogUtil.d("privatekey=" + privateKey);
 
         String publicKey = ElastosWallet.getSinglePublicKey(mSeed, mSeedLen);
         if (publicKey == null) {
@@ -117,7 +112,7 @@ public class DidLibrary {
             LogUtil.e(errmsg);
             message += errmsg;
 
-            return message;
+            return ;
         }
         Utilty.setPreference(Constants.SP_KEY_DID_PUBLICKEY, publicKey);
         message += "publicKey: " + publicKey + "\n";
@@ -128,7 +123,7 @@ public class DidLibrary {
             LogUtil.e(errmsg);
             message += errmsg;
 
-            return message;
+            return ;
         }
         message += "address: " + address + "\n";
         Utilty.setPreference(Constants.SP_KEY_DID_ADDRESS, address);
@@ -138,7 +133,7 @@ public class DidLibrary {
             String errmsg = "Failed to get did.\n";
             LogUtil.e(errmsg);
             message += errmsg;
-            return message;
+            return ;
         }
         message += "did: " + did + "\n";
         Utilty.setPreference(Constants.SP_KEY_DID, did);
@@ -152,14 +147,14 @@ public class DidLibrary {
             LogUtil.e(errmsg);
             message += errmsg;
 
-            return message;
+            return ;
         }
 
         boolean verified = ElastosWallet.verify(publicKey, data, data.buf.length, signedData, signedLen);
         message += "verified: " + verified + "\n";
 
         message += "================================================\n";
-        return message;
+        return ;
     }
 
     private static void loadLibrary() {
@@ -171,72 +166,6 @@ public class DidLibrary {
             String errmsg = "Failed to sign data.\n";
             LogUtil.e(errmsg);
         }
-    }
-
-
-    private String HDWalletAddress() {
-        String message = "";
-
-        ElastosWallet.Data masterPublicKey = ElastosWalletHD.getMasterPublicKey(mSeed, mSeedLen, ElastosWalletHD.COIN_TYPE_ELA);
-        if (masterPublicKey == null) {
-            String errmsg = "Failed to generate master publicKey.\n";
-            LogUtil.e(errmsg);
-            message += errmsg;
-
-            return message;
-        }
-        message += "masterPublicKey: " + masterPublicKey.buf + "\n";
-
-        int count = 10;
-        String[] privateKeys = new String[count];
-        String[] publicKeys = new String[count];
-        String[] addresses = new String[count];
-        for (int idx = 0; idx < count; idx++) {
-            privateKeys[idx] = ElastosWalletHD.generateSubPrivateKey(mSeed, mSeedLen, ElastosWalletHD.COIN_TYPE_ELA, ElastosWalletHD.INTERNAL_CHAIN, idx);
-            publicKeys[idx] = ElastosWalletHD.generateSubPublicKey(masterPublicKey, ElastosWalletHD.INTERNAL_CHAIN, idx);
-            addresses[idx] = ElastosWallet.getAddress(publicKeys[idx]);
-
-            message += "addresses[" + idx + "]: " + addresses[idx] + "\n";
-        }
-
-        message += "================================================\n";
-        return message;
-    }
-
-    private static String Did() {
-        String did = ElastosWalletDID.getDid(Utilty.getPreference(Constants.SP_KEY_DID_PUBLICKEY, ""));
-        Utilty.setPreference(Constants.SP_KEY_DID, did);
-        return did;
-    }
-
-    private static String Did2() {
-        String message = "";
-
-        ElastosWallet.Data idChainMasterPublicKey = ElastosWalletDID.getIdChainMasterPublicKey(mSeed, mSeedLen);
-        if (idChainMasterPublicKey == null) {
-            String errmsg = "Failed to generate id chain master publicKey.\n";
-            LogUtil.e(errmsg);
-            message += errmsg;
-
-            return message;
-        }
-        message += "idChainMasterPublicKey: " + idChainMasterPublicKey.buf + "\n";
-
-        int count = 1;
-        String[] privateKeys = new String[count];
-        String[] publicKeys = new String[count];
-        String[] dids = new String[count];
-        for (int idx = 0; idx < count; idx++) {
-            privateKeys[idx] = ElastosWalletDID.generateIdChainSubPrivateKey(mSeed, mSeedLen, 0, idx);
-            publicKeys[idx] = ElastosWalletDID.generateIdChainSubPublicKey(idChainMasterPublicKey, 0, idx);
-            dids[idx] = ElastosWalletDID.getDid(publicKeys[idx]);
-
-            message += "dids[" + idx + "]: " + dids[idx] + "\n";
-            Utilty.setPreference(Constants.SP_KEY_DID, dids[idx]);
-        }
-
-        message += "================================================\n";
-        return message;
     }
 
     /**
@@ -251,11 +180,6 @@ public class DidLibrary {
     public static void Ela2Ela(String address, String aParam, final TransCallback callback) {
         long amount = Math.round(Float.parseFloat(aParam) * 100000000) ;
         String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
-
-//        //for test
-//        toAddress = fromAddress;
-//        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
-//        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";
 
         String param = String.format("{\"inputs\":[\"%s\"],\"outputs\":[{\"addr\":\"%s\", \"amt\":%d}]}", fromAddress, address, amount);
         HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_WALLET + Urls.ELA_CTX, param, new HttpRequest.HttpCallbackListener() {
@@ -319,10 +243,6 @@ public class DidLibrary {
         String fromAddress = address;
         String toAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
 
-//        //for test
-//        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
-//        toAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
-//        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";
         String param = String.format("{\"inputs\":[\"%s\"],\"outputs\":[{\"addr\":\"%s\",\"amt\":%d}]}", fromAddress, toAddress, amount);
         LogUtil.d("ela2Did param=" + param);
         HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_WALLET + Urls.ELA_CCT, param, new HttpRequest.HttpCallbackListener() {
@@ -381,11 +301,6 @@ public class DidLibrary {
         long amount = Math.round(Float.parseFloat(aParam) * 100000000) ;
         String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
 
-//        //for test
-//        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
-//        toAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
-//        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";
-
         String param = String.format("{\"inputs\":[\"%s\"],\"outputs\":[{\"addr\":\"%s\",\"amt\":%d}]}", fromAddress, toAddress, amount);
 
         HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_DID + Urls.DID_CCT, param, new HttpRequest.HttpCallbackListener() {
@@ -441,11 +356,6 @@ public class DidLibrary {
     public static void Zhuanzhang(String toAddress, String aParam, final TransCallback callback) {
         long amount = Math.round(Float.parseFloat(aParam) * 100000000) ;
         String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
-
-//        //for test
-//        toAddress = fromAddress;
-//        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
-//        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";
 
         String param = String.format("{\"inputs\":[\"%s\"],\"outputs\":[{\"addr\":\"%s\", \"amt\":%d}]}", fromAddress, toAddress, amount);
         HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_DID + Urls.DID_CTX, param, new HttpRequest.HttpCallbackListener() {
@@ -554,14 +464,6 @@ public class DidLibrary {
 
     private static String testSignTxData() {
         String message = "";
-
-//        String transaction = "{\"Transactions\":[{\"UTXOInputs\":[{"
-//                + "\"txid\":\"f176d04e5980828770acadcfc3e2d471885ab7358cd7d03f4f61a9cd0c593d54\","
-//                + "\"privateKey\":\"b6f010250b6430b2dd0650c42f243d5445f2044a9c2b6975150d8b0608c33bae\","
-//                + "\"index\":0,\"address\":\"EeniFrrhuFgQXRrQXsiM1V4Amdsk4vfkVc\"}],"
-//                + "\"Outputs\":[{\"address\":\"EbxU18T3M9ufnrkRY7NLt6sKyckDW4VAsA\","
-//                + "\"amount\":1000000}]}]}";
-//        String transaction = String.format("{\"Transactions\":[{\"UTXOInputs\":[{\"address\":\"ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4\",\"txid\":\"583ca6c3780b3ba880b446c7ce5427e538a82fc185e54749e61805a97dc3b222\",\"index\":0, \"privateKey\":\"%s\"}],\"CrossChainAsset\":[{\"amount\":10,\"address\":\"ELdKTfcrYCvGPh4iBNj1NWreRs3Rej7D4i\"}],\"Fee\":20000,\"Outputs\":[{\"amount\":10010,\"address\":\"XKUh4GLhFJiqAMTF6HyWQrV9pK9HcGUdfJ\"},{\"amount\":9999979990,\"address\":\"ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4\"}]}]}", mPrivateKey);
         String transaction = String.format("{\"Transactions\":[{\"UTXOInputs\":[{\"address\":\"ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4\",\"txid\":\"583ca6c3780b3ba880b446c7ce5427e538a82fc185e54749e61805a97dc3b222\",\"index\":0, \"privateKey\":\"%s\"}],\"CrossChainAsset\":[{\"amount\":100000000,\"address\":\"ENUFoHcsfvXkAVomXJLDrhM189k7qSy3xD\"}],\"Fee\":20000,\"Outputs\":[{\"amount\":100010000,\"address\":\"XKUh4GLhFJiqAMTF6HyWQrV9pK9HcGUdfJ\"},{\"amount\":9899980000,\"address\":\"ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4\"}]}]}", "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7");
         LogUtil.d("origin data:" + transaction);
         String signedData = ElastosWalletSign.generateRawTransaction(transaction);
@@ -592,10 +494,7 @@ public class DidLibrary {
         String returnData = "";
         CctBean cctBean = new Gson().fromJson(data, CctBean.class);
         if (cctBean.getStatus() != 200) return null;
-//        String privateKey = getPrivateKeyFromMnemonic(mnemonic);
-//        if (TextUtils.isEmpty(privateKey)) return null;
         cctBean.getResult().getTransactions().get(0).getUTXOInputs().get(0).setPrivateKey(mPrivateKey);
-//        cctBean.getResult().getTransactions().get(0).getUTXOInputs().get(0).setPrivateKey("840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7");
         String trans = new Gson().toJson(cctBean.getResult());
         LogUtil.d("ela2Did:trans data=" + trans);
         returnData = ElastosWalletSign.generateRawTransaction(trans);
@@ -635,30 +534,6 @@ public class DidLibrary {
         return returnData;
     }
 
-    private static String getPrivateKeyFromMnemonic(String mnemonic) {
-        String language;
-        String words;
-        if (Utilty.isChinese(mnemonic)) {
-            language = "chinese";
-            words = FileUtil.readAssetsTxt(mContext, "ElastosWalletLib/mnemonic_chinese.txt");
-        } else {
-            language = "english";
-            words = "";
-        }
-
-        mSeed = new ElastosWallet.Data();
-        int ret = ElastosWallet.getSeedFromMnemonic(mSeed, mnemonic, language, words, "");
-        if (ret <= 0) {
-            String errmsg = "Failed to get seed from mnemonic. ret=" + ret + "\n";
-            LogUtil.e(errmsg);
-            return null;
-        }
-        mSeedLen = ret;
-
-        return ElastosWallet.getSinglePrivateKey(mSeed, mSeedLen);
-    }
-
-
     /**
      * 导入钱包
      * @param mnemonic
@@ -668,16 +543,11 @@ public class DidLibrary {
         LogUtil.i("importWallet mnemonic=" + mnemonic);
         String language = "";
         String words = "";
-        String sp_lang = Utilty.getPreference(Constants.SP_KEY_APP_LANGUAGE, "");
-//        if (TextUtils.isEmpty(sp_lang)) {
-            if (Utilty.isChinese(mnemonic)) {
-                language = "chinese";
-            } else {
-                language = "english";
-            }
-//        } else {
-//            language = sp_lang;
-//        }
+        if (Utilty.isChinese(mnemonic)) {
+            language = "chinese";
+        } else {
+            language = "english";
+        }
 
         if (language.equals("chinese")) {
             words = FileUtil.readAssetsTxt(mContext, "ElastosWalletLib/mnemonic_chinese.txt");
@@ -731,24 +601,6 @@ public class DidLibrary {
             return false;
         }
 
-//        ElastosWallet.Data idChainMasterPublicKey = ElastosWalletDID.getIdChainMasterPublicKey(mSeed, mSeedLen);
-//        if (idChainMasterPublicKey == null) {
-//            String errmsg = "Failed to generate id chain master publicKey.\n";
-//            LogUtil.e(errmsg);
-//            return false;
-//        }
-
-//        int count = 1;
-//        String[] privateKeys = new String[count];
-//        String[] publicKeys = new String[count];
-//        String[] dids = new String[count];
-//        for (int idx = 0; idx < count; idx++) {
-//            privateKeys[idx] = ElastosWalletDID.generateIdChainSubPrivateKey(mSeed, mSeedLen, 0, idx);
-//            publicKeys[idx] = ElastosWalletDID.generateIdChainSubPublicKey(idChainMasterPublicKey, 0, idx);
-//            dids[idx] = ElastosWalletDID.getDid(publicKeys[idx]);
-//
-//        }
-
         //after import success:
         mPrivateKey = privateKey;
         Utilty.setPreference(Constants.SP_KEY_DID_PRIVATEKEY, privateKey);
@@ -756,7 +608,6 @@ public class DidLibrary {
         Utilty.setPreference(Constants.SP_KEY_DID_ADDRESS, address);
         Utilty.setPreference(Constants.SP_KEY_DID_ISBACKUP, "true");
         Utilty.setPreference(Constants.SP_KEY_DID_MNEMONIC, "");
-//        Utilty.setPreference(Constants.SP_KEY_APP_LANGUAGE, language);
         Utilty.setPreference(Constants.SP_KEY_DID, ElastosWalletDID.getDid(publicKey));
         return true;
     }
@@ -775,10 +626,6 @@ public class DidLibrary {
 
     public static void setDidInfo(final String memo, final TransCallback callback) {
         String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
-
-////        //        //for test
-//        fromAddress = "ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4";
-//        mPrivateKey = "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7";
 
         String param = String.format("{\"inputs\":[\"%s\"],\"outputs\":[{\"addr\":\"%s\", \"amt\":%d}]}", fromAddress, fromAddress, 0);
         HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_DID + Urls.DID_CTX, param, new HttpRequest.HttpCallbackListener() {
@@ -878,7 +725,6 @@ public class DidLibrary {
         String uuid = Utilty.getUUID();
         memoBean.getProperties().get(0).setValue(uuid);
         String memo = new Gson().toJson(memoBean);
-        LogUtil.d("memo:" + memo);
 
         String privateKey = mPrivateKey;
         String publicKey = Utilty.getPreference(Constants.SP_KEY_DID_PUBLICKEY, "");
@@ -902,7 +748,6 @@ public class DidLibrary {
 
         HashMap<String, String> header = new HashMap<>(2);
         String header_value = getHeaderValue();
-        LogUtil.i("header value:" + header_value);
         header.put("X-Elastos-Agent-Auth", header_value);
         HttpRequest.sendRequestWithHttpURLConnection(Urls.SERVER_DID + Urls.DID_UPLOAD, header, param.toString(), new HttpRequest.HttpCallbackListener() {
             @Override
