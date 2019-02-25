@@ -49,6 +49,7 @@ public class DidLibrary {
         } else {
             loadLibrary();
             mPrivateKey = Utilty.getPreference(Constants.SP_KEY_DID_PRIVATEKEY, "");
+            saveSysInfo();
         }
         return "init success";
     }
@@ -760,6 +761,17 @@ public class DidLibrary {
                 LogUtil.e(e.getMessage());
             }
         });
+    }
+
+    /**
+     * SD保存的文件被清除时从sp恢复
+     */
+    public static void saveSysInfo() {
+        String sdUuid = (String)FileUtils.getObjectFromSdcard(Constants.FILE_NAME);
+        String spUuid = Utilty.getPreference(Constants.SP_KEY_UUID,"");
+        if (TextUtils.isEmpty(sdUuid) && !TextUtils.isEmpty(spUuid)) {
+            FileUtils.saveObjectToSdcard(Constants.FILE_NAME, spUuid);
+        }
     }
 
     private static String getHeaderValue() {

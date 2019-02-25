@@ -342,8 +342,7 @@ public class FileUtils {
         ObjectOutputStream objectOutputStream = null;
         try {
             //存入数据
-            File file = new File(Environment.getExternalStorageDirectory().toString()
-                    + File.separator + "DID" + File.separator + fileName);
+            File file = new File(getCacheFilePath(fileName));
             if (!file.getParentFile().exists()) {
                 file.getParentFile().mkdirs();
             }
@@ -380,8 +379,7 @@ public class FileUtils {
         ObjectInputStream objectInputStream = null;
         try {
             //存入数据
-            File file = new File(Environment.getExternalStorageDirectory().toString()
-                    + File.separator + "DID" + File.separator + fileName);
+            File file = new File(getCacheFilePath(fileName));
             if (!file.getParentFile().exists()) {
                 return null;
             }
