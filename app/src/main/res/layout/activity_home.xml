@@ -255,6 +255,14 @@
                 android:ellipsize="end"
                 android:text="@string/me_preference_language"/>
         </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_right"/>
         <TextView
             android:id="@+id/tv_personal_settings_language_tips"
             android:layout_width="wrap_content"
@@ -271,14 +279,7 @@
             android:focusableInTouchMode="true"
             android:hint="@string/me_preference_language_select_english"
             tools:text="@string/me_preference_language_select_english"/>
-        <ImageView
-            android:id="@+id/iv_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_right"/>
+
     </RelativeLayout>
     <View
         android:layout_width="match_parent"

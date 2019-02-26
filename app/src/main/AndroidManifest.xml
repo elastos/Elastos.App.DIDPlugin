@@ -96,7 +96,7 @@
             android:process=":did"/>
         <meta-data
             android:name="LIBRARY_VERSION"
-            android:value="1.0.2" />
+            android:value="1.0.5" />
     </application>
 
 </manifest>
