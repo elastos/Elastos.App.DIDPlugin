@@ -72,6 +72,18 @@
             android:textSize="16sp"
             android:text="@string/finance_send_addresss"
             android:drawableLeft="@drawable/panel_icon_recipient"/>
+        <EditText
+            android:id="@+id/et_scan_address"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:padding="15dp"
+            android:gravity="center_vertical"
+            android:layout_below="@id/tv_title2"
+            android:background="@drawable/send_input"
+            android:inputType="text"
+            android:textSize="14sp"
+            android:hint="@string/send_enter_address" />
         <ImageView
             android:id="@+id/iv_scan"
             android:layout_width="50dp"
@@ -82,19 +94,6 @@
             android:layout_below="@id/tv_title2"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_scan"/>
-        <EditText
-            android:id="@+id/et_scan_address"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:padding="15dp"
-            android:gravity="center_vertical"
-            android:layout_below="@id/tv_title2"
-            android:layout_toLeftOf="@id/iv_scan"
-            android:background="@drawable/send_input"
-            android:inputType="text"
-            android:textSize="14sp"
-            android:hint="@string/send_enter_address" />
 
     </RelativeLayout>
 

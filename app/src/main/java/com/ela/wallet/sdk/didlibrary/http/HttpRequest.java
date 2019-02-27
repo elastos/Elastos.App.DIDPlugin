@@ -37,7 +37,7 @@ public class HttpRequest {
 				HttpURLConnection connection = null;
 				try {
 					URL strUrl = new URL(url);
-					LogUtil.w("url=" + url);
+					LogUtil.v("url=" + url);
 					connection = (HttpURLConnection) strUrl.openConnection();
 					connection.setRequestMethod("GET");
 					connection.setConnectTimeout(15000);

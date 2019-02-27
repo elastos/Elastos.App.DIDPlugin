@@ -11,7 +11,7 @@ public class LogUtil {
 	public static final int ERROR = 5;
 	public static final int ASSERT = 6;
 	public static final int NOTHING = 7;
-	public static int LEVEL = WARN;
+	public static int LEVEL = VERBOSE;
 
 	private static final String TAG = "DidLibrary";
 

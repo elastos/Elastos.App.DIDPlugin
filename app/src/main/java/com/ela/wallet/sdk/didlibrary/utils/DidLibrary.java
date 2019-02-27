@@ -18,12 +18,8 @@ import org.elastos.wallet.lib.ElastosWalletDID;
 import org.elastos.wallet.lib.ElastosWalletHD;
 import org.elastos.wallet.lib.ElastosWalletSign;
 
-import java.security.PublicKey;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
-
-import javax.security.auth.callback.Callback;
 
 public class DidLibrary {
 
@@ -82,7 +78,7 @@ public class DidLibrary {
             return ;
         }
         Utilty.setPreference(Constants.SP_KEY_DID_MNEMONIC, mnemonic);
-        message += "mnemonic: " + mnemonic + "\n";
+//        message += "mnemonic: " + mnemonic + "\n";
 
         mSeed = new ElastosWallet.Data();
         int ret = ElastosWallet.getSeedFromMnemonic(mSeed, mnemonic, language, words, "");
@@ -93,7 +89,7 @@ public class DidLibrary {
             return ;
         }
         mSeedLen = ret;
-        message += "seed: " + mSeed.buf + ", len: " + mSeedLen + "\n";
+//        message += "seed: " + mSeed.buf + ", len: " + mSeedLen + "\n";
 
         String privateKey = ElastosWallet.getSinglePrivateKey(mSeed, mSeedLen);
         if (privateKey == null) {
@@ -104,7 +100,7 @@ public class DidLibrary {
             return ;
         }
         mPrivateKey = privateKey;
-        message += "privateKey: " + privateKey + "\n";
+//        message += "privateKey: " + privateKey + "\n";
         Utilty.setPreference(Constants.SP_KEY_DID_PRIVATEKEY, privateKey);
 
         String publicKey = ElastosWallet.getSinglePublicKey(mSeed, mSeedLen);
@@ -139,22 +135,23 @@ public class DidLibrary {
         message += "did: " + did + "\n";
         Utilty.setPreference(Constants.SP_KEY_DID, did);
 
-        ElastosWallet.Data data = new ElastosWallet.Data();
-        data.buf = new byte[]{0, 1, 2, 3, 4, 5};
-        ElastosWallet.Data signedData = new ElastosWallet.Data();
-        int signedLen = ElastosWallet.sign(privateKey, data, data.buf.length, signedData);
-        if (signedLen <= 0) {
-            String errmsg = "Failed to sign data.\n";
-            LogUtil.e(errmsg);
-            message += errmsg;
-
-            return ;
-        }
-
-        boolean verified = ElastosWallet.verify(publicKey, data, data.buf.length, signedData, signedLen);
-        message += "verified: " + verified + "\n";
+//        ElastosWallet.Data data = new ElastosWallet.Data();
+//        data.buf = new byte[]{0, 1, 2, 3, 4, 5};
+//        ElastosWallet.Data signedData = new ElastosWallet.Data();
+//        int signedLen = ElastosWallet.sign(privateKey, data, data.buf.length, signedData);
+//        if (signedLen <= 0) {
+//            String errmsg = "Failed to sign data.\n";
+//            LogUtil.e(errmsg);
+//            message += errmsg;
+//
+//            return ;
+//        }
+//
+//        boolean verified = ElastosWallet.verify(publicKey, data, data.buf.length, signedData, signedLen);
+//        message += "verified: " + verified + "\n";
 
         message += "================================================\n";
+        LogUtil.i("Wallet Info: " + message);
         return ;
     }
 
