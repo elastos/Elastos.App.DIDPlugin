@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 106
-        versionName "1.0.6"
+        versionCode 107
+        versionName "1.0.7"
 
         ndk.abiFilters 'armeabi-v7a'
     }
@@ -39,6 +39,7 @@ dependencies {
     implementation(name: 'Elastos.ORG.Wallet.Lib-v0.1.6', ext: 'aar')
     implementation(name: 'customdialog', ext: 'aar')
 
+    implementation "com.google.code.gson:gson:2.2.2"
 
     configurations.all {
 
