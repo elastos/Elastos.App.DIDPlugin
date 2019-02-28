@@ -718,11 +718,28 @@ public class DidLibrary {
                 "        \"Key\": \"uuid\",\n" +
                 "        \"Value\": \"\",\n" +
                 "        \"Status\": \"Normal\"\n" +
+                "    }, {\n" +
+                "        \"Key\": \"appid\",\n" +
+                "        \"Value\": \"\",\n" +
+                "        \"Status\": \"Normal\"\n" +
                 "    }]\n" +
                 "}", MemoBean.class);
-        String uuid = Utilty.getUUID();
-        memoBean.getProperties().get(0).setValue(uuid);
+        for(MemoBean.PropertiesBean prop: memoBean.getProperties()) {
+            switch (prop.getKey()) {
+                case "uuid":
+                    String uuid = Utilty.getUUID();
+                    prop.setValue(uuid);
+                    break;
+                case "appid":
+                    String appid = Utilty.getMd5(mAppId).toLowerCase();
+                    prop.setValue(appid);
+                    break;
+                default:
+                    break;
+            }
+        }
         String memo = new Gson().toJson(memoBean);
+        LogUtil.i("info=" + memo);
 
         String privateKey = mPrivateKey;
         String publicKey = Utilty.getPreference(Constants.SP_KEY_DID_PUBLICKEY, "");
@@ -772,11 +789,11 @@ public class DidLibrary {
     }
 
     private static String getHeaderValue() {
-        String appid = "org.elastos.debug.didagent";
-        String appkey = "b2gvzUM79yLhCbbGNWCuhSsGdqYhA7sS";
         long time = System.currentTimeMillis();
-        String auth = Utilty.getMd5(appkey + time).toLowerCase();
-        return String.format(Locale.getDefault(), "id=%s;time=%s;auth=%s", appid, time, auth);
+        String auth = Utilty.getMd5(mAppKey + time).toLowerCase();
+        return String.format(Locale.getDefault(), "id=%s;time=%s;auth=%s", mAppId, time, auth);
     }
 
+    private static final String mAppId = "org.elastos.debug.didagent";
+    private static final String mAppKey = "b2gvzUM79yLhCbbGNWCuhSsGdqYhA7sS";
 }
