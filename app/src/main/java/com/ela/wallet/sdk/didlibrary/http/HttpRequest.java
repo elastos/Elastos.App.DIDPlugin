@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
@@ -41,33 +42,34 @@ public class HttpRequest {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				HttpsURLConnection connection = null;
+				HttpURLConnection connection = null;
 				try {
 					URL strUrl = new URL(url);
 					LogUtil.v("url=" + url);
-					connection = (HttpsURLConnection) strUrl.openConnection();
+					connection = (HttpURLConnection) strUrl.openConnection();
 					connection.setRequestMethod("GET");
 					connection.setConnectTimeout(15000);
 					connection.setReadTimeout(15000);
 					connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
 					connection.setRequestProperty("accept","application/json");
 
-					SSLContext sslContext = SSLContext.getInstance("TLS");
-					sslContext.init(null, new TrustManager[] {
-							new X509TrustManager() {
-								public void checkClientTrusted(X509Certificate[] chain, String authType) {}
-								public void checkServerTrusted(X509Certificate[] chain, String authType) {}
-								public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[]{}; }
+					if (connection instanceof HttpsURLConnection) {
+						SSLContext sslContext = SSLContext.getInstance("TLS");
+						sslContext.init(null, new TrustManager[] {
+								new X509TrustManager() {
+									public void checkClientTrusted(X509Certificate[] chain, String authType) {}
+									public void checkServerTrusted(X509Certificate[] chain, String authType) {}
+									public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[]{}; }
+								}
+						}, null);
+						((HttpsURLConnection)connection).setSSLSocketFactory(sslContext.getSocketFactory());
+						((HttpsURLConnection)connection).setHostnameVerifier(new HostnameVerifier() {
+							@Override
+							public boolean verify(String hostname, SSLSession session) {
+								return true;
 							}
-					}, null);
-					connection.setSSLSocketFactory(sslContext.getSocketFactory());
-					connection.setHostnameVerifier(new HostnameVerifier() {
-						@Override
-						public boolean verify(String hostname, SSLSession session) {
-							return true;
-						}
-					});
-
+						});
+					}
 
 					int code = connection.getResponseCode();
 					LogUtil.i("http response code=" + code);
@@ -124,10 +126,10 @@ public class HttpRequest {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				HttpsURLConnection connection = null;
+				HttpURLConnection connection = null;
 				try {
 					URL strUrl = new URL(url);
-					connection = (HttpsURLConnection) strUrl.openConnection();
+					connection = (HttpURLConnection) strUrl.openConnection();
 					connection.setConnectTimeout(15000);
 					connection.setReadTimeout(15000);
 					connection.setRequestMethod("POST");
@@ -143,21 +145,23 @@ public class HttpRequest {
 						}
 					}
 
-					SSLContext sslContext = SSLContext.getInstance("TLS");
-					sslContext.init(null, new TrustManager[] {
-							new X509TrustManager() {
-								public void checkClientTrusted(X509Certificate[] chain, String authType) {}
-								public void checkServerTrusted(X509Certificate[] chain, String authType) {}
-								public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[]{}; }
+					if (connection instanceof HttpsURLConnection) {
+						SSLContext sslContext = SSLContext.getInstance("TLS");
+						sslContext.init(null, new TrustManager[] {
+								new X509TrustManager() {
+									public void checkClientTrusted(X509Certificate[] chain, String authType) {}
+									public void checkServerTrusted(X509Certificate[] chain, String authType) {}
+									public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[]{}; }
+								}
+						}, null);
+						((HttpsURLConnection)connection).setSSLSocketFactory(sslContext.getSocketFactory());
+						((HttpsURLConnection)connection).setHostnameVerifier(new HostnameVerifier() {
+							@Override
+							public boolean verify(String hostname, SSLSession session) {
+								return true;
 							}
-					}, null);
-					connection.setSSLSocketFactory(sslContext.getSocketFactory());
-					connection.setHostnameVerifier(new HostnameVerifier() {
-						@Override
-						public boolean verify(String hostname, SSLSession session) {
-							return true;
-						}
-					});
+						});
+					}
 
 					DataOutputStream out = new DataOutputStream(connection.getOutputStream());
 					out.writeBytes(data);
