@@ -37,12 +37,12 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        rl_did = findViewById(R.id.rl_home_did);
-        tv_balance = findViewById(R.id.tv_home_did_balance);
-        tv_version = findViewById(R.id.tv_version);
+        rl_did = (RelativeLayout) findViewById(R.id.rl_home_did);
+        tv_balance = (TextView) findViewById(R.id.tv_home_did_balance);
+        tv_version = (TextView) findViewById(R.id.tv_version);
 
-        rl_finance = findViewById(R.id.rl_personal_finance);
-        rl_record = findViewById(R.id.rl_personal_record);
+        rl_finance = (RelativeLayout)findViewById(R.id.rl_personal_finance);
+        rl_record = (RelativeLayout)findViewById(R.id.rl_personal_record);
 
         rl_finance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,9 +62,9 @@ public class HomeActivity extends BaseActivity {
             }
         });
 
-        rl_language = findViewById(R.id.rl_personal_language);
-        rl_importwallet = findViewById(R.id.rl_personal_wallet);
-        tv_language_tips = findViewById(R.id.tv_personal_settings_language_tips);
+        rl_language = (RelativeLayout)findViewById(R.id.rl_personal_language);
+        rl_importwallet = (RelativeLayout)findViewById(R.id.rl_personal_wallet);
+        tv_language_tips = (TextView) findViewById(R.id.tv_personal_settings_language_tips);
 
         rl_language.setOnClickListener(new View.OnClickListener() {
             @Override

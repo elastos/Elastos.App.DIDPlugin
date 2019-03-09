@@ -2,9 +2,9 @@ package com.ela.wallet.sdk.didlibrary.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ela.wallet.sdk.didlibrary.R;
@@ -23,7 +23,7 @@ public class HomeFragment extends BaseFragment {
 
     private Button btn_expense;
     private Button btn_income;
-    private RecyclerView rv_trans;
+    private ListView rv_trans;
 
     @Override
     protected void initView(View rootView, @Nullable Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class HomeFragment extends BaseFragment {
                 btn_income.setTextColor(getResources().getColor(R.color.appColor));
             }
         });
-        rv_trans = rootView.findViewById(R.id.rv_home);
+        rv_trans = (ListView) rootView.findViewById(R.id.rv_home);
     }
 
     @SuppressWarnings("deprecation")

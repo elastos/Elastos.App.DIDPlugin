@@ -9,7 +9,7 @@ import android.widget.TextView;
  * Created by Administrator on 2019/1/8.
  */
 
-public class RollTextView extends AppCompatTextView {
+public class RollTextView extends TextView {
     public RollTextView (Context context) {
         super(context);
     }
@@ -19,9 +19,9 @@ public class RollTextView extends AppCompatTextView {
     public RollTextView (Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
-
-    @Override
-    public boolean isFocused() {
-        return true;
-    }
+//TODO houhong
+//    @Override
+//    public boolean isFocused() {
+//        return true;
+//    }
 }

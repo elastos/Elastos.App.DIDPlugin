@@ -40,8 +40,8 @@ public class ScanActivity extends BaseActivity {
 
     protected void initView() {
         mContext =this;
-        scanner=findViewById(R.id.scanner);
-        cover=findViewById(R.id.cover);
+        scanner= (QRCodeScannerView)findViewById(R.id.scanner);
+        cover= (QRCoverView)findViewById(R.id.cover);
         //自动聚焦间隔2s
         scanner.setAutofocusInterval(2000L);
         //扫描结果监听处理
@@ -56,17 +56,18 @@ public class ScanActivity extends BaseActivity {
             }
         });
         //相机权限监听
-        scanner.setOnCheckCameraPermissionListener(new QRCodeScannerView.OnCheckCameraPermissionListener() {
-            public boolean onCheckCameraPermission() {
-                if (ContextCompat.checkSelfPermission(ScanActivity.this, Manifest.permission.CAMERA)
-                        == PackageManager.PERMISSION_GRANTED) {
-                    return true;
-                } else {
-                    ActivityCompat.requestPermissions(ScanActivity.this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
-                    return false;
-                }
-            }
-        });
+        //TODO houhong
+//        scanner.setOnCheckCameraPermissionListener(new QRCodeScannerView.OnCheckCameraPermissionListener() {
+//            public boolean onCheckCameraPermission() {
+//                if (ContextCompat.checkSelfPermission(ScanActivity.this, Manifest.permission.CAMERA)
+//                        == PackageManager.PERMISSION_GRANTED) {
+//                    return true;
+//                } else {
+//                    ActivityCompat.requestPermissions(ScanActivity.this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
+//                    return false;
+//                }
+//            }
+//        });
         //开启后置摄像头
         scanner.setBackCamera();
     }

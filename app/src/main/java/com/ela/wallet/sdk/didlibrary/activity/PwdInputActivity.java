@@ -29,8 +29,8 @@ public class PwdInputActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        et_pwd = findViewById(R.id.et_pwd);
-        et_pwd_again = findViewById(R.id.et_pwd_again);
+        et_pwd = (EditText) findViewById(R.id.et_pwd);
+        et_pwd_again = (EditText) findViewById(R.id.et_pwd_again);
     }
 
     @Override

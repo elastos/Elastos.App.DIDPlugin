@@ -98,12 +98,12 @@
                 android:textSize="16sp"
                 android:text="@string/home_income"/>
         </LinearLayout>
-        <android.support.v7.widget.RecyclerView
+        <ListView
             android:id="@+id/rv_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_home_trans">
-        </android.support.v7.widget.RecyclerView>
+        </ListView>
     </RelativeLayout>
 
 </LinearLayout>

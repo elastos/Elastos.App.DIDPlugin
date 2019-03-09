@@ -18,12 +18,12 @@ package com.ela.wallet.sdk.didlibrary.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.widget.ImageView;
 
 import com.ela.wallet.sdk.didlibrary.R;
 
-class SpinView extends AppCompatImageView implements Indeterminate {
+class SpinView extends ImageView implements Indeterminate {
 
     private float mRotateDegrees;
     private int mFrameTime;

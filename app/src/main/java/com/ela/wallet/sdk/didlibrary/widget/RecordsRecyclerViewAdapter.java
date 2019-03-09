@@ -1,12 +1,14 @@
 package com.ela.wallet.sdk.didlibrary.widget;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ela.wallet.sdk.didlibrary.R;
@@ -18,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class RecordsRecyclerViewAdapter extends RecyclerView.Adapter<RecordsRecyclerViewAdapter.RecordsViewHolder> {
+public class RecordsRecyclerViewAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<RecordsModel> mList;
@@ -42,13 +44,71 @@ public class RecordsRecyclerViewAdapter extends RecyclerView.Adapter<RecordsRecy
         notifyDataSetChanged();
     }
 
+
     @Override
+    public Object getItem(int position) {
+        return mList.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        RecordsViewHolder holder;
+        //判断是否有缓存
+        if (convertView == null) {
+            convertView= LayoutInflater.from(mContext).inflate(R.layout.recyclerview_item_records, parent, false);
+            holder =  new RecordsViewHolder(convertView);
+            convertView.setTag(holder);
+        } else {
+            //得到缓存的布局
+            holder = (RecordsViewHolder) convertView.getTag();
+        }
+
+        holder.tv_title.setText(mList.get(position).getType());
+        if (TextUtils.isEmpty(mList.get(position).getTime())) {
+            holder.tv_subtitle.setVisibility(View.GONE);
+            holder.tv_next.setText(mList.get(position).getValue());
+        } else {
+            holder.tv_subtitle.setVisibility(View.VISIBLE);
+            holder.tv_subtitle.setText(stampToDate(mList.get(position).getTime()));
+
+            String value = mList.get(position).getValue();
+            String preFix = value.substring(0,1);
+            String realValue = value.substring(1);
+
+            String text = String.format(Locale.getDefault(),"%s %s%.8f%s", mContext.getString(R.string.amount),preFix, Long.parseLong(realValue)/100000000.0f , " ELA");
+            holder.tv_next.setText(text);
+        }
+
+        if (mList.get(position).getFee() == 0) {
+            holder.tv_subnext.setVisibility(View.GONE);
+        } else {
+            holder.tv_subnext.setVisibility(View.VISIBLE);
+            String fee = String.format(Locale.getDefault(),"%s %s%.8f%s", mContext.getString(R.string.fee), "-", mList.get(position).getFee()/100000000.0f , " ELA");
+            holder.tv_subnext.setText(fee);
+        }
+
+        if (position + 1 == getItemCount()) {
+            holder.line.setVisibility(View.GONE);
+        } else {
+            holder.line.setVisibility(View.VISIBLE);
+        }
+
+        return convertView;
+    }
+
+
+    //@Override
     public RecordsRecyclerViewAdapter.RecordsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.recyclerview_item_records, parent, false);
         return new RecordsViewHolder(view);
     }
 
-    @Override
+    //@Override
     public void onBindViewHolder(final RecordsRecyclerViewAdapter.RecordsViewHolder holder, final int position) {
         holder.tv_title.setText(mList.get(position).getType());
         if (TextUtils.isEmpty(mList.get(position).getTime())) {
@@ -94,11 +154,25 @@ public class RecordsRecyclerViewAdapter extends RecyclerView.Adapter<RecordsRecy
     }
 
     @Override
+    public int getCount() {
+        return mList == null ? 0 : mList.size();
+    }
+
     public int getItemCount() {
         return mList == null ? 0 : mList.size();
     }
 
-    class RecordsViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public boolean areAllItemsEnabled(){
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled(int var1){
+        return true;
+    }
+
+    class RecordsViewHolder {
 
         private ImageView iv_img;
         private TextView tv_title;
@@ -108,7 +182,7 @@ public class RecordsRecyclerViewAdapter extends RecyclerView.Adapter<RecordsRecy
         private View line;
 
         public RecordsViewHolder(View itemView) {
-            super(itemView);
+//            super(itemView);
             iv_img = itemView.findViewById(R.id.iv_records_img);
             tv_title = itemView.findViewById(R.id.tv_records_title);
             tv_subtitle = itemView.findViewById(R.id.tv_records_subtitle);

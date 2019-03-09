@@ -56,8 +56,8 @@ public class DidLaunchActivity extends BaseActivity implements ViewPager.OnPageC
 
     @Override
     protected void initView() {
-        mViewPager = findViewById(R.id.vp_launch);
-        mTab = findViewById(R.id.tab_nav_bottom);
+        mViewPager = (CustomViewPager)findViewById(R.id.vp_launch);
+        mTab = (TabLayout)findViewById(R.id.tab_nav_bottom);
     }
 
     @Override
@@ -84,10 +84,10 @@ public class DidLaunchActivity extends BaseActivity implements ViewPager.OnPageC
         fragments.add(new PersonalFragment());
         TitleFragmentPagerAdapter adapter = new TitleFragmentPagerAdapter(getSupportFragmentManager(), fragments, new String[]{getString(R.string.nav_home), getString(R.string.nav_charges), getString(R.string.nav_pay), getString(R.string.nav_mine)});
         mViewPager.setAdapter(adapter);
-        mViewPager.addOnPageChangeListener(this);
+        mViewPager.setOnPageChangeListener(this);
 
         mTab.setupWithViewPager(mViewPager);
-        mTab.addOnTabSelectedListener(this);
+        mTab.setOnTabSelectedListener(this);
         for (int i = 0; i < mTab.getTabCount(); i++) {
             TabLayout.Tab tab = mTab.getTabAt(i);
             tab.setCustomView(getTabView(i));

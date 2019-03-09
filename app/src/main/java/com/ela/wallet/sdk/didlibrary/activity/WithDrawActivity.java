@@ -39,10 +39,10 @@ public class WithDrawActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        et_scan_address = findViewById(R.id.et_scan_address);
-        iv_scan = findViewById(R.id.iv_scan);
+        et_scan_address = (EditText)findViewById(R.id.et_scan_address);
+        iv_scan = (ImageView) findViewById(R.id.iv_scan);
 
-        et_amount = findViewById(R.id.et_amount);
+        et_amount = (EditText) findViewById(R.id.et_amount);
 
         iv_scan.setOnClickListener(new View.OnClickListener() {
             @Override

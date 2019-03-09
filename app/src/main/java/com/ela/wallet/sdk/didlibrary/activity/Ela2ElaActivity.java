@@ -31,9 +31,9 @@ public class Ela2ElaActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        et_scan_address = findViewById(R.id.et_scan_address);
-        iv_scan = findViewById(R.id.iv_scan);
-        et_amount = findViewById(R.id.et_amount);
+        et_scan_address = (EditText) findViewById(R.id.et_scan_address);
+        iv_scan = (ImageView) findViewById(R.id.iv_scan);
+        et_amount = (EditText) findViewById(R.id.et_amount);
 
         iv_scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +59,9 @@ public class Ela2ElaActivity extends BaseActivity {
             public void afterTextChanged(Editable editable) {
                 String temp = editable.toString();
                 int posDot = temp.indexOf(".");
-                if (posDot <= 0) return;
+                if (posDot <= 0) {
+                    return;
+                }
                 if (temp.length() - posDot - 1 > 8)
                 {
                     editable.delete(posDot + 9, posDot + 10);

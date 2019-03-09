@@ -28,11 +28,11 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/bg_dashline_gray">
-        <android.support.v7.widget.RecyclerView
+        <ListView
             android:id="@+id/rv_word_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
+        </ListView>
     </LinearLayout>
 
     <TextView
@@ -47,14 +47,14 @@
         android:textSize="14sp"
         android:text="@string/word_click"/>
 
-    <android.support.v7.widget.RecyclerView
+    <ListView
         android:id="@+id/rv_word_show"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
 
-    </android.support.v7.widget.RecyclerView>
+    </ListView>
 
     <Button
         android:id="@+id/btn_ok"

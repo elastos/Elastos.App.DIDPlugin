@@ -1,6 +1,7 @@
 package com.ela.wallet.sdk.didlibrary.base;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -10,7 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.LocaleList;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -26,7 +27,7 @@ import com.ela.wallet.sdk.didlibrary.utils.Utilty;
 import java.util.Locale;
 
 
-public abstract class BaseActivity extends AppCompatActivity{
+public abstract class BaseActivity extends FragmentActivity {
 
     private String activityName = this.getClass().getSimpleName();
 
@@ -36,10 +37,11 @@ public abstract class BaseActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         LogUtil.i(activityName + ":onCreate");
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+		//houhong
+//        getSupportActionBar().hide();
         setContentView(getRootViewId());
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//强制竖屏
-        tv_title = findViewById(R.id.title_tv_title);
+        tv_title = (TextView) findViewById(R.id.title_tv_title);
         String title = getTitleText();
         if (!TextUtils.isEmpty(title)) {
             tv_title.setText(title);

@@ -186,13 +186,13 @@
             android:src="@drawable/walletbalance_icon_code"/>
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <ListView
         android:id="@+id/rv_personal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
 
-    </android.support.v7.widget.RecyclerView>
+    </ListView>
 
 
     <TextView

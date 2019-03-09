@@ -1,8 +1,6 @@
 package com.ela.wallet.sdk.didlibrary.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 
 import com.ela.wallet.sdk.didlibrary.R;

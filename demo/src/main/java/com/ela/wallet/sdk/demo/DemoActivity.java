@@ -1,6 +1,6 @@
 package com.ela.wallet.sdk.demo;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.ela.wallet.sdk.didlibrary.utils.DidLibrary;
 
-public class DemoActivity extends AppCompatActivity implements View.OnClickListener{
+public class DemoActivity extends Activity implements View.OnClickListener{
 
     private Button button1;
     private Button button2;

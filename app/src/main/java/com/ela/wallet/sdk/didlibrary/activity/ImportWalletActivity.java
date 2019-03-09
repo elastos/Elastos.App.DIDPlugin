@@ -34,9 +34,9 @@ public class ImportWalletActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        et_import_word = findViewById(R.id.et_import_word);
-        et_pwd = findViewById(R.id.et_pwd);
-        et_pwd_again = findViewById(R.id.et_pwd_again);
+        et_import_word = (EditText) findViewById(R.id.et_import_word);
+        et_pwd = (EditText)findViewById(R.id.et_pwd);
+        et_pwd_again = (EditText)findViewById(R.id.et_pwd_again);
     }
 
     @Override

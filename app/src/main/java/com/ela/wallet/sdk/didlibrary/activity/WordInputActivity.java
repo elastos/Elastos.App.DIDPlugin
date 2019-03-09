@@ -1,16 +1,12 @@
 package com.ela.wallet.sdk.didlibrary.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,11 +24,11 @@ import java.util.List;
 
 public class WordInputActivity extends BaseActivity {
 
-    private RecyclerView rv_show;
+    private ListView rv_show;
     private GridRecyclerViewAdapter mWordShowAdapter;
     private List<WordModel> wordList;
 
-    private RecyclerView rv_input;
+    private ListView rv_input;
     private GridRecyclerViewAdapter mWordInputAdapter;
     private List<WordModel> wordInputList;
 
@@ -51,12 +47,12 @@ public class WordInputActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        rv_show = findViewById(R.id.rv_word_show);
-        rv_input = findViewById(R.id.rv_word_input);
+        rv_show = (ListView) findViewById(R.id.rv_word_show);
+        rv_input = (ListView)findViewById(R.id.rv_word_input);
 
-        tv_word_tips = findViewById(R.id.tv_word_input_tips);
-        btn_ok = findViewById(R.id.btn_ok);
-        btn_clear = findViewById(R.id.btn_clear);
+        tv_word_tips = (TextView) findViewById(R.id.tv_word_input_tips);
+        btn_ok = (Button) findViewById(R.id.btn_ok);
+        btn_clear = (Button) findViewById(R.id.btn_clear);
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,7 +100,7 @@ public class WordInputActivity extends BaseActivity {
         Collections.shuffle(wordList);
         mWordShowAdapter = new GridRecyclerViewAdapter(this, wordList);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
-        rv_show.setLayoutManager(gridLayoutManager);
+//        rv_show.setLayoutManager(gridLayoutManager);
         rv_show.setAdapter(mWordShowAdapter);
         mWordShowAdapter.setOnItemClickListener(new GridRecyclerViewAdapter.OnItemClickListener() {
             @Override
@@ -132,7 +128,7 @@ public class WordInputActivity extends BaseActivity {
         mWordInputAdapter = new GridRecyclerViewAdapter(this, wordInputList);
         mWordInputAdapter.setType(GridRecyclerViewAdapter.TYPE_INPUT);
         GridLayoutManager gridLayoutManager1 = new GridLayoutManager(this, 4);
-        rv_input.setLayoutManager(gridLayoutManager1);
+//        rv_input.setLayoutManager(gridLayoutManager1);
         rv_input.setAdapter(mWordInputAdapter);
 
         sb = new StringBuffer();

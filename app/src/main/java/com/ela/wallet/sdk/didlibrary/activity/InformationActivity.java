@@ -1,17 +1,11 @@
 package com.ela.wallet.sdk.didlibrary.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ela.wallet.sdk.didlibrary.R;
 import com.ela.wallet.sdk.didlibrary.base.BaseActivity;
-import com.ela.wallet.sdk.didlibrary.bean.AllTxsBean;
 import com.ela.wallet.sdk.didlibrary.bean.GetDidBean;
 import com.ela.wallet.sdk.didlibrary.bean.RecordsModel;
 import com.ela.wallet.sdk.didlibrary.global.Constants;
@@ -37,7 +31,7 @@ public class InformationActivity extends BaseActivity {
 
     private TextView tv_balance;
 
-    private RecyclerView rv_trans;
+    private ListView rv_trans;
     private RecordsRecyclerViewAdapter mAdapter;
     private List<RecordsModel> mList;
 
@@ -50,15 +44,16 @@ public class InformationActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        tv_balance = findViewById(R.id.tv_home_did_balance);
-        rv_trans = findViewById(R.id.rv_home);
+        tv_balance = (TextView) findViewById(R.id.tv_home_did_balance);
+        rv_trans =(ListView) findViewById(R.id.rv_home);
     }
 
     @Override
     protected void initData() {
         mList = new ArrayList<>();
         tv_balance.setText(Utilty.getPreference(Constants.SP_KEY_DID, ""));
-        rv_trans.setLayoutManager(new LinearLayoutManager(this));
+        //TODO houhong
+//        rv_trans.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new RecordsRecyclerViewAdapter(this, mList);
         rv_trans.setAdapter(mAdapter);
         loadInfoData();

@@ -36,11 +36,11 @@ public class ReceiveActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        iv_qr = findViewById(R.id.iv_charge_qr);
-        tv_copy = findViewById(R.id.tv_charge_copyaddress);
-        tv_reset = findViewById(R.id.tv_charge_reset_address);
-        tv_title = findViewById(R.id.tv_charge_did);
-        tv_balance = findViewById(R.id.tv_charge_did_balance);
+        iv_qr = (ImageView) findViewById(R.id.iv_charge_qr);
+        tv_copy = (TextView) findViewById(R.id.tv_charge_copyaddress);
+        tv_reset = (TextView) findViewById(R.id.tv_charge_reset_address);
+        tv_title = (TextView) findViewById(R.id.tv_charge_did);
+        tv_balance = (TextView)  findViewById(R.id.tv_charge_did_balance);
 
         iv_qr.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,16 +1,10 @@
 package com.ela.wallet.sdk.didlibrary.activity;
 
 import android.content.Intent;
-import android.icu.text.Collator;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -47,7 +41,7 @@ public class PersonalActivity extends BaseActivity {
 //    private TextView tv_language_tips;
 //    private RelativeLayout rl_importwallet;
 
-    private RecyclerView rv_personal;
+    private ListView rv_personal;
     private PersonalRecyclerViewAdapter mAdapter;
     private List<SettingModel> mList;
 
@@ -66,13 +60,13 @@ public class PersonalActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        rl_did = findViewById(R.id.rl_did);
-        rl_ela = findViewById(R.id.rl_ela);
-        tv_did = findViewById(R.id.did_balance);
-        tv_ela = findViewById(R.id.ela_balance);
+        rl_did = (RelativeLayout) findViewById(R.id.rl_did);
+        rl_ela = (RelativeLayout) findViewById(R.id.rl_ela);
+        tv_did = (TextView) findViewById(R.id.did_balance);
+        tv_ela = (TextView) findViewById(R.id.ela_balance);
 
-        rv_personal = findViewById(R.id.rv_personal);
-        tv_balance = findViewById(R.id.tv_personal_did_balance);
+        rv_personal = (ListView) findViewById(R.id.rv_personal);
+        tv_balance = (TextView) findViewById(R.id.tv_personal_did_balance);
 
         rl_did.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,8 +126,9 @@ public class PersonalActivity extends BaseActivity {
         mList.add(new SettingModel(R.drawable.list_icon_recharge, getString(R.string.me_recharge)));
         mList.add(new SettingModel(R.drawable.list_icon_record, getString(R.string.me_records)));
         mAdapter = new PersonalRecyclerViewAdapter(this, mList);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        rv_personal.setLayoutManager(llm);
+        //TODO houhong
+//        LinearLayoutManager llm = new LinearLayoutManager(this);
+//        rv_personal.setLayoutManager(llm);
         rv_personal.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(new PersonalRecyclerViewAdapter.OnItemClickListener() {
             @Override

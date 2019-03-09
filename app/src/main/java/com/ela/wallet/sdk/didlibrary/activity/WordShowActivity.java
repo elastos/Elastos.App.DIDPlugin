@@ -23,7 +23,7 @@ public class WordShowActivity extends BaseActivity{
 
     @Override
     protected void initView() {
-        tv_word_show = findViewById(R.id.tv_word_show);
+        tv_word_show = (TextView) findViewById(R.id.tv_word_show);
     }
 
     @Override

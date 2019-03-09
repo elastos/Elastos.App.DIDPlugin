@@ -1,17 +1,12 @@
 package com.ela.wallet.sdk.didlibrary.activity;
 
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.widget.TableLayout;
-import android.widget.Toast;
+import android.widget.ListView;
 
 import com.ela.wallet.sdk.didlibrary.R;
 import com.ela.wallet.sdk.didlibrary.base.BaseActivity;
 import com.ela.wallet.sdk.didlibrary.bean.AllTxsBean;
-import com.ela.wallet.sdk.didlibrary.bean.BalanceBean;
 import com.ela.wallet.sdk.didlibrary.bean.RecordsModel;
 import com.ela.wallet.sdk.didlibrary.global.Constants;
 import com.ela.wallet.sdk.didlibrary.global.Urls;
@@ -28,7 +23,7 @@ import java.util.List;
 public class RecordsActivity extends BaseActivity {
 
     private TabLayout mTab;
-    private RecyclerView mRv;
+    private ListView mRv;
     private RecordsRecyclerViewAdapter mAdapter;
     private List<RecordsModel> mList;
     private List<RecordsModel> mList1;
@@ -50,8 +45,8 @@ public class RecordsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        mTab = findViewById(R.id.tab_records);
-        mRv = findViewById(R.id.rv_records);
+        mTab = (TabLayout) findViewById(R.id.tab_records);
+        mRv = (ListView) findViewById(R.id.rv_records);
     }
 
     @Override
@@ -85,8 +80,9 @@ public class RecordsActivity extends BaseActivity {
 //            }
 //        }
         mAdapter = new RecordsRecyclerViewAdapter(this, mList);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        mRv.setLayoutManager(llm);
+        //TODO houhong
+//        LinearLayoutManager llm = new LinearLayoutManager(this);
+//        mRv.setLayoutManager(llm);
         mRv.setAdapter(mAdapter);
         mAdapter.setData(mList);
 
@@ -97,7 +93,8 @@ public class RecordsActivity extends BaseActivity {
         }
         mTab.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-        mTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        mTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
+        {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();

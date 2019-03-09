@@ -3,11 +3,11 @@
 buildscript {
     
     repositories {
-        google()
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.0.0'
         
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -17,12 +17,38 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
         jcenter()
         maven { url 'https://jitpack.io' }
+        maven { url "https://maven.google.com" }
+        google()
+    }
+
+    subprojects {
+        project.configurations.all {
+            resolutionStrategy.eachDependency { details ->
+                if (details.requested.group == 'com.android.support'
+                        && !details.requested.name.contains('multidex') ) {
+                    details.useVersion "23.1.0"
+                }
+            }
+        }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    var = [
+            // SDK And Tools
+            minSdkVersion        : 19,
+            targetSdkVersion     : 26,
+            compileSdkVersion    : 27,
+            buildToolsVersion    : "27.0.2",
+            versionCode          : 108,
+            versionName          : "1.0.8",
+            //Dependencies
+            supportLibraryVersion: "23.1.0"
+    ]
 }
