@@ -237,16 +237,20 @@ public class Utilty {
 
     // 判断一个字符是否是中文
     public static boolean isChinese(char c) {
-        return c >= 0x4E00 && c <= 0x9FA5;// 根据字节码判断
+        // 根据字节码判断
+        return c >= 0x4E00 && c <= 0x9FA5;
     }
 
     // 判断一个字符串是否含有中文
     public static boolean isChinese(String str) {
-        if (str == null)
+        if (str == null) {
             return false;
+        }
         for (char c : str.toCharArray()) {
-            if (isChinese(c))
-                return true;// 有一个中文字符就返回
+            if (isChinese(c)) {
+                // 有一个中文字符就返回
+                return true;
+            }
         }
         return false;
     }
@@ -260,7 +264,6 @@ public class Utilty {
     }
 
     public static String getIMSI() {
-
         //TODO houhong
 //        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
 //            try {

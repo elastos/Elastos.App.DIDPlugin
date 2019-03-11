@@ -31,7 +31,7 @@ public class PersonalRecyclerViewAdapter extends BaseAdapter {
     }
 
     //@Override
-    public void onBindViewHolder(final PersonalRecyclerViewAdapter.SettingViewHolder holder, final int position) {
+    public void onBindViewHolder(final SettingViewHolder holder, final int position) {
         holder.iv_img.setImageResource(mList.get(position).getImg());
         holder.tv_title.setText(mList.get(position).getTitle());
         if (position + 1 == getItemCount()) {
@@ -39,9 +39,7 @@ public class PersonalRecyclerViewAdapter extends BaseAdapter {
         } else {
             holder.line.setVisibility(View.VISIBLE);
         }
-		//TODO houhong
-		
-        holder.iv_img.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mOnItemClickListener != null) {
@@ -95,7 +93,7 @@ public class PersonalRecyclerViewAdapter extends BaseAdapter {
             holder.line.setVisibility(View.VISIBLE);
         }
         final int fposition = position;
-        holder.iv_img.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mOnItemClickListener != null) {
@@ -119,6 +117,7 @@ public class PersonalRecyclerViewAdapter extends BaseAdapter {
 
     class SettingViewHolder {
 
+        private View itemView;
         private ImageView iv_img;
         private TextView tv_title;
         private TextView tv_subtitle;
@@ -126,7 +125,7 @@ public class PersonalRecyclerViewAdapter extends BaseAdapter {
         private View line;
 
         public SettingViewHolder(View itemView) {
-//            super(itemView);
+            this.itemView = itemView;
             iv_img = itemView.findViewById(R.id.iv_personal_img);
             tv_title = itemView.findViewById(R.id.tv_personal_title);
             tv_subtitle = itemView.findViewById(R.id.tv_personal_subtitle);

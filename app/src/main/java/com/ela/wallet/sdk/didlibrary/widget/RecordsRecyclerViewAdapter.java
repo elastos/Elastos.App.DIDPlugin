@@ -174,6 +174,7 @@ public class RecordsRecyclerViewAdapter extends BaseAdapter {
 
     class RecordsViewHolder {
 
+        private View itemView;
         private ImageView iv_img;
         private TextView tv_title;
         private TextView tv_subtitle;
@@ -182,7 +183,7 @@ public class RecordsRecyclerViewAdapter extends BaseAdapter {
         private View line;
 
         public RecordsViewHolder(View itemView) {
-//            super(itemView);
+            this.itemView = itemView;
             iv_img = itemView.findViewById(R.id.iv_records_img);
             tv_title = itemView.findViewById(R.id.tv_records_title);
             tv_subtitle = itemView.findViewById(R.id.tv_records_subtitle);

@@ -65,9 +65,9 @@ public class GridRecyclerViewAdapter extends BaseAdapter {
             holder.textView.setBackground(mContext.getResources().getDrawable(R.drawable.bg_roundcorner_gray));
         }
 
-        final GridRecyclerViewAdapter.WordViewHolder fholder  = holder;
+        final WordViewHolder fholder  = holder;
         final int fposition = position;
-        holder.textView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mOnItemClickListener != null && !mList.get(fposition).isClicked()) {
@@ -120,10 +120,11 @@ public class GridRecyclerViewAdapter extends BaseAdapter {
 
     class WordViewHolder {
 
+        private View itemView;
         private TextView textView;
 
         public WordViewHolder(View itemView) {
-//            super(itemView);
+            this.itemView = itemView;
             textView = itemView.findViewById(R.id.tv_word_show);
         }
     }

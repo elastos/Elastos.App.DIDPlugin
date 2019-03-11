@@ -56,18 +56,21 @@ public class ScanActivity extends BaseActivity {
             }
         });
         //相机权限监听
-        //TODO houhong
-//        scanner.setOnCheckCameraPermissionListener(new QRCodeScannerView.OnCheckCameraPermissionListener() {
-//            public boolean onCheckCameraPermission() {
+        scanner.setOnCheckCameraPermissionListener(new QRCodeScannerView.OnCheckCameraPermissionListener() {
+            @Override
+            public boolean onCheckCameraPermission() {
+                //TODO houhong
 //                if (ContextCompat.checkSelfPermission(ScanActivity.this, Manifest.permission.CAMERA)
 //                        == PackageManager.PERMISSION_GRANTED) {
 //                    return true;
 //                } else {
-//                    ActivityCompat.requestPermissions(ScanActivity.this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
+//                    ActivityCompat.requestPermissions(ScanActivity.this,
+//                            new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
 //                    return false;
 //                }
-//            }
-//        });
+                return false;
+            }
+        });
         //开启后置摄像头
         scanner.setBackCamera();
     }

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.ela.wallet.sdk.didlibrary.MainActivity;
 import com.ela.wallet.sdk.didlibrary.R;
 import com.ela.wallet.sdk.didlibrary.bean.WordModel;
 import com.ela.wallet.sdk.didlibrary.global.Constants;
@@ -40,7 +41,7 @@ public class LanguageRecyclerViewAdapter extends BaseAdapter {
     public void onBindViewHolder(final LanguageRecyclerViewAdapter.LanguageViewHolder holder, final int position) {
         holder.textView.setText(mList.get(position).getWord());
         holder.textView.setTextColor(mContext.getResources().getColor(mList.get(position).isClicked() ? R.color.appColor : R.color.textBlack));
-        holder.textView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mOnItemClickListener != null) {
@@ -93,14 +94,16 @@ public class LanguageRecyclerViewAdapter extends BaseAdapter {
         final int fposttion = position;
         final LanguageViewHolder fholder = holder;
         holder.textView.setText(mList.get(position).getWord());
-        holder.textView.setTextColor(mContext.getResources().getColor(mList.get(position).isClicked() ? R.color.appColor : R.color.textBlack));
-        holder.textView.setOnClickListener(new View.OnClickListener() {
+        holder.textView.setTextColor(mContext.getResources().
+                getColor(mList.get(position).isClicked() ? R.color.appColor : R.color.textBlack));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mOnItemClickListener != null) {
                     mList.get(fposttion).setClicked(true);
                     mOnItemClickListener.onClick(fposttion, fholder.textView);
-                    String language = mList.get(fposttion).getWord().toLowerCase().contains("english") ? "english" : "chinese";
+                    String language = mList.get(fposttion).getWord().
+                            toLowerCase().contains("english") ? "english" : "chinese";
                     Utilty.setPreference(Constants.SP_KEY_APP_LANGUAGE, language);
                     Resources resources = mContext.getResources();
                     DisplayMetrics dm = resources.getDisplayMetrics();
@@ -113,7 +116,8 @@ public class LanguageRecyclerViewAdapter extends BaseAdapter {
                     }
                     resources.updateConfiguration(config, dm);
 
-                    final Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(mContext.getPackageName());
+                    final Intent intent = mContext.getPackageManager().
+                            getLaunchIntentForPackage(mContext.getPackageName());
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     mContext.startActivity(intent);
                     System.exit(0);
@@ -145,10 +149,11 @@ public class LanguageRecyclerViewAdapter extends BaseAdapter {
 
     class LanguageViewHolder {
 
+        private View itemView;
         private TextView textView;
 
         public LanguageViewHolder(View itemView) {
-//            super(itemView);
+            this.itemView = itemView;
             textView = itemView.findViewById(R.id.tv_item_language);
         }
     }

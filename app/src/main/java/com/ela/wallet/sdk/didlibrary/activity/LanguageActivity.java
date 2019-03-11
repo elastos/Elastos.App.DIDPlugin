@@ -68,7 +68,7 @@ public class LanguageActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        for (int k=0;k<size;k++) {
+                        for (int k = 0;k < size; k++) {
                             if (k == position) {
                                 mList.get(k).setClicked(true);
                                 ftextView.setTextColor(getResources().getColor(R.color.appColor));
