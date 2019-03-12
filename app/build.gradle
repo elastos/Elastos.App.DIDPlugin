@@ -80,7 +80,7 @@ dependencies {
         exclude group: 'com.android.support', module:'support-core-ui'
         exclude group: 'com.android.support', module:'support-compat'
     }
-    implementation (name: 'Elastos.ORG.Wallet.Lib-v0.1.6', ext: 'aar'){
+    implementation (name: 'ElastosSdkKeypair-v0.1.19', ext: 'aar'){
         exclude group: 'com.android.support', module:'support-v4'
         exclude group: 'com.android.support', module:'support-core-ui'
         exclude group: 'com.android.support', module:'support-compat'

@@ -265,19 +265,19 @@ public class Utilty {
     }
 
     public static String getIMSI() {
-        //TODO houhong
-        if (ContextWrapper.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
-            try {
-                TelephonyManager tm = (TelephonyManager) getContext().getSystemService(Context.TELEPHONY_SERVICE);
-                return tm.getSubscriberId();
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "0000000000";
-            }
-        } else {
-            return "0000000000";
-        }
-//        return "0000000000";
+        //TODO houhong not USED
+//        if (ContextWrapper.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+//            try {
+//                TelephonyManager tm = (TelephonyManager) getContext().getSystemService(Context.TELEPHONY_SERVICE);
+//                return tm.getSubscriberId();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                return "0000000000";
+//            }
+//        } else {
+//            return "0000000000";
+//        }
+        return "0000000000";
     }
 
     private static String getDeviceIdForGeneral(Context var0) {
