@@ -42,12 +42,12 @@ task clean(type: Delete) {
 ext {
     var = [
             // SDK And Tools
-            minSdkVersion        : 19,
+            minSdkVersion        : 16,
             targetSdkVersion     : 26,
             compileSdkVersion    : 27,
             buildToolsVersion    : "27.0.2",
-            versionCode          : 108,
-            versionName          : "1.0.8",
+            versionCode          : 10012,
+            versionName          : "1.0.12",
             //Dependencies
             supportLibraryVersion: "23.1.0"
     ]

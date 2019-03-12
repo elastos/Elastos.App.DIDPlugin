@@ -96,7 +96,7 @@ dependencies {
         exclude group: 'com.android.support', module:'support-compat'
     }
 
-    implementation files('libs/android-support-v13.jar')
+    provided files('libs/android-support-v13.jar')
 
     implementation files('libs/nanohttpd-2.2.0.jar')
 
