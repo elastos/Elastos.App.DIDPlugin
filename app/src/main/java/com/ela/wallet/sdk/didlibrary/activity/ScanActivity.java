@@ -61,7 +61,8 @@ public class ScanActivity extends BaseActivity {
             @Override
             public boolean onCheckCameraPermission() {
                 //TODO houhong
-                if (ContextWrapper.checkSelfPermission(Manifest.permission.CAMERA)
+                ContextWrapper contextWrapper = (ContextWrapper) ScanActivity.this;
+                if (contextWrapper.checkSelfPermission(Manifest.permission.CAMERA)
                         == PackageManager.PERMISSION_GRANTED) {
                     return true;
                 }

@@ -13,10 +13,10 @@ import com.ela.wallet.sdk.didlibrary.http.HttpRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import org.elastos.wallet.lib.ElastosWallet;
-import org.elastos.wallet.lib.ElastosWalletDID;
-import org.elastos.wallet.lib.ElastosWalletHD;
-import org.elastos.wallet.lib.ElastosWalletSign;
+
+import org.elastos.sdk.keypair.ElastosKeypair;
+import org.elastos.sdk.keypair.ElastosKeypairDID;
+import org.elastos.sdk.keypair.ElastosKeypairSign;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -24,7 +24,7 @@ import java.util.Locale;
 public class DidLibrary {
 
     private static Context mContext;
-    private static ElastosWallet.Data mSeed;
+    private static ElastosKeypair.Data mSeed;
     private static int mSeedLen;
 
     private static String mPrivateKey;
@@ -70,7 +70,7 @@ public class DidLibrary {
         }
 
 
-        String mnemonic = ElastosWallet.generateMnemonic(language, words);
+        String mnemonic = ElastosKeypair.generateMnemonic(language, words);
         if (mnemonic == null) {
             String errmsg = "Failed to generate mnemonic.";
             LogUtil.e(errmsg);
@@ -80,8 +80,8 @@ public class DidLibrary {
         Utilty.setPreference(Constants.SP_KEY_DID_MNEMONIC, mnemonic);
         message += "mnemonic: " + mnemonic + "\n";
 
-        mSeed = new ElastosWallet.Data();
-        int ret = ElastosWallet.getSeedFromMnemonic(mSeed, mnemonic, language, words, "");
+        mSeed = new ElastosKeypair.Data();
+        int ret = ElastosKeypair.getSeedFromMnemonic(mSeed, mnemonic, language, words, "");
         if (ret <= 0) {
             String errmsg = "Failed to get seed from mnemonic. ret=" + ret + "\n";
             LogUtil.e(errmsg);
@@ -91,7 +91,7 @@ public class DidLibrary {
         mSeedLen = ret;
         message += "seed: " + mSeed.buf + ", len: " + mSeedLen + "\n";
 
-        String privateKey = ElastosWallet.getSinglePrivateKey(mSeed, mSeedLen);
+        String privateKey = ElastosKeypair.getSinglePrivateKey(mSeed, mSeedLen);
         if (privateKey == null) {
             String errmsg = "Failed to generate privateKey.\n";
             LogUtil.e(errmsg);
@@ -103,7 +103,7 @@ public class DidLibrary {
         message += "privateKey: " + privateKey + "\n";
         Utilty.setPreference(Constants.SP_KEY_DID_PRIVATEKEY, privateKey);
 
-        String publicKey = ElastosWallet.getSinglePublicKey(mSeed, mSeedLen);
+        String publicKey = ElastosKeypair.getSinglePublicKey(mSeed, mSeedLen);
         if (publicKey == null) {
             String errmsg = "Failed to generate publicKey.\n";
             LogUtil.e(errmsg);
@@ -114,7 +114,7 @@ public class DidLibrary {
         Utilty.setPreference(Constants.SP_KEY_DID_PUBLICKEY, publicKey);
         message += "publicKey: " + publicKey + "\n";
 
-        String address = ElastosWallet.getAddress(publicKey);
+        String address = ElastosKeypair.getAddress(publicKey);
         if (address == null) {
             String errmsg = "Failed to get address.\n";
             LogUtil.e(errmsg);
@@ -125,7 +125,7 @@ public class DidLibrary {
         message += "address: " + address + "\n";
         Utilty.setPreference(Constants.SP_KEY_DID_ADDRESS, address);
 
-        String did = ElastosWalletDID.getDid(publicKey);
+        String did = ElastosKeypairDID.getDid(publicKey);
         if (did == null) {
             String errmsg = "Failed to get did.\n";
             LogUtil.e(errmsg);
@@ -135,10 +135,10 @@ public class DidLibrary {
         message += "did: " + did + "\n";
         Utilty.setPreference(Constants.SP_KEY_DID, did);
 
-        ElastosWallet.Data data = new ElastosWallet.Data();
+        ElastosKeypair.Data data = new ElastosKeypair.Data();
         data.buf = new byte[]{0, 1, 2, 3, 4, 5};
-        ElastosWallet.Data signedData = new ElastosWallet.Data();
-        int signedLen = ElastosWallet.sign(privateKey, data, data.buf.length, signedData);
+        ElastosKeypair.Data signedData = new ElastosKeypair.Data();
+        int signedLen = ElastosKeypair.sign(privateKey, data, data.buf.length, signedData);
         if (signedLen <= 0) {
             String errmsg = "Failed to sign data.\n";
             LogUtil.e(errmsg);
@@ -147,7 +147,7 @@ public class DidLibrary {
             return ;
         }
 
-        boolean verified = ElastosWallet.verify(publicKey, data, data.buf.length, signedData, signedLen);
+        boolean verified = ElastosKeypair.verify(publicKey, data, data.buf.length, signedData, signedLen);
         message += "verified: " + verified + "\n";
 
         message += "================================================\n";
@@ -156,10 +156,10 @@ public class DidLibrary {
     }
 
     private static void loadLibrary() {
-        ElastosWallet.Data data = new ElastosWallet.Data();
+        ElastosKeypair.Data data = new ElastosKeypair.Data();
         data.buf = new byte[]{0, 1, 2, 3, 4, 5};
-        ElastosWallet.Data signedData = new ElastosWallet.Data();
-        int signedLen = ElastosWallet.sign(Utilty.getPreference(Constants.SP_KEY_DID_PRIVATEKEY, ""), data, data.buf.length, signedData);
+        ElastosKeypair.Data signedData = new ElastosKeypair.Data();
+        int signedLen = ElastosKeypair.sign(Utilty.getPreference(Constants.SP_KEY_DID_PRIVATEKEY, ""), data, data.buf.length, signedData);
         if (signedLen <= 0) {
             String errmsg = "Failed to sign data.\n";
             LogUtil.e(errmsg);
@@ -445,16 +445,16 @@ public class DidLibrary {
 
 
     private static String getSignedData(String origin, String pubKey) {
-        ElastosWallet.Data data = new ElastosWallet.Data();
+        ElastosKeypair.Data data = new ElastosKeypair.Data();
         data.buf = origin.getBytes();
-        ElastosWallet.Data signedData = new ElastosWallet.Data();
-        int signedLen = ElastosWallet.sign(mPrivateKey, data, data.buf.length, signedData);
+        ElastosKeypair.Data signedData = new ElastosKeypair.Data();
+        int signedLen = ElastosKeypair.sign(mPrivateKey, data, data.buf.length, signedData);
         if (signedLen <= 0) {
             String errmsg = "Failed to sign data.\n";
             LogUtil.e(errmsg);
         }
 
-        boolean verified = ElastosWallet.verify(pubKey, data, data.buf.length, signedData, signedLen);
+        boolean verified = ElastosKeypair.verify(pubKey, data, data.buf.length, signedData, signedLen);
         LogUtil.i("verified=" + verified);
 
         return Utilty.bytesToHexString2(signedData.buf);
@@ -464,7 +464,7 @@ public class DidLibrary {
         String message = "";
         String transaction = String.format("{\"Transactions\":[{\"UTXOInputs\":[{\"address\":\"ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4\",\"txid\":\"583ca6c3780b3ba880b446c7ce5427e538a82fc185e54749e61805a97dc3b222\",\"index\":0, \"privateKey\":\"%s\"}],\"CrossChainAsset\":[{\"amount\":100000000,\"address\":\"ENUFoHcsfvXkAVomXJLDrhM189k7qSy3xD\"}],\"Fee\":20000,\"Outputs\":[{\"amount\":100010000,\"address\":\"XKUh4GLhFJiqAMTF6HyWQrV9pK9HcGUdfJ\"},{\"amount\":9899980000,\"address\":\"ESs1jakyQjxBvEgwqEGxtceastbPAR1UJ4\"}]}]}", "840d6c631e3d612aa624dae2d7f6d354e58135a7a6cb16ed6dd264b7d104aae7");
         LogUtil.d("origin data:" + transaction);
-        String signedData = ElastosWalletSign.generateRawTransaction(transaction);
+        String signedData = ElastosKeypairSign.generateRawTransaction(transaction);
         if(signedData == null) {
             String errmsg = "Failed to generate raw transaction.\n";
             message += errmsg;
@@ -484,7 +484,7 @@ public class DidLibrary {
         cctBean.getResult().getTransactions().get(0).getUTXOInputs().get(0).setPrivateKey(mPrivateKey);
         String trans = new Gson().toJson(cctBean.getResult());
         LogUtil.d("Ela2Ela:trans data=" + trans);
-        returnData = ElastosWalletSign.generateRawTransaction(trans);
+        returnData = ElastosKeypairSign.generateRawTransaction(trans);
         return returnData;
     }
 
@@ -495,7 +495,7 @@ public class DidLibrary {
         cctBean.getResult().getTransactions().get(0).getUTXOInputs().get(0).setPrivateKey(mPrivateKey);
         String trans = new Gson().toJson(cctBean.getResult());
         LogUtil.d("ela2Did:trans data=" + trans);
-        returnData = ElastosWalletSign.generateRawTransaction(trans);
+        returnData = ElastosKeypairSign.generateRawTransaction(trans);
         return returnData;
     }
 
@@ -506,7 +506,7 @@ public class DidLibrary {
         cctBean.getResult().getTransactions().get(0).getUTXOInputs().get(0).setPrivateKey(mPrivateKey);
         String trans = new Gson().toJson(cctBean.getResult());
         LogUtil.d("ela2Did:trans data=" + trans);
-        returnData = ElastosWalletSign.generateRawTransaction(trans);
+        returnData = ElastosKeypairSign.generateRawTransaction(trans);
         return returnData;
     }
 
@@ -517,7 +517,7 @@ public class DidLibrary {
         cctBean.getResult().getTransactions().get(0).getUTXOInputs().get(0).setPrivateKey(mPrivateKey);
         String trans = new Gson().toJson(cctBean.getResult());
         LogUtil.d("zhuanzhang:trans data=" + trans);
-        returnData = ElastosWalletSign.generateRawTransaction(trans);
+        returnData = ElastosKeypairSign.generateRawTransaction(trans);
         return returnData;
     }
 
@@ -528,7 +528,7 @@ public class DidLibrary {
         cctBean.getResult().getTransactions().get(0).getUTXOInputs().get(0).setPrivateKey(mPrivateKey);
         String trans = new Gson().toJson(cctBean.getResult());
         LogUtil.d("ela2Did:trans data=" + trans);
-        returnData = ElastosWalletSign.generateRawTransaction(trans);
+        returnData = ElastosKeypairSign.generateRawTransaction(trans);
         return returnData;
     }
 
@@ -553,8 +553,8 @@ public class DidLibrary {
             words = "";
         }
 
-        mSeed = new ElastosWallet.Data();
-        int ret = ElastosWallet.getSeedFromMnemonic(mSeed, mnemonic, language, words, "");
+        mSeed = new ElastosKeypair.Data();
+        int ret = ElastosKeypair.getSeedFromMnemonic(mSeed, mnemonic, language, words, "");
         if (ret <= 0) {
             String errmsg = "Failed to get seed from mnemonic. ret=" + ret + "\n";
             LogUtil.e(errmsg);
@@ -562,7 +562,7 @@ public class DidLibrary {
         }
         mSeedLen = ret;
 
-        String privateKey = ElastosWallet.getSinglePrivateKey(mSeed, mSeedLen);
+        String privateKey = ElastosKeypair.getSinglePrivateKey(mSeed, mSeedLen);
         if (privateKey == null) {
             String errmsg = "Failed to generate privateKey.\n";
             LogUtil.e(errmsg);
@@ -570,31 +570,31 @@ public class DidLibrary {
         }
         LogUtil.d("privatekey=" + privateKey);
 
-        String publicKey = ElastosWallet.getSinglePublicKey(mSeed, mSeedLen);
+        String publicKey = ElastosKeypair.getSinglePublicKey(mSeed, mSeedLen);
         if (publicKey == null) {
             String errmsg = "Failed to generate publicKey.\n";
             LogUtil.e(errmsg);
             return false;
         }
 
-        String address = ElastosWallet.getAddress(publicKey);
+        String address = ElastosKeypair.getAddress(publicKey);
         if (address == null) {
             String errmsg = "Failed to get address.\n";
             LogUtil.e(errmsg);
             return false;
         }
 
-        ElastosWallet.Data data = new ElastosWallet.Data();
+        ElastosKeypair.Data data = new ElastosKeypair.Data();
         data.buf = new byte[]{0, 1, 2, 3, 4, 5};
-        ElastosWallet.Data signedData = new ElastosWallet.Data();
-        int signedLen = ElastosWallet.sign(privateKey, data, data.buf.length, signedData);
+        ElastosKeypair.Data signedData = new ElastosKeypair.Data();
+        int signedLen = ElastosKeypair.sign(privateKey, data, data.buf.length, signedData);
         if (signedLen <= 0) {
             String errmsg = "Failed to sign data.\n";
             LogUtil.e(errmsg);
             return false;
         }
 
-        boolean verified = ElastosWallet.verify(publicKey, data, data.buf.length, signedData, signedLen);
+        boolean verified = ElastosKeypair.verify(publicKey, data, data.buf.length, signedData, signedLen);
         if (!verified) {
             return false;
         }
@@ -606,7 +606,7 @@ public class DidLibrary {
         Utilty.setPreference(Constants.SP_KEY_DID_ADDRESS, address);
         Utilty.setPreference(Constants.SP_KEY_DID_ISBACKUP, "true");
         Utilty.setPreference(Constants.SP_KEY_DID_MNEMONIC, "");
-        Utilty.setPreference(Constants.SP_KEY_DID, ElastosWalletDID.getDid(publicKey));
+        Utilty.setPreference(Constants.SP_KEY_DID, ElastosKeypairDID.getDid(publicKey));
         return true;
     }
 
@@ -615,7 +615,7 @@ public class DidLibrary {
      * @return
      */
     public static String resetAddress() {
-        String address = ElastosWallet.getAddress(Utilty.getPreference(Constants.SP_KEY_DID_PUBLICKEY, ""));
+        String address = ElastosKeypair.getAddress(Utilty.getPreference(Constants.SP_KEY_DID_PUBLICKEY, ""));
         if (TextUtils.isEmpty(address)) return null;
         Utilty.setPreference(Constants.SP_KEY_DID_ADDRESS, address);
         return address;
@@ -682,18 +682,18 @@ public class DidLibrary {
 
         String privateKey = mPrivateKey;
         String publicKey = Utilty.getPreference(Constants.SP_KEY_DID_PUBLICKEY, "");
-        LogUtil.w("did=" + ElastosWalletDID.getDid(publicKey));
+        LogUtil.w("did=" + ElastosKeypairDID.getDid(publicKey));
 
-        ElastosWallet.Data data = new ElastosWallet.Data();
+        ElastosKeypair.Data data = new ElastosKeypair.Data();
         data.buf = memo.getBytes();
-        ElastosWallet.Data signedData = new ElastosWallet.Data();
-        int signedLen = ElastosWallet.sign(privateKey, data, data.buf.length, signedData);
+        ElastosKeypair.Data signedData = new ElastosKeypair.Data();
+        int signedLen = ElastosKeypair.sign(privateKey, data, data.buf.length, signedData);
         if (signedLen <= 0) {
             String errmsg = "Failed to sign data.\n";
             LogUtil.e(errmsg);
         }
 
-        boolean verified = ElastosWallet.verify(publicKey, data, data.buf.length, signedData, signedLen);
+        boolean verified = ElastosKeypair.verify(publicKey, data, data.buf.length, signedData, signedLen);
         LogUtil.i("verified=" + verified);
 
         JsonObject jsonObject = new JsonObject();
@@ -705,7 +705,7 @@ public class DidLibrary {
 
         String trans = new Gson().toJson(cctBean.getResult());
         LogUtil.d("setdid:trans data=" + trans);
-        returnData = ElastosWalletSign.generateRawTransaction(trans);
+        returnData = ElastosKeypairSign.generateRawTransaction(trans);
         return returnData;
     }
 
@@ -744,16 +744,16 @@ public class DidLibrary {
         String privateKey = mPrivateKey;
         String publicKey = Utilty.getPreference(Constants.SP_KEY_DID_PUBLICKEY, "");
 
-        ElastosWallet.Data data = new ElastosWallet.Data();
+        ElastosKeypair.Data data = new ElastosKeypair.Data();
         data.buf = memo.getBytes();
-        ElastosWallet.Data signedData = new ElastosWallet.Data();
-        int signedLen = ElastosWallet.sign(privateKey, data, data.buf.length, signedData);
+        ElastosKeypair.Data signedData = new ElastosKeypair.Data();
+        int signedLen = ElastosKeypair.sign(privateKey, data, data.buf.length, signedData);
         if (signedLen <= 0) {
             String errmsg = "Failed to sign data.\n";
             LogUtil.e(errmsg);
         }
 
-        boolean verified = ElastosWallet.verify(publicKey, data, data.buf.length, signedData, signedLen);
+        boolean verified = ElastosKeypair.verify(publicKey, data, data.buf.length, signedData, signedLen);
         LogUtil.i("verified=" + verified);
 
         JsonObject param = new JsonObject();
