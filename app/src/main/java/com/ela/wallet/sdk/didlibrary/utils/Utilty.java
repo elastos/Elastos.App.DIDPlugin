@@ -2,6 +2,7 @@ package com.ela.wallet.sdk.didlibrary.utils;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -265,18 +266,18 @@ public class Utilty {
 
     public static String getIMSI() {
         //TODO houhong
-//        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
-//            try {
-//                TelephonyManager tm = (TelephonyManager) getContext().getSystemService(Context.TELEPHONY_SERVICE);
-//                return tm.getSubscriberId();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                return "0000000000";
-//            }
-//        } else {
-//            return "0000000000";
-//        }
-        return "0000000000";
+        if (ContextWrapper.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+            try {
+                TelephonyManager tm = (TelephonyManager) getContext().getSystemService(Context.TELEPHONY_SERVICE);
+                return tm.getSubscriberId();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "0000000000";
+            }
+        } else {
+            return "0000000000";
+        }
+//        return "0000000000";
     }
 
     private static String getDeviceIdForGeneral(Context var0) {

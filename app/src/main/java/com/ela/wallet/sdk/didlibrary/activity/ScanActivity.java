@@ -3,6 +3,7 @@ package com.ela.wallet.sdk.didlibrary.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PointF;
@@ -60,11 +61,12 @@ public class ScanActivity extends BaseActivity {
             @Override
             public boolean onCheckCameraPermission() {
                 //TODO houhong
-//                if (ContextCompat.checkSelfPermission(ScanActivity.this, Manifest.permission.CAMERA)
-//                        == PackageManager.PERMISSION_GRANTED) {
-//                    return true;
-//                } else {
-//                    ActivityCompat.requestPermissions(ScanActivity.this,
+                if (ContextWrapper.checkSelfPermission(Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    return true;
+                }
+//                else {
+//                    ContextWrapper.checkSelfPermission(
 //                            new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
 //                    return false;
 //                }
