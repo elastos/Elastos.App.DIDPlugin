@@ -42,10 +42,10 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionModeOverlay">true</item>
-        <item name="android:actionBarStyle">@style/ActionBarStyle</item>
+        <item name="android:actionBarStyle">@style/DIDActionBarStyle</item>
     </style>
 
-    <style name="ActionBarStyle" parent="@android:style/Widget.Holo.ActionBar">
+    <style name="DIDActionBarStyle" parent="@android:style/Widget.Holo.ActionBar">
     <!--<item name="android:background">@drawable/bg_urlbar</item>-->
     <item name="android:displayOptions"/>
     </style>
