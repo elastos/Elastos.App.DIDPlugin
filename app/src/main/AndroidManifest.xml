@@ -11,14 +11,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/library_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:replace="android:label">
+    <application>
         <activity
             android:name=".activity.DidLaunchActivity"
             android:process=":did">
@@ -30,6 +23,7 @@
         </activity>
         <activity
             android:name=".activity.ScanActivity"
+            android:theme="@style/DIDTheme"
             android:process=":did" />
 
         <service
@@ -42,48 +36,63 @@
 
         <activity
             android:name=".activity.BackupTipsActivity"
+            android:theme="@style/DIDTheme"
             android:process=":did" />
         <activity
             android:name=".activity.WordShowActivity"
+            android:theme="@style/DIDTheme"
             android:process=":did" />
         <activity
             android:name=".activity.WordInputActivity"
+            android:theme="@style/DIDTheme"
             android:process=":did" />
         <activity
             android:name=".activity.ImportWalletActivity"
+            android:theme="@style/DIDTheme"
             android:process=":did" />
         <activity
             android:name=".activity.ReChargeActivity"
+            android:theme="@style/DIDTheme"
             android:process=":did" />
         <activity
             android:name=".activity.WithDrawActivity"
+            android:theme="@style/DIDTheme"
             android:process=":did" />
         <activity
             android:name=".activity.LanguageActivity"
+            android:theme="@style/DIDTheme"
             android:process=":did" />
         <activity
             android:name=".activity.PersonalActivity"
+            android:theme="@style/DIDTheme"
             android:process=":did" />
         <activity
             android:name=".activity.HomeActivity"
+            android:theme="@style/DIDTheme"
             android:process=":did" />
         <activity
             android:name=".activity.ReceiveActivity"
+            android:theme="@style/DIDTheme"
             android:process=":did" />
         <activity
             android:name=".activity.SendActivity"
+            android:theme="@style/DIDTheme"
             android:process=":did" />
         <activity
             android:name=".activity.RecordsActivity"
+            android:theme="@style/DIDTheme"
             android:process=":did" />
         <activity
             android:name=".activity.InformationActivity"
+            android:theme="@style/DIDTheme"
             android:process=":did" />
         <activity
             android:name=".activity.Ela2ElaActivity"
+            android:theme="@style/DIDTheme"
             android:process=":did" />
         <activity
             android:name=".activity.PwdInputActivity"
+            android:theme="@style/DIDTheme"
             android:process=":did"/>
         <meta-data
             android:name="LIBRARY_VERSION"
