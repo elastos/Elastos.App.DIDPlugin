@@ -1,8 +1,13 @@
 package com.ela.wallet.sdk.didlibrary.activity;
 
-import android.support.design.widget.TabLayout;
-import android.support.v7.widget.LinearLayoutManager;
+//import android.support.design.widget.TabLayout;
+import android.database.DataSetObserver;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.ela.wallet.sdk.didlibrary.R;
 import com.ela.wallet.sdk.didlibrary.base.BaseActivity;
@@ -22,7 +27,7 @@ import java.util.List;
 
 public class RecordsActivity extends BaseActivity {
 
-    private TabLayout mTab;
+    private ListView mTab;
     private ListView mRv;
     private RecordsRecyclerViewAdapter mAdapter;
     private List<RecordsModel> mList;
@@ -45,13 +50,13 @@ public class RecordsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        mTab = (TabLayout) findViewById(R.id.tab_records);
+        mTab = (ListView) findViewById(R.id.tab_records);
         mRv = (ListView) findViewById(R.id.rv_records);
     }
 
     @Override
     protected void initData() {
-        String[] tabs = {
+        final String[] tabs = {
                 getString(R.string.nav_all),
                 getString(R.string.nav_record1),
                 getString(R.string.nav_record2),
@@ -86,18 +91,82 @@ public class RecordsActivity extends BaseActivity {
         mRv.setAdapter(mAdapter);
         mAdapter.setData(mList);
 
-        for(int k=0;k<5;k++) {
-            mTab.addTab(mTab.newTab());
-            TabLayout.Tab tabItem = mTab.getTabAt(k);
-            tabItem.setText(tabs[k]);
-        }
-        mTab.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-        mTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
-        {
+//        for(int k=0;k<5;k++) {
+//
+//            mTab.addTab(mTab.newTab());
+//            TabLayout.Tab tabItem = mTab.getTabAt(k);
+//            tabItem.setText(tabs[k]);
+//        }
+//        mTab.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+        mTab.setAdapter(new ListAdapter() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
+            public boolean areAllItemsEnabled() {
+                return false;
+            }
+
+            @Override
+            public boolean isEnabled(int i) {
+                return false;
+            }
+
+            @Override
+            public void registerDataSetObserver(DataSetObserver dataSetObserver) {
+
+            }
+
+            @Override
+            public void unregisterDataSetObserver(DataSetObserver dataSetObserver) {
+
+            }
+
+            @Override
+            public int getCount() {
+                return 0;
+            }
+
+            @Override
+            public Object getItem(int i) {
+                return null;
+            }
+
+            @Override
+            public long getItemId(int i) {
+                return 0;
+            }
+
+            @Override
+            public boolean hasStableIds() {
+                return false;
+            }
+
+            @Override
+            public View getView(int i, View view, ViewGroup viewGroup) {
+                  TextView tv = tv = new TextView(RecordsActivity.this);
+                  tv.setText(tabs[i]);
+                  return tv;
+            }
+
+            @Override
+            public int getItemViewType(int i) {
+                return 0;
+            }
+
+            @Override
+            public int getViewTypeCount() {
+                return tabs.length;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+        });
+
+        mTab.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 1:
                         mAdapter.setData(mList1);
@@ -115,18 +184,35 @@ public class RecordsActivity extends BaseActivity {
                         mAdapter.setData(mList);
                     default:
                 }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });
+
+//        mTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
+//        {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                int position = tab.getPosition();
+//                switch (position) {
+//                    case 1:
+//                        mAdapter.setData(mList1);
+//                        break;
+//                    case 2:
+//                        mAdapter.setData(mList2);
+//                        break;
+//                    case 3:
+//                        mAdapter.setData(mList3);
+//                        break;
+//                    case 4:
+//                        mAdapter.setData(mList4);
+//                        break;
+//                    case 0:
+//                        mAdapter.setData(mList);
+//                    default:
+//                }
+//            }
+//
+//        });
 
         loadDidTxData();
 //        loadElaTxData();
@@ -257,7 +343,7 @@ public class RecordsActivity extends BaseActivity {
         Collections.reverse(mList2);
         Collections.reverse(mList3);
         Collections.reverse(mList4);
-        mTab.getTabAt(0).select();
+//        mTab.getTabAt(0).select();
         mAdapter.setData(mList);
     }
 
