@@ -8,13 +8,14 @@
     <include
         layout="@layout/nav_title"/>
     
-    <ListView
+     <GridView
         android:id="@+id/tab_records"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:orientation="vertical" >
-        >
-    </ListView>
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:numColumns="5"
+        android:stretchMode="spacingWidthUniform" >
+    </GridView>
 
     <ListView
         android:id="@+id/rv_records"

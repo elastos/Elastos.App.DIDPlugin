@@ -1,10 +1,14 @@
 package com.ela.wallet.sdk.didlibrary.activity;
 
-//import android.support.design.widget.TabLayout;
-import android.database.DataSetObserver;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,6 +20,7 @@ import com.ela.wallet.sdk.didlibrary.bean.RecordsModel;
 import com.ela.wallet.sdk.didlibrary.global.Constants;
 import com.ela.wallet.sdk.didlibrary.global.Urls;
 import com.ela.wallet.sdk.didlibrary.http.HttpRequest;
+import com.ela.wallet.sdk.didlibrary.utils.LogUtil;
 import com.ela.wallet.sdk.didlibrary.utils.Utilty;
 import com.ela.wallet.sdk.didlibrary.widget.RecordsRecyclerViewAdapter;
 import com.ela.wallet.sdk.didlibrary.widget.SweetAlertDialog;
@@ -27,9 +32,10 @@ import java.util.List;
 
 public class RecordsActivity extends BaseActivity {
 
-    private ListView mTab;
+    private GridView mTab;
     private ListView mRv;
     private RecordsRecyclerViewAdapter mAdapter;
+    private List<String> mTabList = new ArrayList<>();
     private List<RecordsModel> mList;
     private List<RecordsModel> mList1;
     private List<RecordsModel> mList2;
@@ -50,35 +56,64 @@ public class RecordsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        mTab = (ListView) findViewById(R.id.tab_records);
+        mTab = (GridView) findViewById(R.id.tab_records);
+        int size = 5;
+
+        int length = 100;
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay()
+                .getMetrics(dm);
+        float density = dm.density;
+
+        int gridviewHeight = (int) ((length) * density);
+//        int itemWidth = (int) (gridviewWidth/size);
+
+        @SuppressWarnings("deprecation")
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, gridviewHeight);
+        mTab.setLayoutParams(params);
+        // 设置GirdView布局参数,横向布局的关键
+        mTab.setColumnWidth(200);
+        // 设置列表项宽
+        mTab.setHorizontalSpacing(20);
+        // 设置列表项水平间距
+        mTab.setStretchMode(GridView.NO_STRETCH);
+        mTab.setNumColumns(size);
+        // 设置列数量=列表集合数
+
         mRv = (ListView) findViewById(R.id.rv_records);
     }
 
     @Override
     protected void initData() {
-        final String[] tabs = {
-                getString(R.string.nav_all),
-                getString(R.string.nav_record1),
-                getString(R.string.nav_record2),
-                getString(R.string.nav_record3),
-                getString(R.string.nav_record4)
-        };
+        mTabList.add(getString(R.string.nav_all));
+        mTabList.add(getString(R.string.nav_record1));
+        mTabList.add(getString(R.string.nav_record2));
+        mTabList.add(getString(R.string.nav_record3));
+        mTabList.add(getString(R.string.nav_record4));
+//        final String[] tabs = {
+//                getString(R.string.nav_all),
+//                getString(R.string.nav_record1),
+//                getString(R.string.nav_record2),
+//                getString(R.string.nav_record3),
+//                getString(R.string.nav_record4)
+//        };
         mList = new ArrayList<>();
         mList1 = new ArrayList<>();//DID->DID
         mList2 = new ArrayList<>();//DID->ELA
         mList3 = new ArrayList<>();//ELA->ELA
         mList4 = new ArrayList<>();//ELA->DID
 //        //todo:
-//        mList.add(new RecordsModel(tabs[1], "20/11/2018", "+1.5 ELA"));
-//        mList.add(new RecordsModel(tabs[2], "20/11/2018", "-0.5 ELA"));
-//        mList.add(new RecordsModel(tabs[3], "15/11/2018", "+2 ELA"));
-//        mList.add(new RecordsModel(tabs[4], "21/11/2018", "-1 ELA"));
+//        mList.add(new RecordsModel(mTabList.get(1), "20180900", "+16000000"));
+//        mList.add(new RecordsModel(mTabList.get(2), "20180900", "-15000000"));
+//        mList.add(new RecordsModel(mTabList.get(3), "20185004", "+14000000"));
+//        mList.add(new RecordsModel(mTabList.get(4), "20180000", "-13000000"));
 //        for(RecordsModel records : mList) {
-//            if (tabs[1].equals(records.getType())) {
+//            if (mTabList.get(1).equals(records.getType())) {
 //                mList1.add(records);
-//            } else if(tabs[2].equals(records.getType())) {
+//            } else if(mTabList.get(2).equals(records.getType())) {
 //                mList2.add(records);
-//            } else if(tabs[3].equals(records.getType())) {
+//            } else if(mTabList.get(3).equals(records.getType())) {
 //                mList3.add(records);
 //            } else {
 //                mList4.add(records);
@@ -100,30 +135,10 @@ public class RecordsActivity extends BaseActivity {
 //        }
 //        mTab.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-        mTab.setAdapter(new ListAdapter() {
-            @Override
-            public boolean areAllItemsEnabled() {
-                return false;
-            }
-
-            @Override
-            public boolean isEnabled(int i) {
-                return false;
-            }
-
-            @Override
-            public void registerDataSetObserver(DataSetObserver dataSetObserver) {
-
-            }
-
-            @Override
-            public void unregisterDataSetObserver(DataSetObserver dataSetObserver) {
-
-            }
-
+        mTab.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
-                return 0;
+                return mTabList.size();
             }
 
             @Override
@@ -137,36 +152,21 @@ public class RecordsActivity extends BaseActivity {
             }
 
             @Override
-            public boolean hasStableIds() {
-                return false;
-            }
-
-            @Override
             public View getView(int i, View view, ViewGroup viewGroup) {
-                  TextView tv = tv = new TextView(RecordsActivity.this);
-                  tv.setText(tabs[i]);
+                  TextView tv = new TextView(RecordsActivity.this);
+                  tv.setGravity(Gravity.CENTER);
+                  tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                  tv.setText(mTabList.get(i));
+                  tv.setClickable(false);
+                  tv.setFocusable(false);
                   return tv;
-            }
-
-            @Override
-            public int getItemViewType(int i) {
-                return 0;
-            }
-
-            @Override
-            public int getViewTypeCount() {
-                return tabs.length;
-            }
-
-            @Override
-            public boolean isEmpty() {
-                return false;
             }
         });
 
         mTab.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LogUtil.d("RecodsActivity", "position=" + position);
                 switch (position) {
                     case 1:
                         mAdapter.setData(mList1);
@@ -187,35 +187,7 @@ public class RecordsActivity extends BaseActivity {
 
             }
         });
-
-//        mTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
-//        {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                int position = tab.getPosition();
-//                switch (position) {
-//                    case 1:
-//                        mAdapter.setData(mList1);
-//                        break;
-//                    case 2:
-//                        mAdapter.setData(mList2);
-//                        break;
-//                    case 3:
-//                        mAdapter.setData(mList3);
-//                        break;
-//                    case 4:
-//                        mAdapter.setData(mList4);
-//                        break;
-//                    case 0:
-//                        mAdapter.setData(mList);
-//                    default:
-//                }
-//            }
-//
-//        });
-
         loadDidTxData();
-//        loadElaTxData();
     }
 
     private void loadDidTxData() {
