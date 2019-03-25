@@ -2,7 +2,6 @@ package com.ela.wallet.sdk.didlibrary.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -86,7 +85,10 @@ public class WithDrawActivity extends BaseActivity {
     }
 
     public void onOKClick(View view) {
-        if (Utilty.isFastDoubleClick()) return;
+        if (Utilty.isFastDoubleClick())
+        {
+            return;
+        }
 //        String toAddress = et_scan_address.getText().toString();
         String amount = et_amount.getText().toString();
         if (/*TextUtils.isEmpty(toAddress) || */TextUtils.isEmpty(amount)) {
@@ -122,10 +124,13 @@ public class WithDrawActivity extends BaseActivity {
         String toAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
         String amount = String.format("%.8f", Float.parseFloat(et_amount.getText().toString()));
         if (TextUtils.isEmpty(toAddress) || TextUtils.isEmpty(amount)) {
-            Toast.makeText(WithDrawActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
+            Toast.makeText(WithDrawActivity.this,
+                    "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
-        Snackbar.make(et_amount, getString(R.string.trans_sending), Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(WithDrawActivity.this,
+                getString(R.string.trans_sending), Toast.LENGTH_SHORT).show();
+//        Snackbar.make(et_amount, getString(R.string.trans_sending), Snackbar.LENGTH_SHORT).show();
         DidLibrary.Tixian(toAddress, amount, new TransCallback() {
             @Override
             public void onSuccess(final String result) {

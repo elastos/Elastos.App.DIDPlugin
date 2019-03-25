@@ -2,12 +2,10 @@ package com.ela.wallet.sdk.didlibrary.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -70,7 +68,10 @@ public class ReChargeActivity extends BaseActivity {
             public void afterTextChanged(Editable editable) {
                 String temp = editable.toString();
                 int posDot = temp.indexOf(".");
-                if (posDot <= 0) return;
+                if (posDot <= 0)
+                {
+                    return;
+                }
                 if (temp.length() - posDot - 1 > 8)
                 {
                     editable.delete(posDot + 9, posDot + 10);
@@ -88,7 +89,10 @@ public class ReChargeActivity extends BaseActivity {
     }
 
     public void onOKClick(View view) {
-        if (Utilty.isFastDoubleClick()) return;
+        if (Utilty.isFastDoubleClick())
+        {
+            return;
+        }
 //        String fromAddress = et_scan_address.getText().toString();
         String amount = et_amount.getText().toString();
         if (/*TextUtils.isEmpty(fromAddress) || */TextUtils.isEmpty(amount)) {
@@ -124,10 +128,15 @@ public class ReChargeActivity extends BaseActivity {
         String fromAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
         String amount = String.format("%.8f", Float.parseFloat(et_amount.getText().toString()));
         if (TextUtils.isEmpty(fromAddress) || TextUtils.isEmpty(amount)) {
-            Toast.makeText(ReChargeActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ReChargeActivity.this,
+                    "params invalid", Toast.LENGTH_SHORT).show();
             return;
         }
-        Snackbar.make(et_amount, getString(R.string.trans_sending), Snackbar.LENGTH_SHORT).show();
+
+        Toast.makeText(ReChargeActivity.this,
+                getString(R.string.trans_sending), Toast.LENGTH_SHORT).show();
+
+//        Snackbar.make(et_amount, getString(R.string.trans_sending), Snackbar.LENGTH_SHORT).show();
         DidLibrary.Ela2Did(fromAddress, amount, new TransCallback() {
             @Override
             public void onSuccess(final String result) {
