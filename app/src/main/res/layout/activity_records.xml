@@ -8,17 +8,18 @@
     <include
         layout="@layout/nav_title"/>
     
-    <android.support.design.widget.TabLayout
+     <GridView
         android:id="@+id/tab_records"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        app:tabBackground="@android:color/white"
-        app:tabIndicatorColor="@color/appColor">
-    </android.support.design.widget.TabLayout>
-    <Listview
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:numColumns="5"
+        android:stretchMode="spacingWidthUniform" >
+    </GridView>
+
+    <ListView
         android:id="@+id/rv_records"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-    </Listview>
+    </ListView>
 </LinearLayout>

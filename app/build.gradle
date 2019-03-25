@@ -36,18 +36,19 @@ dependencies {
         exclude group: 'com.android.support', module:'support-core-ui'
         exclude group: 'com.android.support', module:'support-compat'
     }
-    implementation ('com.android.support:design:$var.supportLibraryVersion'){
-        exclude group: 'com.android.support', module:'support-v4'
-        exclude group: 'com.android.support', module:'support-core-ui'
-        exclude group: 'com.android.support', module:'support-compat'
-    }
-    implementation ('com.android.support:recyclerview-v7:$var.supportLibraryVersion'){
+    compile ('com.android.support:design:$var.supportLibraryVersion'){
         exclude group: 'com.android.support', module:'support-v4'
         exclude group: 'com.android.support', module:'support-core-ui'
         exclude group: 'com.android.support', module:'support-compat'
     }
 
-    implementation ('com.android.support:support-annotations:$var.supportLibraryVersion'){
+    compile ('com.android.support:recyclerview-v7:$var.supportLibraryVersion'){
+        exclude group: 'com.android.support', module:'support-v4'
+        exclude group: 'com.android.support', module:'support-core-ui'
+        exclude group: 'com.android.support', module:'support-compat'
+    }
+
+    compile ('com.android.support:support-annotations:$var.supportLibraryVersion'){
         exclude group: 'com.android.support', module:'support-v4'
         exclude group: 'com.android.support', module:'support-core-ui'
         exclude group: 'com.android.support', module:'support-compat'

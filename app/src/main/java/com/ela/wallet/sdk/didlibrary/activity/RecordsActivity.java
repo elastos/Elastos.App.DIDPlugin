@@ -1,8 +1,17 @@
 package com.ela.wallet.sdk.didlibrary.activity;
 
-import android.support.design.widget.TabLayout;
-import android.support.v7.widget.LinearLayoutManager;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.ela.wallet.sdk.didlibrary.R;
 import com.ela.wallet.sdk.didlibrary.base.BaseActivity;
@@ -11,6 +20,7 @@ import com.ela.wallet.sdk.didlibrary.bean.RecordsModel;
 import com.ela.wallet.sdk.didlibrary.global.Constants;
 import com.ela.wallet.sdk.didlibrary.global.Urls;
 import com.ela.wallet.sdk.didlibrary.http.HttpRequest;
+import com.ela.wallet.sdk.didlibrary.utils.LogUtil;
 import com.ela.wallet.sdk.didlibrary.utils.Utilty;
 import com.ela.wallet.sdk.didlibrary.widget.RecordsRecyclerViewAdapter;
 import com.ela.wallet.sdk.didlibrary.widget.SweetAlertDialog;
@@ -22,9 +32,10 @@ import java.util.List;
 
 public class RecordsActivity extends BaseActivity {
 
-    private TabLayout mTab;
+    private GridView mTab;
     private ListView mRv;
     private RecordsRecyclerViewAdapter mAdapter;
+    private List<String> mTabList = new ArrayList<>();
     private List<RecordsModel> mList;
     private List<RecordsModel> mList1;
     private List<RecordsModel> mList2;
@@ -45,35 +56,64 @@ public class RecordsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        mTab = (TabLayout) findViewById(R.id.tab_records);
+        mTab = (GridView) findViewById(R.id.tab_records);
+        int size = 5;
+
+        int length = 100;
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay()
+                .getMetrics(dm);
+        float density = dm.density;
+
+        int gridviewHeight = (int) ((length) * density);
+//        int itemWidth = (int) (gridviewWidth/size);
+
+        @SuppressWarnings("deprecation")
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, gridviewHeight);
+        mTab.setLayoutParams(params);
+        // 设置GirdView布局参数,横向布局的关键
+        mTab.setColumnWidth(200);
+        // 设置列表项宽
+        mTab.setHorizontalSpacing(20);
+        // 设置列表项水平间距
+        mTab.setStretchMode(GridView.NO_STRETCH);
+        mTab.setNumColumns(size);
+        // 设置列数量=列表集合数
+
         mRv = (ListView) findViewById(R.id.rv_records);
     }
 
     @Override
     protected void initData() {
-        String[] tabs = {
-                getString(R.string.nav_all),
-                getString(R.string.nav_record1),
-                getString(R.string.nav_record2),
-                getString(R.string.nav_record3),
-                getString(R.string.nav_record4)
-        };
+        mTabList.add(getString(R.string.nav_all));
+        mTabList.add(getString(R.string.nav_record1));
+        mTabList.add(getString(R.string.nav_record2));
+        mTabList.add(getString(R.string.nav_record3));
+        mTabList.add(getString(R.string.nav_record4));
+//        final String[] tabs = {
+//                getString(R.string.nav_all),
+//                getString(R.string.nav_record1),
+//                getString(R.string.nav_record2),
+//                getString(R.string.nav_record3),
+//                getString(R.string.nav_record4)
+//        };
         mList = new ArrayList<>();
         mList1 = new ArrayList<>();//DID->DID
         mList2 = new ArrayList<>();//DID->ELA
         mList3 = new ArrayList<>();//ELA->ELA
         mList4 = new ArrayList<>();//ELA->DID
 //        //todo:
-//        mList.add(new RecordsModel(tabs[1], "20/11/2018", "+1.5 ELA"));
-//        mList.add(new RecordsModel(tabs[2], "20/11/2018", "-0.5 ELA"));
-//        mList.add(new RecordsModel(tabs[3], "15/11/2018", "+2 ELA"));
-//        mList.add(new RecordsModel(tabs[4], "21/11/2018", "-1 ELA"));
+//        mList.add(new RecordsModel(mTabList.get(1), "20180900", "+16000000"));
+//        mList.add(new RecordsModel(mTabList.get(2), "20180900", "-15000000"));
+//        mList.add(new RecordsModel(mTabList.get(3), "20185004", "+14000000"));
+//        mList.add(new RecordsModel(mTabList.get(4), "20180000", "-13000000"));
 //        for(RecordsModel records : mList) {
-//            if (tabs[1].equals(records.getType())) {
+//            if (mTabList.get(1).equals(records.getType())) {
 //                mList1.add(records);
-//            } else if(tabs[2].equals(records.getType())) {
+//            } else if(mTabList.get(2).equals(records.getType())) {
 //                mList2.add(records);
-//            } else if(tabs[3].equals(records.getType())) {
+//            } else if(mTabList.get(3).equals(records.getType())) {
 //                mList3.add(records);
 //            } else {
 //                mList4.add(records);
@@ -86,18 +126,47 @@ public class RecordsActivity extends BaseActivity {
         mRv.setAdapter(mAdapter);
         mAdapter.setData(mList);
 
-        for(int k=0;k<5;k++) {
-            mTab.addTab(mTab.newTab());
-            TabLayout.Tab tabItem = mTab.getTabAt(k);
-            tabItem.setText(tabs[k]);
-        }
-        mTab.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-        mTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
-        {
+//        for(int k=0;k<5;k++) {
+//
+//            mTab.addTab(mTab.newTab());
+//            TabLayout.Tab tabItem = mTab.getTabAt(k);
+//            tabItem.setText(tabs[k]);
+//        }
+//        mTab.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+        mTab.setAdapter(new BaseAdapter() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
+            public int getCount() {
+                return mTabList.size();
+            }
+
+            @Override
+            public Object getItem(int i) {
+                return null;
+            }
+
+            @Override
+            public long getItemId(int i) {
+                return 0;
+            }
+
+            @Override
+            public View getView(int i, View view, ViewGroup viewGroup) {
+                  TextView tv = new TextView(RecordsActivity.this);
+                  tv.setGravity(Gravity.CENTER);
+                  tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                  tv.setText(mTabList.get(i));
+                  tv.setClickable(false);
+                  tv.setFocusable(false);
+                  return tv;
+            }
+        });
+
+        mTab.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LogUtil.d("RecodsActivity", "position=" + position);
                 switch (position) {
                     case 1:
                         mAdapter.setData(mList1);
@@ -115,21 +184,10 @@ public class RecordsActivity extends BaseActivity {
                         mAdapter.setData(mList);
                     default:
                 }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });
-
         loadDidTxData();
-//        loadElaTxData();
     }
 
     private void loadDidTxData() {
@@ -257,7 +315,7 @@ public class RecordsActivity extends BaseActivity {
         Collections.reverse(mList2);
         Collections.reverse(mList3);
         Collections.reverse(mList4);
-        mTab.getTabAt(0).select();
+//        mTab.getTabAt(0).select();
         mAdapter.setData(mList);
     }
 
