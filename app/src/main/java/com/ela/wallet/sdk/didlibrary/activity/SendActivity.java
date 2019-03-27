@@ -35,16 +35,17 @@ public class SendActivity extends BaseActivity {
     protected void initView() {
         et_scan_address = (EditText) findViewById(R.id.et_scan_address);
         iv_scan = (ImageView) findViewById(R.id.iv_scan);
+        iv_scan.setVisibility(View.GONE);
         et_amount = (EditText) findViewById(R.id.et_amount);
 
-        iv_scan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(SendActivity.this, ScanActivity.class);
-                startActivityForResult(intent, Constants.INTENT_REQUEST_CODE_SCAN);
-            }
-        });
+//        iv_scan.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent();
+//                intent.setClass(SendActivity.this, ScanActivity.class);
+//                startActivityForResult(intent, Constants.INTENT_REQUEST_CODE_SCAN);
+//            }
+//        });
 
         et_amount.addTextChangedListener(new TextWatcher() {
             @Override

@@ -57,28 +57,28 @@ public class RecordsActivity extends BaseActivity {
     @Override
     protected void initView() {
         mTab = (GridView) findViewById(R.id.tab_records);
-        int size = 5;
+//        int size = 5;
+//
+//        int length = 100;
+//        DisplayMetrics dm = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay()
+//                .getMetrics(dm);
+//        float density = dm.density;
 
-        int length = 100;
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay()
-                .getMetrics(dm);
-        float density = dm.density;
-
-        int gridviewHeight = (int) ((length) * density);
+//        int gridviewHeight = (int) ((length) * density);
 //        int itemWidth = (int) (gridviewWidth/size);
 
-        @SuppressWarnings("deprecation")
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, gridviewHeight);
-        mTab.setLayoutParams(params);
-        // 设置GirdView布局参数,横向布局的关键
-        mTab.setColumnWidth(200);
-        // 设置列表项宽
-        mTab.setHorizontalSpacing(20);
-        // 设置列表项水平间距
-        mTab.setStretchMode(GridView.NO_STRETCH);
-        mTab.setNumColumns(size);
+//        @SuppressWarnings("deprecation")
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+//                LinearLayout.LayoutParams.MATCH_PARENT, gridviewHeight);
+//        mTab.setLayoutParams(params);
+//        // 设置GirdView布局参数,横向布局的关键
+//        mTab.setColumnWidth(200);
+//        // 设置列表项宽
+////        mTab.setHorizontalSpacing();
+//        // 设置列表项水平间距
+//        mTab.setStretchMode(GridView.NO_STRETCH);
+//        mTab.setNumColumns(size);
         // 设置列数量=列表集合数
 
         mRv = (ListView) findViewById(R.id.rv_records);
@@ -155,7 +155,7 @@ public class RecordsActivity extends BaseActivity {
             public View getView(int i, View view, ViewGroup viewGroup) {
                   TextView tv = new TextView(RecordsActivity.this);
                   tv.setGravity(Gravity.CENTER);
-                  tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                  tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                   tv.setText(mTabList.get(i));
                   tv.setClickable(false);
                   tv.setFocusable(false);

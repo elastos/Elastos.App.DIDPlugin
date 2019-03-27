@@ -28,11 +28,18 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/bg_dashline_gray">
-        <ListView
+        <GridView
             android:id="@+id/rv_word_input"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </ListView>
+            android:layout_height="match_parent"
+            android:numColumns="4"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+        </GridView>
     </LinearLayout>
 
     <TextView
@@ -47,14 +54,18 @@
         android:textSize="14sp"
         android:text="@string/word_click"/>
 
-    <ListView
+    <GridView
         android:id="@+id/rv_word_show"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:numColumns="4"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
-
-    </ListView>
+    </GridView>
 
     <Button
         android:id="@+id/btn_ok"

@@ -29,6 +29,7 @@
                 android:layout_weight="1"
                 android:background="@color/bgGray"
                 android:textSize="14sp"
+                android:textColor="@color/textBlack"
                 android:textColorHint="@color/hintGray"
                 android:hint="@string/send_enter_address"/>
             <ImageView

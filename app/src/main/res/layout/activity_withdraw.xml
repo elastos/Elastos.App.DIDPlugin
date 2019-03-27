@@ -36,6 +36,8 @@
             android:padding="15dp"
             android:gravity="center_vertical"
             android:layout_below="@id/tv_title"
+	    android:textColor="@color/textBlack"
+            android:textColorHint="@color/hintGray"
             android:background="@drawable/send_input"
             android:inputType="number|numberDecimal"
             android:textSize="14sp"/>
@@ -78,6 +80,8 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:padding="15dp"
+            android:textColor="@color/textBlack"
+            android:textColorHint="@color/hintGray"
             android:gravity="center_vertical"
             android:layout_below="@id/tv_title2"
             android:layout_toLeftOf="@id/iv_scan"
