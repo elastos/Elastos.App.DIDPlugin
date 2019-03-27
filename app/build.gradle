@@ -66,34 +66,34 @@ dependencies {
 //        exclude group: 'com.android.support', module:'support-v4'
 //    }
 
-    implementation ('com.github.qingmei2:QrCodeScannerView-Android:1.1.2'){
+    compile ('com.github.qingmei2:QrCodeScannerView-Android:1.1.2'){
         exclude group: 'com.android.support', module:'support-v4'
         exclude group: 'com.android.support', module:'support-core-ui'
         exclude group: 'com.android.support', module:'support-compat'
     }
-    implementation ('com.google.zxing:core:3.3.0'){
+    compile ('com.google.zxing:core:3.3.0'){
         exclude group: 'com.android.support', module:'support-v4'
         exclude group: 'com.android.support', module:'support-core-ui'
         exclude group: 'com.android.support', module:'support-compat'
     }
-    implementation (name: 'ElastosSdkKeypair-v0.1.19', ext: 'aar'){
+    compile (name: 'ElastosSdkKeypair-v0.1.19', ext: 'aar'){
         exclude group: 'com.android.support', module:'support-v4'
         exclude group: 'com.android.support', module:'support-core-ui'
         exclude group: 'com.android.support', module:'support-compat'
     }
-    implementation (name: 'customdialog', ext: 'aar'){
+    compile (name: 'customdialog', ext: 'aar'){
         exclude group: 'com.android.support', module:'support-v4'
         exclude group: 'com.android.support', module:'support-core-ui'
         exclude group: 'com.android.support', module:'support-compat'
     }
-    implementation ('com.google.code.gson:gson:2.2.2'){
+    compile ('com.google.code.gson:gson:2.2.2'){
         exclude group: 'com.android.support', module:'support-v4'
         exclude group: 'com.android.support', module:'support-core-ui'
         exclude group: 'com.android.support', module:'support-compat'
     }
 
-    implementation (name: 'android-support-v13', ext: 'jar')
+    compile (name: 'android-support-v13', ext: 'jar')
 
-    implementation files('libs/nanohttpd-2.2.0.jar')
+    compile files('libs/nanohttpd-2.2.0.jar')
 
 }

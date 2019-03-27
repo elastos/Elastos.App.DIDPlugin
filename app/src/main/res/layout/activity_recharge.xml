@@ -37,6 +37,8 @@
             android:gravity="center_vertical"
             android:layout_below="@id/tv_title"
             android:background="@drawable/send_input"
+            android:textColor="@color/textBlack"
+	    android:textColorHint="@color/hintGray"
             android:inputType="number|numberDecimal"
             android:textSize="14sp"/>
         <TextView
@@ -81,6 +83,8 @@
             android:gravity="center_vertical"
             android:layout_below="@id/tv_title2"
             android:layout_toLeftOf="@id/iv_scan"
+	    android:textColor="@color/textBlack"
+	    android:textColorHint="@color/hintGray"
             android:background="@drawable/send_input"
             android:inputType="text"
             android:textSize="14sp"

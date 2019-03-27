@@ -11,10 +11,10 @@
      <GridView
         android:id="@+id/tab_records"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:gravity="center"
         android:numColumns="5"
-        android:stretchMode="spacingWidthUniform" >
+        android:stretchMode="columnWidth" >
     </GridView>
 
     <ListView

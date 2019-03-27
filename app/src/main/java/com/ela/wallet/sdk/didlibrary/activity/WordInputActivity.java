@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,11 +25,11 @@ import java.util.List;
 
 public class WordInputActivity extends BaseActivity {
 
-    private ListView rv_show;
+    private GridView rv_show;
     private GridRecyclerViewAdapter mWordShowAdapter;
     private List<WordModel> wordList;
 
-    private ListView rv_input;
+    private GridView rv_input;
     private GridRecyclerViewAdapter mWordInputAdapter;
     private List<WordModel> wordInputList;
 
@@ -47,8 +48,8 @@ public class WordInputActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        rv_show = (ListView) findViewById(R.id.rv_word_show);
-        rv_input = (ListView)findViewById(R.id.rv_word_input);
+        rv_show = (GridView) findViewById(R.id.rv_word_show);
+        rv_input = (GridView)findViewById(R.id.rv_word_input);
 
         tv_word_tips = (TextView) findViewById(R.id.tv_word_input_tips);
         btn_ok = (Button) findViewById(R.id.btn_ok);
@@ -99,7 +100,7 @@ public class WordInputActivity extends BaseActivity {
         }
         Collections.shuffle(wordList);
         mWordShowAdapter = new GridRecyclerViewAdapter(this, wordList);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
 //        rv_show.setLayoutManager(gridLayoutManager);
         rv_show.setAdapter(mWordShowAdapter);
         mWordShowAdapter.setOnItemClickListener(new GridRecyclerViewAdapter.OnItemClickListener() {
@@ -127,7 +128,7 @@ public class WordInputActivity extends BaseActivity {
         wordInputList = new ArrayList<>(16);
         mWordInputAdapter = new GridRecyclerViewAdapter(this, wordInputList);
         mWordInputAdapter.setType(GridRecyclerViewAdapter.TYPE_INPUT);
-        GridLayoutManager gridLayoutManager1 = new GridLayoutManager(this, 4);
+//        GridLayoutManager gridLayoutManager1 = new GridLayoutManager(this, 4);
 //        rv_input.setLayoutManager(gridLayoutManager1);
         rv_input.setAdapter(mWordInputAdapter);
 
