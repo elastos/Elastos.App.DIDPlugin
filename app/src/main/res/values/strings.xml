@@ -107,6 +107,8 @@
     <string name="btn_ok">ok</string>
     <string name="btn_backup">Back Up</string>
 
+    <string name="params_invalid">params invalid</string>
+
     <string name="version">Made by the Elastos Application Lab. \nVersion </string>
 
 </resources>
