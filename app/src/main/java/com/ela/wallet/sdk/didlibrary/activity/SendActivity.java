@@ -107,7 +107,7 @@ public class SendActivity extends BaseActivity {
         String toAddress = et_scan_address.getText().toString();
         String amount = et_amount.getText().toString();
         if (TextUtils.isEmpty(toAddress) || TextUtils.isEmpty(amount)) {
-            Toast.makeText(SendActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SendActivity.this, getString(R.string.params_invalid), Toast.LENGTH_SHORT).show();
             return;
         }
         final String password = Utilty.getPreference(Constants.SP_KEY_DID_PASSWORD, "");
@@ -138,7 +138,7 @@ public class SendActivity extends BaseActivity {
         String amount = String.format("%.8f", Float.parseFloat(et_amount.getText().toString()));
         if (TextUtils.isEmpty(toAddress) || TextUtils.isEmpty(amount)) {
             Toast.makeText(SendActivity.this,
-                    "params invalid", Toast.LENGTH_SHORT).show();
+                    getString(R.string.params_invalid), Toast.LENGTH_SHORT).show();
             return;
         }
         //TODO houhong

@@ -109,6 +109,8 @@
     <string name="btn_ok">确定</string>
     <string name="btn_backup">备份</string>
 
+    <string name="params_invalid">无效的参数</string>
+
     <string name="version">由 Elastos Application Lab 制作。\n版本号 </string>
 
 </resources>

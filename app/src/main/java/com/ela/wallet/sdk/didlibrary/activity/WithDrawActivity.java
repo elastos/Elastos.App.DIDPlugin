@@ -92,7 +92,7 @@ public class WithDrawActivity extends BaseActivity {
 //        String toAddress = et_scan_address.getText().toString();
         String amount = et_amount.getText().toString();
         if (/*TextUtils.isEmpty(toAddress) || */TextUtils.isEmpty(amount)) {
-            Toast.makeText(WithDrawActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
+            Toast.makeText(WithDrawActivity.this, getString(R.string.params_invalid), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -125,7 +125,7 @@ public class WithDrawActivity extends BaseActivity {
         String amount = String.format("%.8f", Float.parseFloat(et_amount.getText().toString()));
         if (TextUtils.isEmpty(toAddress) || TextUtils.isEmpty(amount)) {
             Toast.makeText(WithDrawActivity.this,
-                    "params invalid", Toast.LENGTH_SHORT).show();
+                    getString(R.string.params_invalid), Toast.LENGTH_SHORT).show();
             return;
         }
         Toast.makeText(WithDrawActivity.this,

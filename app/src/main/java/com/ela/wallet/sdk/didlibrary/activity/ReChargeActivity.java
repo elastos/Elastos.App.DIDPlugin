@@ -96,7 +96,7 @@ public class ReChargeActivity extends BaseActivity {
 //        String fromAddress = et_scan_address.getText().toString();
         String amount = et_amount.getText().toString();
         if (/*TextUtils.isEmpty(fromAddress) || */TextUtils.isEmpty(amount)) {
-            Toast.makeText(ReChargeActivity.this, "params invalid", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ReChargeActivity.this, getString(R.string.params_invalid), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -129,7 +129,7 @@ public class ReChargeActivity extends BaseActivity {
         String amount = String.format("%.8f", Float.parseFloat(et_amount.getText().toString()));
         if (TextUtils.isEmpty(fromAddress) || TextUtils.isEmpty(amount)) {
             Toast.makeText(ReChargeActivity.this,
-                    "params invalid", Toast.LENGTH_SHORT).show();
+                    getString(R.string.params_invalid), Toast.LENGTH_SHORT).show();
             return;
         }
 
