@@ -23,6 +23,8 @@ import com.ela.wallet.sdk.didlibrary.utils.LogUtil;
 import com.ela.wallet.sdk.didlibrary.utils.Utilty;
 import com.ela.wallet.sdk.didlibrary.widget.DidAlertDialog;
 
+import org.elastos.sdk.keypair.ElastosKeypair;
+
 public class SendActivity extends BaseActivity {
 
 
@@ -103,10 +105,14 @@ public class SendActivity extends BaseActivity {
     }
 
     public void onOKClick(View view) {
-        if (Utilty.isFastDoubleClick()) return;
+        if (Utilty.isFastDoubleClick())
+        {
+            return;
+        }
         String toAddress = et_scan_address.getText().toString();
         String amount = et_amount.getText().toString();
-        if (TextUtils.isEmpty(toAddress) || TextUtils.isEmpty(amount)) {
+        if (TextUtils.isEmpty(toAddress) || TextUtils.isEmpty(amount)
+                || !ElastosKeypair.isAddressValid(toAddress)) {
             Toast.makeText(SendActivity.this, getString(R.string.params_invalid), Toast.LENGTH_SHORT).show();
             return;
         }

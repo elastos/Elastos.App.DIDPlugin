@@ -20,6 +20,8 @@ import com.ela.wallet.sdk.didlibrary.utils.LogUtil;
 import com.ela.wallet.sdk.didlibrary.utils.Utilty;
 import com.ela.wallet.sdk.didlibrary.widget.DidAlertDialog;
 
+import org.elastos.sdk.keypair.ElastosKeypair;
+
 public class Ela2ElaActivity extends BaseActivity {
 
 
@@ -105,7 +107,8 @@ public class Ela2ElaActivity extends BaseActivity {
         }
         String toAddress = et_scan_address.getText().toString();
         String amount = et_amount.getText().toString();
-        if (TextUtils.isEmpty(toAddress) || TextUtils.isEmpty(amount)) {
+        //TODO check isAddressValid
+        if (TextUtils.isEmpty(toAddress) || TextUtils.isEmpty(amount) || !ElastosKeypair.isAddressValid(toAddress)) {
             Toast.makeText(Ela2ElaActivity.this, getString(R.string.params_invalid), Toast.LENGTH_SHORT).show();
             return;
         }

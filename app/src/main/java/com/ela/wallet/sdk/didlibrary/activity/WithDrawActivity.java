@@ -122,12 +122,13 @@ public class WithDrawActivity extends BaseActivity {
 
     private void doWithDraw() {
         String toAddress = Utilty.getPreference(Constants.SP_KEY_DID_ADDRESS, "");
-        String amount = String.format("%.8f", Float.parseFloat(et_amount.getText().toString()));
-        if (TextUtils.isEmpty(toAddress) || TextUtils.isEmpty(amount)) {
+        String mounttext = et_amount.getText().toString();
+        if (TextUtils.isEmpty(toAddress) || TextUtils.isEmpty(mounttext)) {
             Toast.makeText(WithDrawActivity.this,
                     getString(R.string.params_invalid), Toast.LENGTH_SHORT).show();
             return;
         }
+        String amount = String.format("%.8f", Float.parseFloat(mounttext));
         Toast.makeText(WithDrawActivity.this,
                 getString(R.string.trans_sending), Toast.LENGTH_SHORT).show();
 //        Snackbar.make(et_amount, getString(R.string.trans_sending), Snackbar.LENGTH_SHORT).show();

@@ -25,6 +25,7 @@
         android:layout_marginTop="14dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
+        android:textColor="@color/textBlack"
         android:textCursorDrawable="@drawable/edit_cursor_color"
         android:background="@drawable/bg_roundcorner_white"/>
 
