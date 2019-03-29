@@ -80,6 +80,7 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:padding="15dp"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             android:textColorHint="@color/hintGray"
             android:gravity="center_vertical"
             android:textCursorDrawable="@drawable/edit_cursor_color"
