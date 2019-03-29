@@ -37,6 +37,7 @@
             android:gravity="center_vertical"
             android:layout_below="@id/tv_title"
             android:textColor="@color/textBlack"
+            android:textCursorDrawable="@drawable/edit_cursor_color"
 	    android:textColorHint="@color/hintGray"
             android:background="@drawable/send_input"
             android:inputType="number|numberDecimal"
