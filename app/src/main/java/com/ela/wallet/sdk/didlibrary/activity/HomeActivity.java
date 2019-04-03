@@ -30,8 +30,8 @@ public class HomeActivity extends BaseActivity {
     private RelativeLayout rl_finance;
     private RelativeLayout rl_record;
 
-    private RelativeLayout rl_language;
-    private TextView tv_language_tips;
+//    private RelativeLayout rl_language;
+//    private TextView tv_language_tips;
     private RelativeLayout rl_importwallet;
 
 
@@ -62,18 +62,18 @@ public class HomeActivity extends BaseActivity {
             }
         });
 
-        rl_language = (RelativeLayout)findViewById(R.id.rl_personal_language);
+//        rl_language = (RelativeLayout)findViewById(R.id.rl_personal_language);
         rl_importwallet = (RelativeLayout)findViewById(R.id.rl_personal_wallet);
-        tv_language_tips = (TextView) findViewById(R.id.tv_personal_settings_language_tips);
+//        tv_language_tips = (TextView) findViewById(R.id.tv_personal_settings_language_tips);
 
-        rl_language.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(HomeActivity.this, LanguageActivity.class);
-                startActivityForResult(intent, Constants.INTENT_REQUEST_CODE_LANGUAGE);
-            }
-        });
+//        rl_language.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent();
+//                intent.setClass(HomeActivity.this, LanguageActivity.class);
+//                startActivityForResult(intent, Constants.INTENT_REQUEST_CODE_LANGUAGE);
+//            }
+//        });
         rl_importwallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -155,15 +155,15 @@ public class HomeActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         String language = Utilty.getPreference(Constants.SP_KEY_APP_LANGUAGE, "");
-        if (TextUtils.isEmpty(language)) {
-            if (Locale.getDefault().getLanguage().contains("zh")) {
-                tv_language_tips.setText("中文（简体）");
-            } else {
-                tv_language_tips.setText("ENGLISH");
-            }
-        } else {
-            tv_language_tips.setText(language.equals("english") ? "ENGLISH" : "中文（简体）");
-        }
+//        if (TextUtils.isEmpty(language)) {
+//            if (Locale.getDefault().getLanguage().contains("zh")) {
+//                tv_language_tips.setText("中文（简体）");
+//            } else {
+//                tv_language_tips.setText("ENGLISH");
+//            }
+//        } else {
+//            tv_language_tips.setText(language.equals("english") ? "ENGLISH" : "中文（简体）");
+//        }
     }
 
     @Override
