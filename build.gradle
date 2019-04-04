@@ -46,8 +46,8 @@ ext {
             targetSdkVersion     : 26,
             compileSdkVersion    : 27,
             buildToolsVersion    : "27.0.2",
-            versionCode          : 100103,
-            versionName          : "1.0.103",
+            versionCode          : 100105,
+            versionName          : "1.0.105",
             //Dependencies
             supportLibraryVersion: "23.1.0"
     ]
