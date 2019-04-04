@@ -12,6 +12,7 @@ public class Constants {
     public static final String SP_KEY_DID_PASSWORD = "did_password";
     public static final String SP_KEY_DID_ISBACKUP = "did_backup";
     public static final String SP_KEY_APP_LANGUAGE = "app_language";
+    public static final String SP_KEY_DID_ISUPLOADED = "did_uploaded";
 
     public static final String SP_KEY_UUID = "uuid";
 

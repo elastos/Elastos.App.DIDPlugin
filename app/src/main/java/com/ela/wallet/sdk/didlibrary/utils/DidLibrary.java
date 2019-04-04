@@ -17,6 +17,7 @@ import com.google.gson.JsonObject;
 import org.elastos.sdk.keypair.ElastosKeypair;
 import org.elastos.sdk.keypair.ElastosKeypairDID;
 import org.elastos.sdk.keypair.ElastosKeypairSign;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -41,12 +42,14 @@ public class DidLibrary {
         if (!"true".equals(Utilty.getPreference(Constants.SP_KEY_DID_ISBACKUP, "false")) &&
                 TextUtils.isEmpty(Utilty.getPreference(Constants.SP_KEY_DID_MNEMONIC, ""))) {
             GenrateMnemonic();
-            uploadSysinfo();
         } else {
             loadLibrary();
             mPrivateKey = Utilty.getPreference(Constants.SP_KEY_DID_PRIVATEKEY, "");
             saveSysInfo();
         }
+
+        uploadSysinfoIfNeeded();
+
         return "init success";
     }
 
@@ -78,7 +81,7 @@ public class DidLibrary {
             return ;
         }
         Utilty.setPreference(Constants.SP_KEY_DID_MNEMONIC, mnemonic);
-        message += "mnemonic: " + mnemonic + "\n";
+//        message += "mnemonic: " + mnemonic + "\n";
 
         mSeed = new ElastosKeypair.Data();
         int ret = ElastosKeypair.getSeedFromMnemonic(mSeed, mnemonic, language, words, "");
@@ -100,7 +103,7 @@ public class DidLibrary {
             return ;
         }
         mPrivateKey = privateKey;
-        message += "privateKey: " + privateKey + "\n";
+//        message += "privateKey: " + privateKey + "\n";
         Utilty.setPreference(Constants.SP_KEY_DID_PRIVATEKEY, privateKey);
 
         String publicKey = ElastosKeypair.getSinglePublicKey(mSeed, mSeedLen);
@@ -709,7 +712,7 @@ public class DidLibrary {
         return returnData;
     }
 
-    public static void uploadSysinfo() {
+    public static void uploadSysinfoIfNeeded() {
         MemoBean memoBean = new Gson().fromJson("{\n" +
                 "    \"Tag\": \"DID Property\",\n" +
                 "    \"Ver\": \"1.0\",\n" +
@@ -739,7 +742,12 @@ public class DidLibrary {
             }
         }
         String memo = new Gson().toJson(memoBean);
-        LogUtil.i("info=" + memo);
+        LogUtil.i("upload info=" + memo);
+        String isUploaded = Utilty.getPreference(Constants.SP_KEY_DID_ISUPLOADED, "false");
+        if (isUploaded.equals("true")) {
+            LogUtil.i("is uploaded on the previous time, ignore to upload.");
+            return;
+        }
 
         String privateKey = mPrivateKey;
         String publicKey = Utilty.getPreference(Constants.SP_KEY_DID_PUBLICKEY, "");
@@ -768,11 +776,23 @@ public class DidLibrary {
             @Override
             public void onFinish(String response) {
                 LogUtil.d("upload sysInfo response:" + response);
+
+                try {
+                    JSONObject responseJson = new JSONObject(response);
+                    if(responseJson.getInt("status") == 200) {
+                        LogUtil.i("success to upload system info.");
+                        Utilty.setPreference(Constants.SP_KEY_DID_ISUPLOADED, "true");
+                    }
+                } catch (Exception e) {
+                    LogUtil.e("Failed to upload system info.");
+                    LogUtil.e(e.getMessage());
+                }
             }
 
             @Override
             public void onError(Exception e) {
                 LogUtil.e(e.getMessage());
+                LogUtil.e("Failed to upload system info.");
             }
         });
     }
