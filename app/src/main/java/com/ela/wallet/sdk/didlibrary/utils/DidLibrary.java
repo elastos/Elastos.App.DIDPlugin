@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.ela.wallet.sdk.didlibrary.bean.CctBean;
 import com.ela.wallet.sdk.didlibrary.bean.HttpBean;
 import com.ela.wallet.sdk.didlibrary.bean.MemoBean;
+import com.ela.wallet.sdk.didlibrary.bean.SetDidBean;
 import com.ela.wallet.sdk.didlibrary.callback.TransCallback;
 import com.ela.wallet.sdk.didlibrary.global.Constants;
 import com.ela.wallet.sdk.didlibrary.global.Urls;
@@ -19,7 +20,9 @@ import org.elastos.sdk.keypair.ElastosKeypairDID;
 import org.elastos.sdk.keypair.ElastosKeypairSign;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 public class DidLibrary {
@@ -713,35 +716,19 @@ public class DidLibrary {
     }
 
     public static void uploadSysinfoIfNeeded() {
-        MemoBean memoBean = new Gson().fromJson("{\n" +
-                "    \"Tag\": \"DID Property\",\n" +
-                "    \"Ver\": \"1.0\",\n" +
-                "    \"Status\": \"Normal\",\n" +
-                "    \"Properties\": [{\n" +
-                "        \"Key\": \"uuid\",\n" +
-                "        \"Value\": \"\",\n" +
-                "        \"Status\": \"Normal\"\n" +
-                "    }, {\n" +
-                "        \"Key\": \"appid\",\n" +
-                "        \"Value\": \"\",\n" +
-                "        \"Status\": \"Normal\"\n" +
-                "    }]\n" +
-                "}", MemoBean.class);
-        for(MemoBean.PropertiesBean prop: memoBean.getProperties()) {
-            switch (prop.getKey()) {
-                case "uuid":
-                    String uuid = Utilty.getUUID();
-                    prop.setValue(uuid);
-                    break;
-                case "appid":
-                    String appid = Utilty.getMd5(mAppId).toLowerCase();
-                    prop.setValue(appid);
-                    break;
-                default:
-                    break;
-            }
-        }
-        String memo = new Gson().toJson(memoBean);
+        SetDidBean setDidBean = new SetDidBean();
+        setDidBean.setTag("DID Property");
+        setDidBean.setVer("1.0");
+        setDidBean.setStatus("Normal");
+        SetDidBean.PropertiesBean propertiesBean = new SetDidBean.PropertiesBean();
+        propertiesBean.setStatus("Normal");
+        propertiesBean.setKey("uuid");
+        propertiesBean.setValue(Utilty.getUUID());
+        List<SetDidBean.PropertiesBean> mList = new ArrayList<>();
+        mList.add(propertiesBean);
+        setDidBean.setProperties(mList);
+        String memo = new Gson().toJson(setDidBean);
+
         LogUtil.i("upload info=" + memo);
         String isUploaded = Utilty.getPreference(Constants.SP_KEY_DID_ISUPLOADED, "false");
         if (isUploaded.equals("true")) {
@@ -810,10 +797,10 @@ public class DidLibrary {
 
     private static String getHeaderValue() {
         long time = System.currentTimeMillis();
-        String auth = Utilty.getMd5(mAppKey + time).toLowerCase();
-        return String.format(Locale.getDefault(), "id=%s;time=%s;auth=%s", mAppId, time, auth);
+        String auth = Utilty.getMd5(mAgentHeaderKey + time).toLowerCase();
+        return String.format(Locale.getDefault(), "id=%s;time=%s;auth=%s", mAgentHeaderId, time, auth);
     }
 
-    private static final String mAppId = "org.elastos.debug.didagent";
-    private static final String mAppKey = "b2gvzUM79yLhCbbGNWCuhSsGdqYhA7sS";
+    private static final String mAgentHeaderId = MemoBean.DidAppName;
+    private static final String mAgentHeaderKey = "b2gvzUM79yLhCbbGNWCuhSsGdqYhA7sS";
 }

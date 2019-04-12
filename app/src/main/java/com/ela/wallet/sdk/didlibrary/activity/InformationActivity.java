@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.ela.wallet.sdk.didlibrary.R;
 import com.ela.wallet.sdk.didlibrary.base.BaseActivity;
 import com.ela.wallet.sdk.didlibrary.bean.GetDidBean;
+import com.ela.wallet.sdk.didlibrary.bean.MemoBean;
 import com.ela.wallet.sdk.didlibrary.bean.RecordsModel;
 import com.ela.wallet.sdk.didlibrary.global.Constants;
 import com.ela.wallet.sdk.didlibrary.global.Urls;
@@ -44,12 +45,14 @@ public class InformationActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        LogUtil.d("InformationActivity.initView()");
         tv_balance = (TextView) findViewById(R.id.tv_home_did_balance);
         rv_trans =(ListView) findViewById(R.id.rv_home);
     }
 
     @Override
     protected void initData() {
+        LogUtil.d("InformationActivity.initData()");
         mList = new ArrayList<>();
         tv_balance.setText(Utilty.getPreference(Constants.SP_KEY_DID, ""));
         //TODO houhong
@@ -71,14 +74,16 @@ public class InformationActivity extends BaseActivity {
         mDialog.setTitle(getString(R.string.loading));
         mDialog.show();
 
+        LogUtil.d("InformationActivity.loadInfoData()");
         String url = String.format("%s%s%s", Urls.SERVER_DID, Urls.DID_GETDID, Utilty.getPreference(Constants.SP_KEY_DID, ""));
+        LogUtil.d("loadInfoData:url=" + url);
         HttpRequest.sendRequestWithHttpURLConnection(url, new HttpRequest.HttpCallbackListener() {
             @Override
             public void onFinish(final String response) {
+                LogUtil.d("loadInfoData:response=" + response);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        LogUtil.d("loadInfoData:response=" + response);
                         if (mDialog != null && mDialog.isShowing()) {
                             mDialog.dismiss();
                         }
@@ -89,6 +94,9 @@ public class InformationActivity extends BaseActivity {
                             JSONArray jsonArray = new JSONArray(bean.getResult());
                             for(int k=0;k<jsonArray.length();k++) {
                                 String key = jsonArray.getJSONObject(k).getString("key");
+                                if(key.startsWith(MemoBean.DidAppDirPath) == true) {
+                                    key = key.replace(MemoBean.DidAppDirPath, "");
+                                }
                                 String value = jsonArray.getJSONObject(k).getString("value");
                                 if (TextUtils.isEmpty(key) && TextUtils.isEmpty(value)) continue;
 //                                if ("imei".equals(key.trim().toLowerCase())) continue;

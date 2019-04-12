@@ -2,6 +2,9 @@ package com.ela.wallet.sdk.didlibrary.bean;
 
 import java.util.List;
 
+import static com.ela.wallet.sdk.didlibrary.bean.MemoBean.DidAppDirPath;
+import static com.ela.wallet.sdk.didlibrary.bean.MemoBean.DidAppId;
+
 /**
  * Created by Administrator on 2018/12/23.
  */
@@ -64,11 +67,18 @@ public class SetDidBean {
         private String Status;
 
         public String getKey() {
-            return Key;
+            String key = this.Key;
+            if(key.startsWith(DidAppDirPath) == true) {
+                key = this.Key.replace(DidAppDirPath, "");
+            }
+            return key;
         }
 
-        public void setKey(String Key) {
-            this.Key = Key;
+        public void setKey(String key) {
+            this.Key = key;
+            if(key.startsWith(DidAppDirPath) == false) {
+                this.Key = DidAppDirPath + key;
+            }
         }
 
         public String getValue() {

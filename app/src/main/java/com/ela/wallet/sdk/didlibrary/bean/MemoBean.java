@@ -64,11 +64,18 @@ public class MemoBean {
         private String Status;
 
         public String getKey() {
-            return Key;
+            String key = this.Key;
+            if(key.startsWith(DidAppDirPath) == true) {
+                key = this.Key.replace(DidAppDirPath, "");
+            }
+            return key;
         }
 
-        public void setKey(String Key) {
-            this.Key = Key;
+        public void setKey(String key) {
+            this.Key = key;
+            if(Key.startsWith(DidAppDirPath) == false) {
+                this.Key = DidAppDirPath + key;
+            }
         }
 
         public String getValue() {
@@ -87,4 +94,8 @@ public class MemoBean {
             this.Status = Status;
         }
     }
+
+    public static final String DidAppName = "org.elastos.debug.didagent";
+    public static final String DidAppId = "DC92DEC59082610D1D4698F42965381EBBC4EF7DBDA08E4B3894D530608A64AAA65BB82A170FBE16F04B2AF7B25D88350F86F58A7C1F55CC29993B4C4C29E405";
+    public static final String DidAppDirPath = "Apps/" + DidAppId + "/";
 }
